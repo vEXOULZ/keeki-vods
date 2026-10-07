@@ -1,0 +1,195 @@
+/* Keeki Picture House: an old cinema with the lights down. Blackout colours, a marquee's bulbs, title boards in Big
+   Shoulders. Dark only. Every colour, size and font the components use is a token here. */
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap');
+
+:root {
+  color-scheme: dark;
+
+  --k-bg: #080707;
+  --k-panel: #100f0e;
+  --k-line: #2a2725;
+  --k-ink: #ece6dc;
+  --k-muted: #a39a8e;
+  --k-thumb: #1c1a18;
+  --k-frame: #141210;
+  --k-board: #0d0c0b;
+  --k-board-ink: #f6e7c8;
+  --k-kicker: #f2b84b;
+  --k-bulb: #f2b84b;
+  --k-accent: #f2b84b;
+  --k-accent-ink: #080707;
+  /* Raised surfaces (menus, hovered rows) and the states. */
+  --k-surface: #181614;
+  --k-surface-2: #24211e;
+  --k-info: #8fb7d9;
+  --k-ok: #8cc084;
+  --k-warn: #e8a24a;
+  --k-bad: #e0645a;
+  --k-shadow: 0 10px 30px rgb(0 0 0 / 0.6);
+
+  --k-radius: 2px;
+  --k-radius-sm: 2px;
+  --k-frame-radius: 6px;
+  --k-control: 44px;
+  --k-control-sm: 32px;
+
+  --k-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --k-body: 'IBM Plex Sans JP', 'Hiragino Sans', system-ui, sans-serif;
+  --k-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--k-bg); }
+body {
+  margin: 0; background: var(--k-bg); color: var(--k-ink);
+  font-family: var(--k-body); font-size: 16px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--k-accent); }
+button, input, select, textarea { font: inherit; color: inherit; }
+img { max-width: 100%; }
+:focus-visible { outline: 2px solid var(--k-accent); outline-offset: 2px; }
+::selection { background: var(--k-accent); color: var(--k-accent-ink); }
+
+/* ---- type ---- */
+.k-display {
+  margin: 0; font-family: var(--k-display); font-weight: 900; line-height: 0.95; text-transform: uppercase;
+  letter-spacing: 0.02em; text-wrap: balance;
+}
+.k-eyebrow {
+  font-family: var(--k-display); font-weight: 700; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--k-muted);
+}
+.k-kicker {
+  font-family: var(--k-display); font-weight: 900; font-size: 16px; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--k-kicker);
+}
+.k-mono { font-family: var(--k-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.k-muted { color: var(--k-muted); }
+.k-sr {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
+/* ---- surfaces ---- */
+.k-panel { background: var(--k-panel); border: 1px solid var(--k-line); }
+/* A section's heading: big, with a rule under it. */
+.k-section-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  padding-bottom: 10px; border-bottom: 2px solid var(--k-ink);
+}
+.k-section-head h2 { margin: 0; font-family: var(--k-display); font-weight: 900; font-size: 36px; line-height: 1; text-transform: uppercase; letter-spacing: 0.03em; }
+@media (max-width: 560px) { .k-section-head h2 { font-size: 30px; } }
+/* A row of marquee bulbs: as many as fit, evenly spaced. */
+.k-bulbs {
+  height: 11px;
+  background: radial-gradient(circle closest-side, var(--k-bulb) 82%, transparent 100%) 0 0 / 11px 11px space no-repeat;
+  filter: drop-shadow(0 0 5px var(--k-bulb));
+}
+.k-bulbs.is-sm { height: 9px; background-size: 9px 9px; }
+.k-ring { outline: 1px solid rgb(255 255 255 / 0.06); outline-offset: -1px; }
+
+/* ---- controls ---- */
+.k-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: var(--k-control);
+  padding: 0 18px; border: 1px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-panel);
+  color: var(--k-ink); font-family: var(--k-body); font-size: 14px; font-weight: 500; line-height: 1;
+  text-decoration: none; white-space: nowrap; cursor: pointer; user-select: none;
+}
+.k-btn:hover:not(:disabled) { border-color: var(--k-muted); }
+.k-btn:disabled { opacity: 0.45; cursor: default; }
+.k-btn[aria-pressed='true'], .k-btn.is-pressed { border-color: var(--k-accent); color: var(--k-accent); }
+/* The big uppercase ones: Watch (filled) and the outlined marquee buttons. */
+.k-btn.is-primary, .k-btn.is-marquee {
+  font-family: var(--k-display); font-weight: 900; font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.k-btn.is-primary { background: var(--k-accent); border-color: var(--k-accent); color: var(--k-accent-ink); }
+.k-btn.is-primary:hover:not(:disabled) { border-color: var(--k-accent); filter: brightness(1.08); }
+.k-btn.is-marquee { background: transparent; }
+.k-btn.is-marquee.is-accent { border-color: var(--k-accent); color: var(--k-accent); }
+.k-btn.is-filter { font-family: var(--k-display); font-weight: 900; font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; }
+.k-btn.is-filter[aria-pressed='true'] { background: var(--k-accent); border-color: var(--k-accent); color: var(--k-accent-ink); }
+.k-btn.is-ghost { background: transparent; border-color: transparent; }
+.k-btn.is-ghost:hover:not(:disabled) { background: var(--k-surface); border-color: transparent; }
+.k-btn.is-danger { color: var(--k-bad); }
+.k-btn.is-sm { height: var(--k-control-sm); padding: 0 12px; font-size: 13px; }
+.k-btn.is-icon { width: var(--k-control); padding: 0; }
+.k-btn.is-icon.is-sm { width: var(--k-control-sm); }
+.k-btn.is-block { display: flex; width: 100%; }
+.k-spinner {
+  width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%;
+  animation: k-spin 700ms linear infinite;
+}
+@keyframes k-spin { to { transform: rotate(360deg); } }
+
+.k-input-wrap {
+  position: relative; display: inline-flex; align-items: center; height: var(--k-control); min-width: 0;
+  border: 1px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-panel);
+}
+.k-input-wrap:focus-within { border-color: var(--k-muted); }
+.k-input-wrap > .k-input { border: 0; background: transparent; height: 100%; }
+.k-input-wrap > .k-input:focus-visible { outline: none; }
+.k-input-icon { padding-left: 14px; color: var(--k-muted); }
+.k-input-clear { margin-right: 6px; }
+.k-input {
+  width: 100%; min-width: 0; height: var(--k-control); padding: 0 14px; border: 1px solid var(--k-line);
+  border-radius: var(--k-radius); background: var(--k-panel); color: var(--k-ink); font-size: 15px;
+}
+.k-input::placeholder { color: var(--k-muted); }
+.k-input[type='search']::-webkit-search-cancel-button { display: none; }
+.k-input[type='date'] { color-scheme: dark; }
+
+.k-chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border: 1px solid var(--k-line);
+  border-radius: var(--k-radius); color: var(--k-ink); font-size: 13px; line-height: 1.3; white-space: nowrap;
+  background: transparent;
+}
+.k-chip-key { color: var(--k-muted); }
+.k-chip.is-accent { border-color: var(--k-accent); color: var(--k-accent); font-weight: 700; }
+.k-chip.is-ok { border-color: var(--k-ok); color: var(--k-ok); font-weight: 700; }
+.k-chip.is-warn { border-color: var(--k-warn); color: var(--k-warn); }
+.k-chip.is-bad { border-color: var(--k-bad); color: var(--k-bad); }
+button.k-chip { cursor: pointer; }
+button.k-chip:hover { border-color: var(--k-muted); }
+.k-chip.is-active { background: var(--k-accent); border-color: var(--k-accent); color: var(--k-accent-ink); }
+
+/* ---- overlays ---- */
+.k-pop {
+  position: fixed; z-index: 1000; overflow-y: auto; overscroll-behavior: contain; padding: 6px;
+  background: var(--k-surface); border: 1px solid var(--k-line); border-radius: var(--k-radius);
+  box-shadow: var(--k-shadow); scrollbar-width: thin;
+}
+.k-menu-item {
+  display: flex; align-items: center; gap: 10px; width: 100%; min-height: 40px; padding: 6px 8px; border: 0;
+  border-radius: var(--k-radius); background: transparent; color: var(--k-ink); font-size: 14px; text-align: left;
+  text-decoration: none; cursor: pointer;
+}
+.k-menu-item:hover:not(:disabled), .k-menu-item:focus-visible { background: var(--k-surface-2); }
+.k-menu-item:disabled { opacity: 0.5; cursor: default; }
+.k-menu-item.is-current { color: var(--k-accent); }
+.k-menu-main { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; line-height: 1.3; }
+.k-menu-sub { flex: none; color: var(--k-muted); font-family: var(--k-mono); font-size: 12px; }
+
+.k-tooltip-bubble {
+  position: fixed; z-index: 1100; max-width: 280px; padding: 4px 8px; border-radius: var(--k-radius);
+  background: var(--k-board-ink); color: var(--k-bg); font-size: 12px; font-weight: 500; line-height: 1.35;
+  pointer-events: none;
+}
+
+/* ---- states ---- */
+.k-skeleton {
+  display: block; border-radius: var(--k-radius);
+  background: linear-gradient(90deg, var(--k-thumb) 0 40%, var(--k-surface-2) 50%, var(--k-thumb) 60% 100%) 0 0 / 300% 100%;
+  animation: k-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes k-shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+.k-ph {
+  display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--k-thumb);
+  color: var(--k-muted); font-size: 12px; text-align: center;
+}
+.k-ph.is-round { border-radius: 50%; }
+.k-ph > span { padding: 4px; overflow: hidden; text-overflow: ellipsis; }
+
+@media (prefers-reduced-motion: reduce) {
+  .k-skeleton, .k-spinner { animation: none; }
+}
