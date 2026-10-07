@@ -20,7 +20,7 @@ defineProps<{ title: string; text?: string; code?: string }>()
   background: var(--k-board); border: 1px solid var(--k-line);
 }
 .empty .k-bulbs { align-self: stretch; margin: 0 -10px 24px; padding: 0; background-color: var(--k-frame); height: 29px; background-position: 10px 10px; background-origin: content-box; }
-.title { font-size: 40px; color: var(--k-board-ink); }
+.title { font-size: 30px; color: var(--k-board-ink); }
 .text { margin: 0; max-width: 46ch; }
 .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 6px; }
 </style>

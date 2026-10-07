@@ -50,5 +50,5 @@ const resumeOf = (v: Vod) => resumeProgress(saved.value.get(v.id), v.duration)
 </template>
 
 <style scoped>
-.home { display: flex; flex-direction: column; gap: 40px; }
+.home { display: flex; flex-direction: column; gap: 32px; }
 </style>

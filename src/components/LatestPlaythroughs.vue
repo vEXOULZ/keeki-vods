@@ -93,13 +93,13 @@ const entries = computed(() =>
 .all { padding: 8px 0; font-weight: 700; color: var(--k-accent); }
 .list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); gap: 24px; }
 .item { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 18px; min-width: 0; }
-.info { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 4px 0; }
+.info { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 2px 0; font-size: 13px; }
 .games { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .game-names { font-weight: 700; line-height: 1.3; overflow-wrap: anywhere; }
-.facts { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 13px; }
+.facts { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 12px; }
 .facts dt { color: var(--k-muted); }
 .facts dd { margin: 0; overflow-wrap: anywhere; }
 .status { display: flex; flex-wrap: wrap; gap: 6px; }
-.you { margin: 0; font-size: 13px; }
+.you { margin: 0; font-size: 12px; }
 .cta { align-self: flex-start; margin-top: auto; }
 </style>

@@ -43,6 +43,6 @@ function apply(days: number) {
 <style scoped>
 .range { display: flex; flex-direction: column; gap: 10px; }
 .row { display: flex; align-items: center; gap: 6px; }
-.row .k-input { flex: 1 1 0; padding: 0 8px; font-size: 14px; }
+.row .k-input { flex: 1 1 0; padding: 0 8px; font-size: 13px; }
 .presets { display: flex; flex-wrap: wrap; gap: 6px; }
 </style>

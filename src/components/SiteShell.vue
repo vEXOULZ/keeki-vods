@@ -63,31 +63,31 @@ const NAV = [
 
 .head { border-bottom: 1px solid var(--k-line); }
 .head-in {
-  max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center;
+  max-width: 1200px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center;
   justify-content: space-between; gap: 8px 16px;
 }
 .is-fill .head-in { max-width: none; }
 .brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; color: var(--k-ink); text-decoration: none; }
-.name { font-family: var(--k-display); font-weight: 900; font-size: 26px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.1; }
-.jp { font-size: 14px; color: var(--k-muted); }
+.name { font-family: var(--k-display); font-weight: 900; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.1; }
+.jp { font-size: 13px; color: var(--k-muted); }
 .nav {
   display: flex; flex-wrap: wrap; gap: 4px; margin-right: -14px; font-family: var(--k-display); font-weight: 700;
-  font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase;
+  font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase;
 }
-.nav a { display: block; padding: 10px 14px; color: var(--k-ink); text-decoration: none; }
+.nav a { display: block; padding: 6px 10px; color: var(--k-ink); text-decoration: none; }
 .nav a:hover { color: var(--k-accent); }
 .nav a.on { color: var(--k-accent); }
 
 .main {
   container: k-site / inline-size; flex: 1 0 auto; width: 100%; max-width: 1200px; margin: 0 auto;
-  padding: 28px 24px 64px; outline: none;
+  padding: 24px 24px 56px; outline: none;
 }
 .is-fill .main { max-width: none; padding: 16px 24px; display: flex; flex-direction: column; min-height: 0; }
 
 .foot { border-top: 1px solid var(--k-line); }
 .foot-in {
-  max-width: 1200px; margin: 0 auto; padding: 26px 24px; display: flex; flex-wrap: wrap; justify-content: space-between;
-  gap: 12px; font-size: 14px; color: var(--k-muted);
+  max-width: 1200px; margin: 0 auto; padding: 20px 24px; display: flex; flex-wrap: wrap; justify-content: space-between;
+  gap: 12px; font-size: 13px; color: var(--k-muted);
 }
 @media (max-width: 560px) {
   .head-in, .main, .foot-in { padding-left: 16px; padding-right: 16px; }

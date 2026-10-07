@@ -93,14 +93,14 @@ watchEffect(() => learnGameColors(top.value.map((g) => ({ name: g.name, image: a
 .art { display: block; aspect-ratio: 3 / 4; overflow: hidden; border-radius: var(--k-radius); background: var(--k-thumb); }
 .art img, .art :deep(.k-ph) { display: block; width: 100%; height: 100%; object-fit: cover; }
 .board {
-  display: flex; flex-direction: column; gap: 2px; padding: 6px 7px 7px; min-height: 52px;
+  display: flex; flex-direction: column; gap: 2px; padding: 5px 6px 6px; min-height: 44px;
   background: var(--k-board); color: var(--k-board-ink); border-radius: var(--k-radius);
 }
 .name {
-  font-family: var(--k-display); font-size: 15px; font-weight: 700; line-height: 1.1; text-transform: uppercase;
+  font-family: var(--k-display); font-size: 13px; font-weight: 700; line-height: 1.1; text-transform: uppercase;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere;
 }
-.count { margin-top: auto; font-size: 11px; color: var(--k-accent); }
+.count { margin-top: auto; font-size: 10px; color: var(--k-accent); }
 .frame:hover, .frame:focus-visible {
   outline: none; border-color: var(--k-accent);
   box-shadow: 0 0 0 1px var(--k-accent), 0 0 22px rgb(242 184 75 / 0.25), 0 10px 24px rgb(0 0 0 / 0.55);

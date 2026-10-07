@@ -109,17 +109,17 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .menu-head { padding: 6px 8px; }
 
 .strip {
-  flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 12px 14px 14px;
+  flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 5px; padding: 10px 12px 12px;
   color: inherit; text-decoration: none;
 }
 .strip:not(.no-posters) .title { padding-right: 84px; }
 .title {
-  font-family: var(--k-display); font-weight: 900; font-size: 21px; line-height: 1.05; text-transform: uppercase;
+  font-family: var(--k-display); font-weight: 900; font-size: 17px; line-height: 1.1; text-transform: uppercase;
   color: var(--k-ink); overflow-wrap: anywhere;
 }
 .strip:hover .title, .strip:focus-visible .title, .card:has(.thumb-link:hover) .title { color: var(--k-accent); }
-.meta { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 13px; color: var(--k-muted); }
+.meta { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 12px; color: var(--k-muted); }
 .meta > span:first-child, .tag { white-space: nowrap; flex: none; }
-.tag { padding: 0 6px; font-size: 12px; }
+.tag { padding: 0 5px; font-size: 11px; }
 .games { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 </style>

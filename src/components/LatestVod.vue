@@ -97,21 +97,21 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .thumb { position: relative; }
 .thumb-link { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--k-thumb); color: inherit; }
 .thumb-link img, .thumb-link :deep(.k-ph) { display: block; width: 100%; height: 100%; object-fit: cover; }
-.dur { position: absolute; right: 10px; bottom: 16px; padding: 2px 8px; background: var(--k-bg); color: var(--k-ink); font-size: 13px; }
+.dur { position: absolute; right: 10px; bottom: 16px; padding: 1px 7px; background: var(--k-bg); color: var(--k-ink); font-size: 12px; }
 .watched { position: absolute; left: 0; bottom: 6px; height: 3px; background: var(--k-accent); z-index: 1; }
 .bar { position: absolute; left: 0; right: 0; bottom: 0; }
 .tags { position: absolute; left: -5px; top: 14px; z-index: 1; }
 .board {
-  display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 18px 20px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 16px; text-align: center;
   background: var(--k-board); color: var(--k-board-ink);
 }
 .kicker { letter-spacing: 0.3em; }
-.title { font-size: 48px; overflow-wrap: anywhere; }
+.title { font-size: 34px; overflow-wrap: anywhere; }
 .title a { color: inherit; text-decoration: none; }
 .title a:hover { color: var(--k-accent); }
-@container k-site (max-width: 560px) { .title { font-size: 34px; } }
+@container k-site (max-width: 560px) { .title { font-size: 26px; } }
 
-.side { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 16px; padding: 20px; }
+.side { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 16px; }
 .chapters { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; max-height: 22rem; overflow-y: auto; scrollbar-width: thin; }
 .chapter {
   display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 6px;
@@ -121,7 +121,7 @@ a.chapter:hover { background: var(--k-surface); }
 a.chapter:hover .name { color: var(--k-accent); }
 .chapter.is-cut { opacity: 0.6; }
 .name { font-weight: 500; line-height: 1.3; overflow-wrap: anywhere; }
-.at { font-size: 13px; }
+.at { font-size: 12px; }
 .meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; }
 </style>

@@ -22,7 +22,7 @@ const model = defineModel<T>()
 <style scoped>
 .seg { display: inline-flex; border: 1px solid var(--k-line); }
 .seg button {
-  height: var(--k-control); padding: 0 16px; border: 0; background: transparent; color: var(--k-ink); font-size: 14px;
+  height: var(--k-control); padding: 0 11px; border: 0; background: transparent; color: var(--k-ink); font-size: 13px;
   cursor: pointer;
 }
 .seg button[aria-checked='true'] { background: var(--k-accent); color: var(--k-accent-ink); font-weight: 700; }

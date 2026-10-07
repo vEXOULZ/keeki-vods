@@ -199,7 +199,7 @@ const countText = computed(() => `Showing ${(shownFrom.value + vods.value.length
         <VodCard v-for="v in vods" :key="v.id" :vod="v" :progress="resume.get(v.id)" />
       </div>
       <div class="more">
-        <KButton v-if="hasMore" variant="marquee" accent class="load" :loading="loading" @click="loadMore">
+        <KButton v-if="hasMore" variant="marquee" accent :loading="loading" @click="loadMore">
           Load {{ site.perPage }} more
         </KButton>
         <span class="k-muted count">{{ countText }}</span>
@@ -209,25 +209,24 @@ const countText = computed(() => `Showing ${(shownFrom.value + vods.value.length
 </template>
 
 <style scoped>
-.marquee { display: flex; flex-direction: column; margin-bottom: 22px; }
-.lights { background: var(--k-frame); border-radius: var(--k-frame-radius) var(--k-frame-radius) 0 0; padding: 10px 14px 34px; }
+.marquee { display: flex; flex-direction: column; margin-bottom: 18px; }
+.lights { background: var(--k-frame); border-radius: var(--k-frame-radius) var(--k-frame-radius) 0 0; padding: 8px 12px 28px; }
 .board {
-  position: relative; margin-top: -24px; padding: 20px 24px; display: flex; flex-direction: column; gap: 6px;
+  position: relative; margin-top: -20px; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px;
   background: var(--k-board); color: var(--k-board-ink); border: 1px solid var(--k-line);
 }
-.board h1 { margin: 0; font-size: 56px; overflow-wrap: anywhere; }
-@container k-site (max-width: 560px) { .board h1 { font-size: 38px; } }
+.board h1 { margin: 0; font-size: 40px; overflow-wrap: anywhere; }
+@container k-site (max-width: 560px) { .board h1 { font-size: 30px; } }
 
-.filters { scroll-margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 26px; }
+.filters { scroll-margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
 .search { flex: 1 1 220px; max-width: 360px; }
 @container k-site (max-width: 700px) {
   /* Search gets its own full-width line; All, game, tag and dates share the next. */
   .search { order: -1; flex-basis: 100%; max-width: none; }
 }
 .date-pop { display: flex; flex-direction: column; gap: 8px; padding: 8px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(270px, 100%), 1fr)); gap: 26px 20px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(270px, 100%), 1fr)); gap: 22px 18px; }
 .sk { display: flex; flex-direction: column; gap: 8px; }
-.more { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 32px; }
-.load { min-height: 48px; padding-inline: 28px; }
-.count { font-size: 13px; }
+.more { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 26px; }
+.count { font-size: 12px; }
 </style>

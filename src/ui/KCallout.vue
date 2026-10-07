@@ -16,8 +16,8 @@ withDefaults(defineProps<{ tone?: 'info' | 'ok' | 'warn' | 'error'; title?: stri
 <style scoped>
 .callout {
   --c: var(--k-info);
-  display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px 16px; background: var(--k-panel);
-  border: 1px solid var(--k-line); border-left: 4px solid var(--c); font-size: 14px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 14px; background: var(--k-panel);
+  border: 1px solid var(--k-line); border-left: 4px solid var(--c); font-size: 13px;
 }
 .is-ok { --c: var(--k-ok); }
 .is-warn { --c: var(--k-warn); }
