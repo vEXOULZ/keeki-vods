@@ -79,7 +79,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
       </template>
     </KPopover>
 
-    <KLink :to="to" class="strip" :class="{ 'no-posters': !games.length }">
+    <KLink :to="to" class="strip">
       <span class="title">{{ title }}</span>
       <span class="meta">
         <span>{{ date }}</span>
@@ -103,7 +103,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .tags { position: absolute; left: -5px; top: 30px; z-index: 1; }
 
 /* The posters hang in their frame off the thumbnail's bottom-right corner, over the strip. */
-.hang { align-self: flex-end; height: 0; margin-right: 10px; position: relative; top: -24px; z-index: 2; }
+.hang { align-self: flex-end; height: 0; margin-right: 10px; position: relative; top: -26px; z-index: 2; }
 .poster-btn { display: flex; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; }
 .poster-btn:hover, .poster-btn.open { filter: brightness(1.15); }
 .menu-head { padding: 6px 8px; }
@@ -112,7 +112,6 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
   flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 5px; padding: 10px 12px 12px;
   color: inherit; text-decoration: none;
 }
-.strip:not(.no-posters) .title { padding-right: 84px; }
 .title {
   font-family: var(--k-display); font-weight: 900; font-size: 17px; line-height: 1.1; text-transform: uppercase;
   color: var(--k-ink); overflow-wrap: anywhere;
