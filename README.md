@@ -18,7 +18,12 @@ its design (`@vexoulz/ui`); it links to vexoul.net only as its maker.
 
 Pages: Home (the latest VOD on the screen, the series now running, the most played games), `/vods` and
 `/playthroughs` (filters and a card grid), the watch page (`/vods/:id`, with the YouTube parts on one timeline and
-the chat replay) and `/games/:id`. Manage (`/manage`) is still to come, rebuilt in this UI.
+the chat replay) and `/games/:id`. Manage (`/manage`) is still to come, rebuilt in this UI; for now it's the gate
+(the worker's Twitch sign-in, archive admins only) and a placeholder.
+
+Sign-in is the vexoul.net one (vexoulz-auth, `src/lib/account.ts`): the same session as the other vexoul.net
+sites. Signed in, watch progress is kept in the account and follows you across devices and sites; signed out it
+stays in the browser, and signing in moves it into the account. Archive admins also get Manage in the account menu.
 
 ```bash
 npm install
@@ -36,7 +41,9 @@ git config core.hooksPath .conventions/githooks   # once per clone: branch-name 
 See `.env.example`; everything is optional.
 
 - `VITE_ARCHIVE_API`: the archive API (default `/backend`, same origin).
-- `VITE_ADMIN_API`: the worker's admin API, for Manage once it's here (default `/backend-admin`, same origin).
+- `VITE_ADMIN_API`: the worker's admin API, for Manage (default `/backend-admin`, same origin).
+- `VITE_AUTH_BASE`: vexoulz-auth (default the vexoul.net one). Empty turns sign-in off. The service only answers
+  the origins it's configured for, so on a dev server sign-in stays signed out unless you point this at your own.
 - In dev, `/backend` is proxied to `VITE_DEV_API_TARGET` (default the public site), and `/backend-admin` is
   vods-core's in-memory mock (password `admin`) unless `VITE_DEV_ADMIN_TARGET` is set in `.env.local`.
 

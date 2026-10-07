@@ -1,9 +1,10 @@
 <script setup lang="ts">
 // Frame for every page: the Picture House header (name, ケーキでちゅ, nav), the page in <main>, and the footer, which
-// links to vexoul.net only as the site's maker. `fill`: the watch page, as wide as the window and exactly its height
+// links to vexoul.net only as the site's maker; the header ends with the vexoul.net sign-in (AccountMenu). `fill`: the watch page, as wide as the window and exactly its height
 // (the player and chat size themselves to it), with no footer; `header` false hides the header (theater mode).
 import { RouterLink } from 'vue-router'
 import { KToastHost } from '@/ui'
+import AccountMenu from './AccountMenu.vue'
 
 withDefaults(defineProps<{ fill?: boolean; header?: boolean }>(), { fill: false, header: true })
 
@@ -23,22 +24,25 @@ const NAV = [
           <span class="name">Keeki Picture House</span>
           <span class="jp" lang="ja">ケーキでちゅ</span>
         </RouterLink>
-        <nav aria-label="Main" class="nav">
-          <RouterLink
-            v-for="n in NAV"
-            :key="n.to"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-            :to="n.to"
-            custom
-          >
-            <a
-              :href="href"
-              :class="{ on: n.exact ? isExactActive : isActive }"
-              :aria-current="(n.exact ? isExactActive : isActive) ? 'page' : undefined"
-              @click="navigate"
-            >{{ n.label }}</a>
-          </RouterLink>
-        </nav>
+        <div class="end">
+          <nav aria-label="Main" class="nav">
+            <RouterLink
+              v-for="n in NAV"
+              :key="n.to"
+              v-slot="{ href, navigate, isActive, isExactActive }"
+              :to="n.to"
+              custom
+            >
+              <a
+                :href="href"
+                :class="{ on: n.exact ? isExactActive : isActive }"
+                :aria-current="(n.exact ? isExactActive : isActive) ? 'page' : undefined"
+                @click="navigate"
+              >{{ n.label }}</a>
+            </RouterLink>
+          </nav>
+          <AccountMenu />
+        </div>
       </div>
     </header>
 
@@ -67,13 +71,14 @@ const NAV = [
   justify-content: space-between; gap: 8px 16px;
 }
 .is-fill .head-in { max-width: none; }
-.brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; color: var(--k-ink); text-decoration: none; }
+.brand { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; margin-right: auto; color: var(--k-ink); text-decoration: none; }
 .name { font-family: var(--k-display); font-weight: 900; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.1; }
 .jp { font-size: 13px; color: var(--k-muted); }
 .nav {
-  display: flex; flex-wrap: wrap; gap: 4px; margin-right: -14px; font-family: var(--k-display); font-weight: 700;
+  display: flex; flex-wrap: wrap; gap: 4px; font-family: var(--k-display); font-weight: 700;
   font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase;
 }
+.end { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-left: auto; }
 .nav a { display: block; padding: 6px 10px; color: var(--k-ink); text-decoration: none; }
 .nav a:hover { color: var(--k-accent); }
 .nav a.on { color: var(--k-accent); }
@@ -91,6 +96,5 @@ const NAV = [
 }
 @media (max-width: 560px) {
   .head-in, .main, .foot-in { padding-left: 16px; padding-right: 16px; }
-  .nav { margin-left: -14px; }
 }
 </style>
