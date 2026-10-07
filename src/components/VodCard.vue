@@ -102,8 +102,8 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .bar { position: absolute; left: 0; right: 0; bottom: 0; }
 .tags { position: absolute; left: -5px; top: 30px; z-index: 1; }
 
-/* The posters hang in their frame off the thumbnail's bottom-left corner. */
-.hang { align-self: flex-start; height: 0; margin-left: 10px; position: relative; top: -34px; z-index: 2; }
+/* The posters hang in their frame in the thumbnail's bottom-left corner, just above the watched and chapter bars. */
+.hang { align-self: flex-start; height: 0; margin-left: 10px; position: relative; top: -53px; z-index: 2; }
 .poster-btn { display: flex; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; }
 .poster-btn:hover, .poster-btn.open { filter: brightness(1.15); }
 .menu-head { padding: 6px 8px; }
