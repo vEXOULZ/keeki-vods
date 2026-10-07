@@ -47,7 +47,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
       <ThumbTags :vod="vod" class="tags" />
     </div>
 
-    <KPopover v-if="games.length" class="hang" align="right" width="min(320px, calc(100vw - 24px))" :cap="340">
+    <KPopover v-if="games.length" class="hang" align="left" width="min(320px, calc(100vw - 24px))" :cap="340">
       <template #trigger="{ toggle, open }">
         <button
           type="button"
@@ -57,7 +57,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
           :aria-expanded="open"
           @click="toggle"
         >
-          <KPosters :games="games" :size="20" />
+          <KPosters :games="games" :size="26" />
         </button>
       </template>
       <template #default="{ close }">
@@ -102,8 +102,8 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .bar { position: absolute; left: 0; right: 0; bottom: 0; }
 .tags { position: absolute; left: -5px; top: 30px; z-index: 1; }
 
-/* The posters hang in their frame off the thumbnail's bottom-right corner, over the strip. */
-.hang { align-self: flex-end; height: 0; margin-right: 10px; position: relative; top: -26px; z-index: 2; }
+/* The posters hang in their frame off the thumbnail's bottom-left corner. */
+.hang { align-self: flex-start; height: 0; margin-left: 10px; position: relative; top: -34px; z-index: 2; }
 .poster-btn { display: flex; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; }
 .poster-btn:hover, .poster-btn.open { filter: brightness(1.15); }
 .menu-head { padding: 6px 8px; }
