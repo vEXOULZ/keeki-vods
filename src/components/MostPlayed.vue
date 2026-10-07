@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// "Most played": the games keeki has played most, as a fanned hand of box art: by how long they can be watched in
-// total (the default), or by how many VODs they're in (the toggle, remembered in this browser). A card opens the VOD
-// list filtered to that game.
+// "Most played": the games keeki has played most, hung as a wall of framed posters with their titles on a board
+// beneath: by how long they can be watched in total (the default), or by how many VODs they're in (the toggle,
+// remembered in this browser). A poster opens the VOD list filtered to that game.
 import { boxArt, type GamePlayed } from '@vexoulz/vods-core'
 import { hasPlayTime, playTime, rankGames, relativeDay, type MostPlayedBy } from '@vexoulz/vods-core/kit'
 import { computed, ref, watch, watchEffect } from 'vue'
@@ -54,14 +54,20 @@ watchEffect(() => learnGameColors(top.value.map((g) => ({ name: g.name, image: a
     <div v-if="error" class="k-muted">
       Couldn't load the games. <KButton size="sm" variant="ghost" @click="emit('retry')">Try again</KButton>
     </div>
-    <div v-else-if="!games" class="hand" aria-busy="true"><KSkeleton v-for="i in 6" :key="i" w="112px" ratio="3 / 4" /></div>
-    <ul v-else class="hand" :style="{ '--n': top.length }">
-      <li v-for="(g, i) in top" :key="g.name" :style="{ '--i': i }">
-        <button type="button" class="card" :title="describe(g)" @click="emit('game', g.name)">
-          <img v-if="art(g)" :src="art(g)" alt="" loading="lazy" decoding="async" />
-          <KPlaceholder v-else :label="g.name" ratio="3 / 4" />
-          <span class="count k-mono">{{ tag(g) }}</span>
-          <span class="name">{{ g.name }}</span>
+    <div v-else-if="!games" class="wall" aria-busy="true">
+      <div v-for="i in 6" :key="i" class="frame"><KSkeleton ratio="3 / 4" /><KSkeleton w="70%" h="0.8em" /></div>
+    </div>
+    <ul v-else class="wall">
+      <li v-for="g in top" :key="g.name">
+        <button type="button" class="frame" :title="describe(g)" @click="emit('game', g.name)">
+          <span class="art">
+            <img v-if="art(g)" :src="art(g)" alt="" loading="lazy" decoding="async" />
+            <KPlaceholder v-else :label="g.name" ratio="3 / 4" />
+          </span>
+          <span class="board">
+            <span class="name">{{ g.name }}</span>
+            <span class="count k-mono">{{ tag(g) }}</span>
+          </span>
         </button>
       </li>
     </ul>
@@ -71,45 +77,44 @@ watchEffect(() => learnGameColors(top.value.map((g) => ({ name: g.name, image: a
 <style scoped>
 .most { display: flex; flex-direction: column; gap: 18px; container-type: inline-size; }
 
-/* A hand of cards: overlapping, fanned out from the middle, and the one you point at rises to the top. */
-.hand {
-  /* Cards shrink to fit the row (down to 80px, then the row scrolls). */
-  --card: max(80px, min(132px, calc((100cqw - 24px + 20px * (var(--n) - 1)) / var(--n))));
-  list-style: none; margin: 0; padding: 20px 12px 34px; display: flex; justify-content: center; gap: 0; min-width: 0;
-  overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--k-line) transparent;
+/* A poster wall: upright one-sheets side by side, each in its case with its title board beneath. Pointing at one
+   lights its case; nothing moves. */
+.wall {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 18px 14px;
+  grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
 }
-.hand > li {
-  --off: calc(var(--i) - (var(--n) - 1) / 2);
-  flex: none; position: relative; z-index: var(--i);
-  transform: translateY(calc(var(--off) * var(--off) * 2px)) rotate(calc(var(--off) * 3deg));
-  transition: transform 160ms ease;
+.wall > li { display: flex; min-width: 0; }
+.frame {
+  display: flex; flex-direction: column; gap: 6px; width: 100%; padding: 6px; font: inherit; color: inherit; text-align: left;
+  background: var(--k-frame); border: 1px solid var(--k-line); border-radius: var(--k-frame-radius);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 0.55); cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
 }
-.hand > li + li { margin-left: -20px; }
-.hand > li:hover, .hand > li:focus-within { z-index: 20; transform: translateY(-10px) rotate(0deg); }
-.card {
-  position: relative; display: block; width: var(--card, 112px); aspect-ratio: 3 / 4; padding: 0; overflow: hidden;
-  border: 2px solid var(--k-panel); border-radius: var(--k-radius); background: var(--k-surface);
-  box-shadow: 0 8px 22px rgb(0 0 0 / 0.6); color: #fff; font: inherit; cursor: pointer; text-align: left;
-}
-.card img, .card :deep(.k-ph) { display: block; width: 100%; height: 100%; object-fit: cover; }
-.card:hover, .card:focus-visible { border-color: var(--k-accent); outline: none; }
-.count {
-  position: absolute; top: 6px; right: 6px; padding: 0 6px; font-size: 11px; background: var(--k-bg); color: var(--k-accent);
+.art { display: block; aspect-ratio: 3 / 4; overflow: hidden; border-radius: var(--k-radius); background: var(--k-thumb); }
+.art img, .art :deep(.k-ph) { display: block; width: 100%; height: 100%; object-fit: cover; }
+.board {
+  display: flex; flex-direction: column; gap: 2px; padding: 6px 7px 7px; min-height: 52px;
+  background: var(--k-board); color: var(--k-board-ink); border-radius: var(--k-radius);
 }
 .name {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 7px 6px; font-family: var(--k-display);
-  font-size: 14px; font-weight: 700; line-height: 1.1; text-transform: uppercase;
-  background: linear-gradient(transparent, rgb(0 0 0 / 0.9));
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  font-family: var(--k-display); font-size: 15px; font-weight: 700; line-height: 1.1; text-transform: uppercase;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere;
+}
+.count { margin-top: auto; font-size: 11px; color: var(--k-accent); }
+.frame:hover, .frame:focus-visible {
+  outline: none; border-color: var(--k-accent);
+  box-shadow: 0 0 0 1px var(--k-accent), 0 0 22px rgb(242 184 75 / 0.25), 0 10px 24px rgb(0 0 0 / 0.55);
 }
 @container (max-width: 480px) {
-  /* Too narrow to fan: a straight row that scrolls sideways. */
-  .hand { justify-content: flex-start; padding: 4px 0 8px; --card: 96px; }
-  .hand > li { transform: none; }
-  .hand > li + li { margin-left: 8px; }
-  .hand > li:hover, .hand > li:focus-within { transform: none; }
+  /* A row of posters that scrolls sideways, two and a bit in view. */
+  .wall {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 40%; gap: 12px;
+    overflow-x: auto; padding-bottom: 8px; scroll-snap-type: x mandatory;
+    scrollbar-width: thin; scrollbar-color: var(--k-line) transparent;
+  }
+  .wall > li { scroll-snap-align: start; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hand > li { transition: none; }
+  .frame { transition: none; }
 }
 </style>

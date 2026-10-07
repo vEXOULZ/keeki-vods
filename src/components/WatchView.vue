@@ -449,7 +449,7 @@ useShortcuts(() => shortcuts.value)
               <KPopover prefer="up" width="min(340px, calc(100vw - 24px))" :cap="380">
                 <template #trigger="{ toggle, open }">
                   <button type="button" class="poster-btn" :class="{ open }" title="Chapters" aria-label="Chapters" @click="toggle">
-                    <KPosters :games="posterGames" :size="26" />
+                    <KPosters :games="posterGames" :size="19" />
                   </button>
                 </template>
                 <template #default="{ close }">

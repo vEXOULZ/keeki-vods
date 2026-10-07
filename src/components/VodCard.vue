@@ -47,7 +47,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
       <ThumbTags :vod="vod" class="tags" />
     </div>
 
-    <KPopover v-if="games.length" class="posters" align="right" width="min(320px, calc(100vw - 24px))" :cap="340">
+    <KPopover v-if="games.length" class="hang" align="right" width="min(320px, calc(100vw - 24px))" :cap="340">
       <template #trigger="{ toggle, open }">
         <button
           type="button"
@@ -57,7 +57,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
           :aria-expanded="open"
           @click="toggle"
         >
-          <KPosters :games="games" mode="fan" :size="24" />
+          <KPosters :games="games" :size="20" />
         </button>
       </template>
       <template #default="{ close }">
@@ -102,8 +102,8 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .bar { position: absolute; left: 0; right: 0; bottom: 0; }
 .tags { position: absolute; left: -5px; top: 30px; z-index: 1; }
 
-/* The posters hang off the thumbnail's bottom-right corner, over the strip. */
-.posters { align-self: flex-end; height: 0; margin-right: 10px; position: relative; top: -22px; z-index: 2; }
+/* The posters hang in their frame off the thumbnail's bottom-right corner, over the strip. */
+.hang { align-self: flex-end; height: 0; margin-right: 10px; position: relative; top: -24px; z-index: 2; }
 .poster-btn { display: flex; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; }
 .poster-btn:hover, .poster-btn.open { filter: brightness(1.15); }
 .menu-head { padding: 6px 8px; }
@@ -112,7 +112,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
   flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 12px 14px 14px;
   color: inherit; text-decoration: none;
 }
-.strip:not(.no-posters) .title { padding-right: 60px; }
+.strip:not(.no-posters) .title { padding-right: 84px; }
 .title {
   font-family: var(--k-display); font-weight: 900; font-size: 21px; line-height: 1.05; text-transform: uppercase;
   color: var(--k-ink); overflow-wrap: anywhere;
