@@ -82,7 +82,7 @@ const NAV = [
   container: k-site / inline-size; flex: 1 0 auto; width: 100%; max-width: 1200px; margin: 0 auto;
   padding: 24px 24px 56px; outline: none;
 }
-.is-fill .main { max-width: none; padding: 16px 24px; display: flex; flex-direction: column; min-height: 0; }
+.is-fill .main { max-width: none; padding: 0; display: flex; flex-direction: column; min-height: 0; }
 
 .foot { border-top: 1px solid var(--k-line); }
 .foot-in {
@@ -92,6 +92,5 @@ const NAV = [
 @media (max-width: 560px) {
   .head-in, .main, .foot-in { padding-left: 16px; padding-right: 16px; }
   .nav { margin-left: -14px; }
-  .is-fill .main { padding: 8px 0; }
 }
 </style>
