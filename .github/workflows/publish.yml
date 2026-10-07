@@ -1,0 +1,18 @@
+# Builds the site and pushes it to the `deploy` branch. Where that branch gets served from is not this
+# repo's business (see "Infrastructure" in the README).
+name: publish
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: publish
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    uses: vEXOULZ/conventions/.github/workflows/publish-site.yml@v2.0.0
+    permissions:
+      contents: write
