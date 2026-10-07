@@ -449,7 +449,7 @@ useShortcuts(() => shortcuts.value)
               <KPopover prefer="up" width="min(340px, calc(100vw - 24px))" :cap="380">
                 <template #trigger="{ toggle, open }">
                   <button type="button" class="poster-btn" :class="{ open }" title="Chapters" aria-label="Chapters" @click="toggle">
-                    <KPosters :games="posterGames" :size="19" />
+                    <KPosters :games="posterGames" :size="26" />
                   </button>
                 </template>
                 <template #default="{ close }">
@@ -610,7 +610,7 @@ useShortcuts(() => shortcuts.value)
 .row { display: flex; align-items: center; gap: 8px; padding: 6px 12px 8px; min-width: 0; }
 .time { font-size: 12px; white-space: nowrap; }
 .now { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; margin-left: 4px; }
-.poster-btn { background: none; border: none; padding: 0 4px; cursor: pointer; display: flex; height: 32px; align-items: center; color: inherit; border-radius: var(--k-radius-sm); }
+.poster-btn { background: none; border: none; padding: 0 4px; cursor: pointer; display: flex; min-height: 32px; align-items: center; color: inherit; border-radius: var(--k-radius-sm); }
 .poster-btn:focus-visible { outline: 2px solid var(--k-accent); }
 .now-text { min-width: 0; line-height: 1.3; }
 .title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

@@ -57,7 +57,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
           :aria-expanded="open"
           @click="toggle"
         >
-          <KPosters :games="games" :size="26" />
+          <KPosters :games="games" :size="32" />
         </button>
       </template>
       <template #default="{ close }">
@@ -103,7 +103,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .tags { position: absolute; left: -5px; top: 30px; z-index: 1; }
 
 /* The posters hang in their frame in the thumbnail's bottom-left corner, just above the watched and chapter bars. */
-.hang { align-self: flex-start; height: 0; margin-left: 10px; position: relative; top: -53px; z-index: 2; }
+.hang { align-self: flex-start; height: 0; margin-left: 10px; position: relative; top: -61px; z-index: 2; }
 .poster-btn { display: flex; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; }
 .poster-btn:hover, .poster-btn.open { filter: brightness(1.15); }
 .menu-head { padding: 6px 8px; }
