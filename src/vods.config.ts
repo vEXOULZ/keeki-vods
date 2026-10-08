@@ -12,6 +12,6 @@ export const vodsConfig = defineVodsConfig({
 
 export const site: VodsSiteOptions['site'] = {
   id: 'keekivods',
-  name: 'Keeki Picture House',
+  name: 'Keeki Archives',
   twitchUrl: 'https://twitch.tv/keeki_dechu',
 }

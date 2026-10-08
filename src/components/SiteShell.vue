@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Frame for every page: the Picture House header (name, ケーキでちゅ, nav), the page in <main>, and the footer, which
+// Frame for every page: the Keeki Archives header (name, ケーキでちゅ, nav), the page in <main>, and the footer, which
 // links to vexoul.net only as the site's maker; the header ends with the vexoul.net sign-in (AccountMenu). `fill`: the watch page, as wide as the window and exactly its height
 // (the player and chat size themselves to it), with no footer; `header` false hides the header (theater mode).
 import { RouterLink } from 'vue-router'
@@ -21,7 +21,7 @@ const NAV = [
     <header v-if="header" class="head">
       <div class="head-in">
         <RouterLink to="/" class="brand">
-          <span class="name">Keeki Picture House</span>
+          <span class="name">Keeki Archives</span>
           <span class="jp" lang="ja">ケーキでちゅ</span>
         </RouterLink>
         <div class="end">

@@ -1,4 +1,4 @@
-/* @vexoulz/platform-web's components (the chat lines) in the Picture House colours. `:root:root` outranks the
+/* @vexoulz/platform-web's components (the chat lines) in the Keeki Archives colours. `:root:root` outranks the
    library's own :root defaults whichever stylesheet loads last. */
 :root:root {
   --vxp-bg: var(--k-bg);
@@ -25,7 +25,7 @@
 }
 
 /* vods-core's default tag styles (kit DEFAULT_TAGS) name the --vx-* colours the other sites define; here they are the
-   Picture House ones. */
+   Keeki Archives ones. */
 :root {
   --vx-bg: var(--k-bg);
   --vx-ink: var(--k-ink);
