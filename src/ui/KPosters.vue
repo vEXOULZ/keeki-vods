@@ -42,7 +42,7 @@ const extra = computed(() => all.value.length - shown.value.length)
 
 /* Each in a dark frame with a lit edge, the way posters hang in their cases. */
 .is-bill { gap: 3px; padding: 3px; background: var(--k-frame); box-shadow: 0 4px 12px rgb(0 0 0 / 0.6); }
-.is-bill .poster { outline: 1px solid rgb(242 184 75 / 0.35); outline-offset: -1px; }
+.is-bill .poster { outline: 1px solid color-mix(in srgb, var(--k-accent) 35%, transparent); outline-offset: -1px; }
 .more { margin-left: 4px; font-size: 11px; color: var(--k-muted); }
 .is-bill .more { margin: 0 3px 0 1px; }
 </style>

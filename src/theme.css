@@ -1,4 +1,4 @@
-/* Keeki Picture House: an old cinema with the lights down. Blackout colours, a marquee's bulbs, title boards in Big
+/* Keeki Archives: an old cinema with the lights down. Blackout colours, film-strip edges, title boards in Big
    Shoulders. Dark only. Every colour, size and font the components use is a token here. */
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap');
 
@@ -14,9 +14,11 @@
   --k-frame: #141210;
   --k-board: #0d0c0b;
   --k-board-ink: #f6e7c8;
-  --k-kicker: #f2b84b;
-  --k-bulb: #f2b84b;
-  --k-accent: #f2b84b;
+  --k-kicker: #539cc1;
+  --k-accent: #539cc1;
+  /* A strip of film: its base, and the sprocket holes punched along its edges. */
+  --k-film: #151311;
+  --k-film-hole: #3b3631;
   --k-accent-ink: #080707;
   /* Raised surfaces (menus, hovered rows) and the states. */
   --k-surface: #181614;
@@ -80,13 +82,17 @@ img { max-width: 100%; }
 }
 .k-section-head h2 { margin: 0; font-family: var(--k-display); font-weight: 900; font-size: 28px; line-height: 1; text-transform: uppercase; letter-spacing: 0.03em; }
 @media (max-width: 560px) { .k-section-head h2 { font-size: 24px; } }
-/* A row of marquee bulbs: as many as fit, evenly spaced. */
-.k-bulbs {
-  height: 11px;
-  background: radial-gradient(circle closest-side, var(--k-bulb) 82%, transparent 100%) 0 0 / 11px 11px space no-repeat;
-  filter: drop-shadow(0 0 5px var(--k-bulb));
+/* A strip of film, and a row of its sprocket holes (as many as fit, evenly spaced) for its top or bottom edge. */
+.k-film { background: var(--k-film); }
+.k-sprockets {
+  height: 22px; padding: 6px 8px; background: var(--k-film); background-clip: border-box;
 }
-.k-bulbs.is-sm { height: 9px; background-size: 9px 9px; }
+.k-sprockets::before {
+  content: ''; display: block; height: 100%; background: var(--k-film-hole);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Crect x='3' width='10' height='10' rx='2'/%3E%3C/svg%3E") 0 0 / 16px 10px space no-repeat;
+}
+.k-sprockets.is-sm { height: 18px; padding: 5px 6px; }
+.k-sprockets.is-sm::before { mask-size: 12px 8px; }
 .k-ring { outline: 1px solid rgb(255 255 255 / 0.06); outline-offset: -1px; }
 
 /* ---- controls ---- */
@@ -139,6 +145,79 @@ img { max-width: 100%; }
 .k-input[type='search']::-webkit-search-cancel-button { display: none; }
 .k-input[type='date'] { color-scheme: dark; }
 
+.k-input-wrap.is-invalid, .k-input-wrap.is-invalid:focus-within { border-color: var(--k-bad); }
+textarea.k-input { height: auto; padding: 7px 10px; line-height: 1.45; resize: vertical; }
+
+/* A labelled field (KField), and a row of them that lines its buttons up with the inputs. */
+.k-field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.k-field-label { font-size: 13px; line-height: 18px; font-weight: 700; color: var(--k-ink); }
+.k-field-help { font-size: 12px; color: var(--k-muted); }
+.k-field-error { font-size: 12px; color: var(--k-bad); }
+.k-check { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.k-check input { accent-color: var(--k-accent); width: 15px; height: 15px; margin: 0; }
+.k-check.is-disabled { opacity: 0.5; cursor: not-allowed; }
+
+.k-select { min-width: 160px; justify-content: space-between; }
+.k-select-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.k-select-pop { display: inline-flex; }
+.k-select-pop.is-fill, .k-select.is-fill { width: 100%; }
+.k-caret { color: var(--k-muted); font-size: 10px; }
+
+.k-tabs-wrap { position: relative; }
+.k-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--k-line); overflow-x: auto; scrollbar-width: none; }
+.k-tabs::-webkit-scrollbar { display: none; }
+.k-tabs button {
+  flex: none; height: var(--k-control); padding: 0 12px; border: 0; background: transparent; color: var(--k-muted);
+  font-family: var(--k-display); font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase;
+  white-space: nowrap; cursor: pointer;
+}
+.k-tabs button:hover { color: var(--k-ink); }
+.k-tabs button[aria-selected='true'] { color: var(--k-ink); box-shadow: inset 0 -2px 0 var(--k-accent); }
+.k-tabs button:disabled { opacity: 0.45; cursor: default; }
+.k-tabs-wrap.has-left .k-tabs { mask-image: linear-gradient(to right, transparent 0, #000 56px); }
+.k-tabs-wrap.has-right .k-tabs { mask-image: linear-gradient(to left, transparent 0, #000 56px); }
+.k-tabs-wrap.has-left.has-right .k-tabs {
+  mask-image: linear-gradient(to right, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%);
+}
+.k-tabs-more {
+  position: absolute; top: 50%; translate: 0 -50%; width: 24px; height: 24px; display: grid; place-items: center;
+  padding: 0; border: 1px solid var(--k-line); border-radius: var(--k-radius); background: var(--k-panel);
+  color: var(--k-ink); font-size: 15px; line-height: 1; cursor: pointer;
+}
+.k-tabs-more:hover { border-color: var(--k-muted); }
+.k-tabs-more.is-left { left: 0; }
+.k-tabs-more.is-right { right: 0; }
+
+/* Tables: every column stays; a narrow screen scrolls the table sideways. */
+.k-table-wrap { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--k-line) transparent; }
+.k-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.k-table th {
+  padding: 7px 12px; border-bottom: 2px solid var(--k-line); text-align: left; color: var(--k-muted);
+  font-family: var(--k-display); font-weight: 700; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+  white-space: nowrap;
+}
+.k-table th.is-sortable { cursor: pointer; user-select: none; }
+.k-table th.is-sortable::after { content: ' ↕'; opacity: 0.4; }
+.k-table th[aria-sort='ascending']::after { content: ' ↑'; opacity: 1; color: var(--k-accent); }
+.k-table th[aria-sort='descending']::after { content: ' ↓'; opacity: 1; color: var(--k-accent); }
+.k-table td { padding: 7px 12px; border-bottom: 1px solid var(--k-line); vertical-align: middle; }
+.k-table:has(td :is(.k-btn, .k-input-wrap, .k-input)) td { padding-top: 5px; padding-bottom: 5px; }
+.k-table tr:last-child td { border-bottom: none; }
+.k-table tbody tr:hover { background: rgb(255 255 255 / 0.03); }
+.k-table .is-right { text-align: right; }
+.k-table .is-mono { font-family: var(--k-mono); }
+.k-table .is-muted { color: var(--k-muted); }
+@container k-site (max-width: 760px) { .k-table td, .k-table th { white-space: nowrap; } }
+
+.k-status { display: inline-flex; align-items: center; gap: 7px; }
+.k-status-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--k-muted); }
+.k-status.is-live .k-status-dot { background: var(--k-bad); box-shadow: 0 0 0 3px color-mix(in srgb, var(--k-bad) 30%, transparent); }
+.k-status.is-ok .k-status-dot { background: var(--k-ok); }
+.k-status.is-warn .k-status-dot { background: var(--k-warn); }
+.k-status.is-down .k-status-dot { background: var(--k-bad); }
+.k-progress { width: 100%; height: 6px; background: var(--k-surface-2); overflow: hidden; }
+.k-progress > span { display: block; height: 100%; background: var(--k-accent); transition: width 0.2s; }
+
 .k-chip {
   display: inline-flex; align-items: center; gap: 4px; padding: 1px 7px; border: 1px solid var(--k-line);
   border-radius: var(--k-radius); color: var(--k-ink); font-size: 12px; line-height: 1.3; white-space: nowrap;
@@ -170,6 +249,21 @@ button.k-chip:hover { border-color: var(--k-muted); }
 .k-menu-main { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; line-height: 1.3; }
 .k-menu-sub { flex: none; color: var(--k-muted); font-family: var(--k-mono); font-size: 11px; }
 
+.k-scrim {
+  position: fixed; inset: 0; z-index: 900; display: grid; place-items: center; padding: 16px; background: rgb(0 0 0 / 0.72);
+}
+.k-dialog {
+  max-height: calc(100vh - 32px); overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 18px;
+  background: var(--k-surface); border: 1px solid var(--k-line); border-top: 3px solid var(--k-accent);
+  box-shadow: var(--k-shadow);
+}
+.k-dialog:focus-visible { outline: none; }
+.k-dialog-title {
+  font-family: var(--k-display); font-weight: 900; font-size: 22px; line-height: 1; letter-spacing: 0.03em; text-transform: uppercase;
+}
+.k-dialog-body { color: var(--k-muted); font-size: 14px; }
+.k-dialog-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+
 .k-tooltip-bubble {
   position: fixed; z-index: 1100; max-width: 280px; padding: 4px 8px; border-radius: var(--k-radius);
   background: var(--k-board-ink); color: var(--k-bg); font-size: 12px; font-weight: 500; line-height: 1.35;
@@ -193,3 +287,5 @@ button.k-chip:hover { border-color: var(--k-muted); }
 @media (prefers-reduced-motion: reduce) {
   .k-skeleton, .k-spinner { animation: none; }
 }
+
+.k-btn.is-danger-solid { background: var(--k-bad); border-color: var(--k-bad); color: var(--k-ink); }

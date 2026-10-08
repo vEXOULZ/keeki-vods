@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // One list of VODs, by tag, each its own page (kit listQuery, TABS): /vods has the plain VODs (merges and splits
-// included), /playthroughs the playthroughs (one game across streams, as one video). Under the bulb strip, the board
+// included), /playthroughs the playthroughs (one game across streams, as one video). Under the film strip, the board
 // with the page's name and count, then one filter row (All resets, title search, game, tag, date range; all combinable
 // and kept in the URL), a grid of cards, and "load more". A tag on a card links here narrowed to it (ThumbTags).
 import { resumeProgress, type GamePlayed, type Progress, type Vod } from '@vexoulz/vods-core'
@@ -140,7 +140,7 @@ const countText = computed(() => `Showing ${(shownFrom.value + vods.value.length
 <template>
   <SiteShell>
     <div class="marquee">
-      <div class="lights"><div class="k-bulbs is-sm" aria-hidden="true"></div></div>
+      <div class="edge"><div class="k-sprockets is-sm" aria-hidden="true"></div></div>
       <div class="board">
         <h1 class="k-display">{{ playthroughs ? 'Playthroughs' : 'Past broadcasts' }}</h1>
         <span class="k-kicker" aria-live="polite">{{ kicker }}</span>
@@ -210,7 +210,7 @@ const countText = computed(() => `Showing ${(shownFrom.value + vods.value.length
 
 <style scoped>
 .marquee { display: flex; flex-direction: column; margin-bottom: 18px; }
-.lights { background: var(--k-frame); border-radius: var(--k-frame-radius) var(--k-frame-radius) 0 0; padding: 8px 12px 28px; }
+.edge { background: var(--k-film); padding-bottom: 20px; }
 .board {
   position: relative; margin-top: -20px; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px;
   background: var(--k-board); color: var(--k-board-ink); border: 1px solid var(--k-line);

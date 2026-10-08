@@ -103,7 +103,7 @@ watchEffect(() => learnGameColors(top.value.map((g) => ({ name: g.name, image: a
 .count { margin-top: auto; font-size: 10px; color: var(--k-accent); }
 .frame:hover, .frame:focus-visible {
   outline: none; border-color: var(--k-accent);
-  box-shadow: 0 0 0 1px var(--k-accent), 0 0 22px rgb(242 184 75 / 0.25), 0 10px 24px rgb(0 0 0 / 0.55);
+  box-shadow: 0 0 0 1px var(--k-accent), 0 0 22px color-mix(in srgb, var(--k-accent) 25%, transparent), 0 10px 24px rgb(0 0 0 / 0.55);
 }
 @container (max-width: 480px) {
   /* A row of posters that scrolls sideways, two and a bit in view. */

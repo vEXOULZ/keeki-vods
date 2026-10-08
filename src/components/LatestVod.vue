@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// The newest VOD, on the screen: its thumbnail in a frame of bulbs over a title board ("Now showing · today"), and
-// beside it every chapter (each a link to that point), when it was streamed, its length, and Watch (or Resume).
+// The newest VOD, on a strip of film: its thumbnail over a title board ("Now showing · today"), and beside it every chapter (each a link to that point), when it was streamed, its length, and Watch (or Resume).
 import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from '@vexoulz/vods-core'
 import { gamesWithArt, relativeDay, useThumbnail } from '@vexoulz/vods-core/kit'
 import { computed, watchEffect } from 'vue'
@@ -36,64 +35,64 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 </script>
 
 <template>
-  <section class="latest" aria-label="Latest broadcast">
-    <div class="screen">
-      <div class="k-bulbs" aria-hidden="true"></div>
-      <div class="thumb">
-        <KLink :to="to" class="thumb-link" :aria-label="title" tabindex="-1">
-          <img v-if="thumb" :src="thumb" :srcset="thumbSet" alt="" decoding="async" @load="thumbLoaded" @error="thumbFailed" />
-          <KPlaceholder v-else label="no thumbnail" ratio="16 / 9" />
-          <span class="dur k-mono">{{ toClock(vod.duration) }}</span>
-          <span v-if="progress" class="watched" :style="{ width: `${watched * 100}%` }"></span>
-          <KChapterBar v-if="vod.chapters.length" class="bar" :chapters="vod.chapters" :palette="palette" :height="6" />
-        </KLink>
-        <ThumbTags :vod="vod" class="tags" />
-      </div>
-      <div class="board">
-        <span class="k-kicker kicker">Now showing · {{ relativeDay(vod.createdAt) }}</span>
-        <h2 class="k-display title"><KLink :to="to">{{ title }}</KLink></h2>
-      </div>
-    </div>
-
-    <div class="side k-panel">
-      <span v-if="vod.chapters.length" class="k-eyebrow">Chapters · {{ vod.chapters.length }}</span>
-      <ol v-if="vod.chapters.length" class="chapters">
-        <li v-for="(c, i) in vod.chapters" :key="i">
-          <KLink v-if="!c.restricted" :to="watchPath(vod, c.start)" class="chapter">
-            <KPosters :games="[{ name: c.name, image: boxArt(c.image) ?? undefined, color: palette.get(c.name) }]" mode="row" :size="22" />
-            <span class="name">{{ c.name }}</span>
-            <span class="k-mono k-muted at">{{ toClock(c.start) }}</span>
+  <section class="latest k-film" aria-label="Latest broadcast">
+    <div class="k-sprockets" aria-hidden="true"></div>
+    <div class="reel">
+      <div class="screen">
+        <div class="thumb">
+          <KLink :to="to" class="thumb-link" :aria-label="title" tabindex="-1">
+            <img v-if="thumb" :src="thumb" :srcset="thumbSet" alt="" decoding="async" @load="thumbLoaded" @error="thumbFailed" />
+            <KPlaceholder v-else label="no thumbnail" ratio="16 / 9" />
+            <span class="dur k-mono">{{ toClock(vod.duration) }}</span>
+            <span v-if="progress" class="watched" :style="{ width: `${watched * 100}%` }"></span>
+            <KChapterBar v-if="vod.chapters.length" class="bar" :chapters="vod.chapters" :palette="palette" :height="6" />
           </KLink>
-          <span v-else class="chapter is-cut" title="Cut from the YouTube uploads">
-            <KPosters :games="[{ name: c.name, image: boxArt(c.image) ?? undefined, color: palette.get(c.name) }]" mode="row" :size="22" />
-            <span class="name">{{ c.name }}</span>
-            <KChip>cut</KChip>
-          </span>
-        </li>
-      </ol>
-      <div class="meta">
-        <KChip k="streamed">{{ date }}, {{ time }}</KChip>
-        <KChip k="length">{{ toClock(vod.duration) }}</KChip>
-        <KChip v-if="parts > 1" k="parts">{{ parts }}</KChip>
-        <KChip v-if="cut" k="cut" title="Chapters cut from the YouTube uploads">{{ cut }}</KChip>
-        <KChip v-if="vod.drive.length" tone="ok">download</KChip>
+          <ThumbTags :vod="vod" class="tags" />
+        </div>
+        <div class="board">
+          <span class="k-kicker kicker">Now showing · {{ relativeDay(vod.createdAt) }}</span>
+          <h2 class="k-display title"><KLink :to="to">{{ title }}</KLink></h2>
+        </div>
       </div>
-      <div class="actions">
-        <KButton :to="to" variant="primary">{{ cta }}</KButton>
-        <KButton v-if="progress" :to="watchPath(vod, 0)" variant="marquee">From the start</KButton>
-        <KButton to="/vods" variant="marquee">See all VODs</KButton>
+
+      <div class="side">
+        <span v-if="vod.chapters.length" class="k-eyebrow">Chapters · {{ vod.chapters.length }}</span>
+        <ol v-if="vod.chapters.length" class="chapters">
+          <li v-for="(c, i) in vod.chapters" :key="i">
+            <KLink v-if="!c.restricted" :to="watchPath(vod, c.start)" class="chapter">
+              <KPosters :games="[{ name: c.name, image: boxArt(c.image) ?? undefined, color: palette.get(c.name) }]" mode="row" :size="22" />
+              <span class="name">{{ c.name }}</span>
+              <span class="k-mono k-muted at">{{ toClock(c.start) }}</span>
+            </KLink>
+            <span v-else class="chapter is-cut" title="Cut from the YouTube uploads">
+              <KPosters :games="[{ name: c.name, image: boxArt(c.image) ?? undefined, color: palette.get(c.name) }]" mode="row" :size="22" />
+              <span class="name">{{ c.name }}</span>
+              <KChip>cut</KChip>
+            </span>
+          </li>
+        </ol>
+        <div class="meta">
+          <KChip k="streamed">{{ date }}, {{ time }}</KChip>
+          <KChip k="length">{{ toClock(vod.duration) }}</KChip>
+          <KChip v-if="parts > 1" k="parts">{{ parts }}</KChip>
+          <KChip v-if="cut" k="cut" title="Chapters cut from the YouTube uploads">{{ cut }}</KChip>
+          <KChip v-if="vod.drive.length" tone="ok">download</KChip>
+        </div>
+        <div class="actions">
+          <KButton :to="to" variant="primary">{{ cta }}</KButton>
+          <KButton v-if="progress" :to="watchPath(vod, 0)" variant="marquee">From the start</KButton>
+          <KButton to="/vods" variant="marquee">See all VODs</KButton>
+        </div>
       </div>
     </div>
+    <div class="k-sprockets" aria-hidden="true"></div>
   </section>
 </template>
 
 <style scoped>
-.latest { display: flex; flex-wrap: wrap; gap: 28px; align-items: stretch; }
-.screen {
-  flex: 3 1 560px; max-width: 100%; min-width: 0; display: flex; flex-direction: column; padding: 14px;
-  background: var(--k-frame); border-radius: var(--k-frame-radius);
-}
-.screen > .k-bulbs { margin: 0 4px 12px; }
+.latest { display: flex; flex-direction: column; }
+.reel { display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch; padding: 4px 14px; }
+.screen { flex: 3 1 560px; max-width: 100%; min-width: 0; display: flex; flex-direction: column; }
 .thumb { position: relative; }
 .thumb-link { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--k-thumb); color: inherit; }
 .thumb-link img, .thumb-link :deep(.k-ph) { display: block; width: 100%; height: 100%; object-fit: cover; }
@@ -111,13 +110,13 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .title a:hover { color: var(--k-accent); }
 @container k-site (max-width: 560px) { .title { font-size: 26px; } }
 
-.side { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 16px; }
+.side { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 4px 0; }
 .chapters { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; max-height: 22rem; overflow-y: auto; scrollbar-width: thin; }
 .chapter {
   display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 6px;
   color: var(--k-ink); text-decoration: none;
 }
-a.chapter:hover { background: var(--k-surface); }
+a.chapter:hover { background: var(--k-surface-2); }
 a.chapter:hover .name { color: var(--k-accent); }
 .chapter.is-cut { opacity: 0.6; }
 .name { font-weight: 500; line-height: 1.3; overflow-wrap: anywhere; }
