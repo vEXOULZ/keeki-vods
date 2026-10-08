@@ -6,7 +6,7 @@ import { clamp } from '@/lib/number'
 import { clampX } from '@/lib/place'
 import { previewFrame, toClock, type PartStatus, type PlayableTimeline, type Span } from '@vexoulz/vods-core'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import SnailMarker, { type SnailMode } from '@/components/SnailMarker.vue'
+import SeekMarker, { type SeekMode } from '@/components/SeekMarker.vue'
 
 const props = defineProps<{
   timeline: PlayableTimeline
@@ -26,9 +26,9 @@ const props = defineProps<{
   jumps?: readonly { at: number; skipped: number }[]
   /** Colours per game (gamePalette of the VOD), shared with the posters. */
   palette: Map<string, string>
-  /** The snail on the playhead crawls while this is on, and sleeps otherwise. */
+  /** The gorilla on the playhead walks while this is on, and sleeps otherwise. */
   playing?: boolean
-  /** Playback speed, which the snail crawls at. */
+  /** Playback speed, which the gorilla walks at. */
   rate?: number
 }>()
 const emit = defineEmits<{ seek: [t: number] }>()
@@ -127,7 +127,7 @@ const track = ref<HTMLElement | null>(null)
 const hover = ref<{ x: number; t: number; brk: boolean; jump?: { at: number; skipped: number } } | null>(null)
 const dragging = ref(false)
 
-// The snail floats while the time is being moved, and a moment after (so a click or a key shows it too).
+// The gorilla hops while the time is being moved, and a moment after (so a click or a key shows it too).
 const floating = ref(false)
 let settle: ReturnType<typeof setTimeout> | undefined
 function float() {
@@ -142,7 +142,7 @@ function seekTo(t: number) {
 onUnmounted(() => clearTimeout(settle))
 
 // A jump in the reported time that playing can't explain is a seek made somewhere else (YouTube's own progress bar,
-// the part picker): the snail floats for those too.
+// the part picker): the gorilla hops for those too.
 let last = { t: props.time, at: performance.now() }
 watch(
   () => props.time,
@@ -226,8 +226,8 @@ const hoverPreview = computed(() => {
   return previewFrame(upload, pos.offset, vodsConfig.apiBase)
 })
 const shown = computed(() => (dragging.value && hover.value ? hover.value.t : props.time))
-const snailMode = computed<SnailMode>(() => (dragging.value || floating.value ? 'float' : props.playing ? 'walk' : 'sleep'))
-/** The colour of the game at the playhead, for the snail's shell (none in a "stream down" gap). */
+const seekMode = computed<SeekMode>(() => (dragging.value || floating.value ? 'seek' : props.playing ? 'play' : 'pause'))
+/** The colour of the game at the playhead, for the gorilla's fur (none in a "stream down" gap). */
 const shownColor = computed(() => {
   const c = props.timeline.chapterAt(shown.value)
   return c && c.kind !== 'gap' ? props.palette.get(c.name) : undefined
@@ -283,7 +283,7 @@ const shownColor = computed(() => {
       </span>
       <span class="rest" :style="{ left: pct(shown) }"></span>
       <span class="played" :style="{ width: pct(shown) }"></span>
-      <SnailMarker class="head" :mode="snailMode" :rate="rate" :shell="shownColor" :style="{ left: pct(shown) }" />
+      <SeekMarker class="head" :mode="seekMode" :rate="rate" :fur="shownColor" :style="{ left: pct(shown) }" />
       <span
         v-if="hover"
         ref="tip"
@@ -339,11 +339,11 @@ const shownColor = computed(() => {
    what's been played. */
 .rest { position: absolute; right: 0; top: 0; bottom: 0; background: rgb(0 0 0 / 0.55); pointer-events: none; }
 .played { position: absolute; left: 0; bottom: -4px; height: 2px; background: var(--k-accent); border-radius: 1px; pointer-events: none; }
-/* The snail's head sits on the time, its foot on the bar. */
+/* The gorilla's face sits on the time, its feet on the bar. */
 .head { position: absolute; z-index: 2; bottom: -2px; width: 24px; height: 24px; margin-left: -22px; pointer-events: none; filter: drop-shadow(0 0 2px rgb(0 0 0 / 0.7)); }
 .tip {
   position: absolute; bottom: calc(100% + 22px); transform: translateX(-50%); white-space: nowrap; pointer-events: none;
-  font-size: 11px; padding: 2px 6px; border-radius: var(--k-radius-sm); background: var(--k-pop); border: 1px solid var(--k-line);
+  font-size: 11px; padding: 2px 6px; border-radius: var(--k-radius-sm); background: var(--k-surface); border: 1px solid var(--k-line);
   z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 2px;
 }
 .frame { display: block; margin: 2px -4px 0; border-radius: 2px; background-color: #000; background-repeat: no-repeat; }
