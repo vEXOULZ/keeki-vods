@@ -87,7 +87,7 @@ const textStyle = computed(() => ({
   transform: rotate(-4deg); transform-origin: 0 50%; filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.5));
 }
 .shape { display: block; object-fit: contain; }
-/* The placeholder takes the tag's color, so the config shows before the image exists. */
+/* The placeholder takes the tag's color, so the config shows before the image exists (KPlaceholder's own fill is cleared below). */
 .ph { display: flex; border-radius: var(--k-radius-sm); background: var(--tag-color, var(--k-surface-2)); }
 /* The same patterns as lib/tagShape, for the placeholder. */
 .is-stripes .ph {
@@ -99,7 +99,7 @@ const textStyle = computed(() => ({
     var(--tag-pattern, var(--k-bg)) 0 75%, var(--tag-color, var(--k-surface-2)) 0) 0 0 / calc(2 * var(--tag-pattern-size)) calc(2 * var(--tag-pattern-size));
 }
 .probe { color: var(--tag-pattern, var(--k-bg)); }
-.ph :deep(.k-ph) { font-size: 10px; color: var(--k-bg); border-color: color-mix(in srgb, var(--k-bg) 45%, transparent); }
+.ph :deep(.k-ph) { background: none; font-size: 10px; color: var(--k-bg); border-color: color-mix(in srgb, var(--k-bg) 45%, transparent); }
 /* Its text takes the placeholder's place. */
 .has-text .ph :deep(.k-ph) { color: transparent; }
 .text {
