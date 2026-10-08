@@ -53,6 +53,12 @@ router.beforeEach(async (to) => {
   return { path: '/manage/login', query: { next: to.fullPath } }
 })
 
+// The tab's title goes back to the site's name on every new page; a page with a title of its own (a VOD, a Manage
+// page) sets it as it renders, after this. A page that stays (a VOD's ?t= moving) keeps the title it set.
+router.afterEach((to, from, failure) => {
+  if (!failure && to.matched.at(-1) !== from.matched.at(-1)) document.title = site.name
+})
+
 // Signed in to the account: read the quiet check's answer off the URL, and ask once if this browser doesn't know
 // whether the account is one of the archive's admins (that answer shows Manage in the account menu). A known viewer
 // never loads the dashboard session.
