@@ -3,7 +3,7 @@
 [keeki_dechu](https://twitch.tv/keeki_dechu)'s VOD archive: past broadcasts with their YouTube uploads, a timeline
 across all parts, and the Twitch chat replayed alongside.
 
-It's "Keeki Picture House": an old cinema with the lights down. The look and every page are this repo's own; the
+It's "Keeki Archives": an old cinema with the lights down. The look and every page are this repo's own; the
 logic underneath (the API client, the player and chat replay state, list filters, tags, games) is
 [`@vexoulz/vods-core`](https://github.com/vEXOULZ/vods-core)'s, shared with
 [vods.vexoul.net](https://github.com/vEXOULZ/vexoulz-vods). It isn't part of the vexoul.net network and doesn't use
@@ -11,15 +11,16 @@ its design (`@vexoulz/ui`); it links to vexoul.net only as its maker.
 
 - `src/vods.config.ts`: the channel, its Twitch id, the archive API and the site's name.
 - `src/main.ts`: the styles, `setupVodsSite()`, the router and the vods plugin.
-- `src/theme.css`: the tokens (blackout colours, Big Shoulders title boards, bulbs) and the `.k-*` classes.
+- `src/theme.css`: the tokens (blackout colours, Big Shoulders title boards, film-strip edges) and the `.k-*` classes.
   Dark only.
 - `src/ui/`: the controls (`KButton`, `KPopover`, `KChip`, …), `src/components/` and `src/pages/`: the site.
 - `index.html` and `public/`: title, description, favicon.
 
 Pages: Home (the latest VOD on the screen, the series now running, the most played games), `/vods` and
 `/playthroughs` (filters and a card grid), the watch page (`/vods/:id`, with the YouTube parts on one timeline and
-the chat replay) and `/games/:id`. Manage (`/manage`) is still to come, rebuilt in this UI; for now it's the gate
-(the worker's Twitch sign-in, archive admins only) and a placeholder.
+the chat replay) and `/games/:id`. Manage (`/manage`, archive admins only, through the worker's Twitch sign-in) is
+the worker's dashboard in this UI: overview, jobs, VODs (with synthetic VODs), storage, settings, tags and the audit
+log, all on vods-core's `/kit` admin client.
 
 Sign-in is the vexoul.net one (vexoulz-auth, `src/lib/account.ts`): the same session as the other vexoul.net
 sites. Signed in, watch progress is kept in the account and follows you across devices and sites; signed out it

@@ -31,22 +31,26 @@ setupVodsSite({ config: vodsConfig, site, adminBase: import.meta.env.VITE_ADMIN_
 const onManage = (path: string) => path === '/manage' || path.startsWith('/manage/')
 
 // A dashboard session that ends mid-use: an admin still signed in to the account gets a new one quietly (one trip
-// through the worker); for anyone else ManagePage turns into its sign-in.
+// through the worker); anyone else goes to the Manage sign-in, which says why.
 setExpiredHandler(() => {
   const here = router.currentRoute.value
   const user = account.user.value
-  if (user && recall(user.id) === 'yes' && shouldCheck(user.id)) window.location.assign(quietLoginUrl(here.fullPath))
+  if (user && recall(user.id) === 'yes' && shouldCheck(user.id)) return window.location.assign(quietLoginUrl(here.fullPath))
+  if (onManage(here.path) && !here.meta.public) void router.push({ path: '/manage/login', query: { next: here.fullPath } })
 })
 
-// Manage needs a dashboard session. Without one, the visitor goes through the worker's Twitch sign-in (which signs in
-// to the vexoul.net account on the way) and comes back to the page; with that off, or after it failed, ManagePage
-// says why.
+// Manage pages need a dashboard session. Without one, the visitor goes through the worker's Twitch sign-in (which
+// signs in to the vexoul.net account on the way) and comes back to the page; with that off, or after a session ended,
+// to the Manage sign-in.
 router.beforeEach(async (to) => {
-  if (!onManage(to.path)) return true
+  if (!onManage(to.path) || to.meta.public) return true
   await ensure()
-  if (session.authenticated || !session.twitchLogin || session.notice || to.query.auth_error) return true
-  window.location.assign(twitchLoginUrl(to.path))
-  return false
+  if (session.authenticated) return true
+  if (session.twitchLogin && !session.notice) {
+    window.location.assign(twitchLoginUrl(to.fullPath))
+    return false
+  }
+  return { path: '/manage/login', query: { next: to.fullPath } }
 })
 
 // Signed in to the account: read the quiet check's answer off the URL, and ask once if this browser doesn't know

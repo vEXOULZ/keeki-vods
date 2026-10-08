@@ -5,7 +5,7 @@ import KLink from './KLink.vue'
 
 const props = withDefaults(
   defineProps<{
-    variant?: 'default' | 'primary' | 'marquee' | 'filter' | 'ghost' | 'danger'
+    variant?: 'default' | 'primary' | 'marquee' | 'filter' | 'ghost' | 'danger' | 'danger-solid'
     accent?: boolean
     size?: 'md' | 'sm'
     icon?: boolean
