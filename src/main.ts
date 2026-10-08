@@ -1,0 +1,111 @@
+import '@vexoulz/platform-web/style.css'
+import './theme.css'
+import './platform.css'
+
+import { AccountProgressStore } from '@vexoulz/vods-core'
+import {
+  answerOf,
+  ensure,
+  quietLoginUrl,
+  recall,
+  remember,
+  session,
+  setExpiredHandler,
+  setupVodsSite,
+  shouldCheck,
+  twitchLoginUrl,
+} from '@vexoulz/vods-core/kit'
+import { createVods } from '@vexoulz/vods-core/vue'
+import { createPlatformUi } from '@vexoulz/platform-web/vue'
+import { createApp, watch } from 'vue'
+import { RouterLink } from 'vue-router'
+
+import App from './App.vue'
+import { account } from './lib/account'
+import { router } from './router'
+import { useToast } from './ui'
+import { site, vodsConfig } from './vods.config'
+
+setupVodsSite({ config: vodsConfig, site, adminBase: import.meta.env.VITE_ADMIN_API || '/backend-admin' })
+
+const onManage = (path: string) => path === '/manage' || path.startsWith('/manage/')
+
+// A dashboard session that ends mid-use: an admin still signed in to the account gets a new one quietly (one trip
+// through the worker); anyone else goes to the Manage sign-in, which says why.
+setExpiredHandler(() => {
+  const here = router.currentRoute.value
+  const user = account.user.value
+  if (user && recall(user.id) === 'yes' && shouldCheck(user.id)) return window.location.assign(quietLoginUrl(here.fullPath))
+  if (onManage(here.path) && !here.meta.public) void router.push({ path: '/manage/login', query: { next: here.fullPath } })
+})
+
+// Manage pages need a dashboard session. Without one, the visitor goes through the worker's Twitch sign-in (which
+// signs in to the vexoul.net account on the way) and comes back to the page; with that off, or after a session ended,
+// to the Manage sign-in.
+router.beforeEach(async (to) => {
+  if (!onManage(to.path) || to.meta.public) return true
+  await ensure()
+  if (session.authenticated) return true
+  if (session.twitchLogin && !session.notice) {
+    window.location.assign(twitchLoginUrl(to.fullPath))
+    return false
+  }
+  return { path: '/manage/login', query: { next: to.fullPath } }
+})
+
+// The tab's title goes back to the site's name on every new page; a page with a title of its own (a VOD, a Manage
+// page) sets it as it renders, after this. A page that stays (a VOD's ?t= moving) keeps the title it set.
+router.afterEach((to, from, failure) => {
+  if (!failure && to.matched.at(-1) !== from.matched.at(-1)) document.title = site.name
+})
+
+// Signed in to the account: read the quiet check's answer off the URL, and ask once if this browser doesn't know
+// whether the account is one of the archive's admins (that answer shows Manage in the account menu). A known viewer
+// never loads the dashboard session.
+void router.isReady().then(() =>
+  watch(
+    () => [account.user.value, account.ready.value, router.currentRoute.value.query.admin] as const,
+    async ([user, ready]) => {
+      if (!ready) return
+      const here = router.currentRoute.value
+      const answer = answerOf(here.query)
+      if (here.query.admin !== undefined) {
+        const { admin: _a, ...query } = here.query
+        void router.replace({ path: here.path, query, hash: here.hash })
+      }
+      if (!user) return
+      if (answer) remember(user.id, answer)
+      if (recall(user.id) === 'no') return
+      await ensure()
+      if (session.authenticated) {
+        if (session.user?.id === user.id) remember(user.id, 'yes')
+        return
+      }
+      if (!answer && session.twitchLogin && shouldCheck(user.id)) window.location.assign(quietLoginUrl(here.fullPath))
+    },
+    { immediate: true },
+  ),
+)
+
+// Watch progress follows the vexoul.net account; signed out it stays in this browser, and signing in moves what this
+// browser has into the account.
+const progress = new AccountProgressStore({ signedIn: () => !!account.user.value, request: account.request })
+watch(account.user, (user, before) => {
+  if (user && !before) void progress.merge()
+})
+
+createApp(App)
+  .use(router)
+  .use(account)
+  .use(createVods(vodsConfig, { progress }))
+  // The shared chat-line component (and, with Manage, the jobs and audit ones): links and toasts.
+  .use(
+    createPlatformUi({
+      link: RouterLink,
+      jobHref: (id) => `/manage/jobs/${id}`,
+      subjectHref: () => null,
+      notify: (msg, kind) => useToast().show(msg, { kind, duration: kind === 'error' ? 5000 : 3000 }),
+      appName: 'worker',
+    }),
+  )
+  .mount('#app')

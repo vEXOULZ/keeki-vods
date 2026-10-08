@@ -1,0 +1,50 @@
+# conventions:begin: synced from vEXOULZ/conventions; edit it there, then run `conventions sync`
+# Secrets and local settings. The templates (.env.example, secrets.example/) are the ones committed.
+.env
+.env.*
+!.env.example
+secrets/
+
+# Claude Code worktrees and the graphify knowledge graph, both local to a checkout
+.claude/worktrees/
+graphify-out/
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+.vite/
+# conventions:end
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+dist-ssr
+coverage
+*.local
+
+/cypress/videos/
+/cypress/screenshots/
+
+# Editor directories and files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local, host-specific files never belong in this repo
+*.local.*
+/deploy.local/

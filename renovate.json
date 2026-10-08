@@ -1,0 +1,8 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>vEXOULZ/conventions//renovate/default"],
+  "packageRules": [
+    { "matchUpdateTypes": ["minor", "patch"], "matchDepTypes": ["devDependencies"], "groupName": "dev dependencies (non-major)" },
+    { "matchPackageNames": ["@vexoulz/vods-core", "@vexoulz/platform-web", "vEXOULZ/vods-core", "vEXOULZ/vex-platform-web"], "groupName": "vexoulz packages", "description": "Tagged git releases of the shared vods logic and the platform components." }
+  ]
+}

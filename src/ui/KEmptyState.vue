@@ -1,0 +1,26 @@
+<script setup lang="ts">
+// "Nothing here": no results, nothing archived yet, a 404. A title board under the edge of a film strip; always offers a way
+// on (the actions slot).
+defineProps<{ title: string; text?: string; code?: string }>()
+</script>
+
+<template>
+  <div class="empty">
+    <div class="k-sprockets is-sm" aria-hidden="true"></div>
+    <div v-if="code" class="k-kicker">{{ code }}</div>
+    <h2 class="k-display title">{{ title }}</h2>
+    <p v-if="text || $slots.default" class="k-muted text"><slot>{{ text }}</slot></p>
+    <div v-if="$slots.actions" class="actions"><slot name="actions"></slot></div>
+  </div>
+</template>
+
+<style scoped>
+.empty {
+  display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 0 24px 44px; text-align: center;
+  background: var(--k-board); border: 1px solid var(--k-line);
+}
+.empty .k-sprockets { align-self: stretch; margin: 0 -24px 24px; }
+.title { font-size: 30px; color: var(--k-board-ink); }
+.text { margin: 0; max-width: 46ch; }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 6px; }
+</style>

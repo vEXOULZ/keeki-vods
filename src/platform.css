@@ -1,0 +1,38 @@
+/* @vexoulz/platform-web's components (the chat lines) in the Keeki Archives colours. `:root:root` outranks the
+   library's own :root defaults whichever stylesheet loads last. */
+:root:root {
+  --vxp-bg: var(--k-bg);
+  --vxp-surface: var(--k-surface);
+  --vxp-ink: var(--k-ink);
+  --vxp-muted: var(--k-muted);
+  --vxp-line: var(--k-line);
+  --vxp-hover: var(--k-surface-2);
+  --vxp-accent: var(--k-accent);
+  --vxp-on-accent: var(--k-accent-ink);
+  --vxp-ok: var(--k-ok);
+  --vxp-warn: var(--k-warn);
+  --vxp-bad: var(--k-bad);
+  --vxp-ring: var(--k-accent);
+  --vxp-radius: var(--k-radius);
+  --vxp-radius-sm: var(--k-radius-sm);
+  --vxp-ctl: var(--k-control);
+  --vxp-ctl-sm: var(--k-control-sm);
+  --vxp-font: var(--k-body);
+  --vxp-mono: var(--k-mono);
+  --vxp-chat-bg: var(--k-panel);
+  --vxp-chat-ink: var(--k-ink);
+  --vxp-chat-muted: var(--k-muted);
+}
+
+/* vods-core's default tag styles (kit DEFAULT_TAGS) name the --vx-* colours the other sites define; here they are the
+   Keeki Archives ones. */
+:root {
+  --vx-bg: var(--k-bg);
+  --vx-ink: var(--k-ink);
+  --vx-muted: var(--k-muted);
+  --vx-accent: var(--k-accent);
+  --vx-info: var(--k-info);
+  --vx-ok: var(--k-ok);
+  --vx-warn: var(--k-warn);
+  --vx-bad: var(--k-bad);
+}
