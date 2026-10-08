@@ -6,6 +6,7 @@ import { useRouter } from 'vue-router'
 import { JobsTable, usePoll } from '@vexoulz/platform-web/vue'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import { platform, admin, errorMessage, site } from '@vexoulz/vods-core/kit'
+import type { Health } from '@vexoulz/vods-core/kit'
 
 const { data: health, error, loading, refresh } = usePoll((signal) => admin.health(signal), 15_000)
 const toast = useToast()
@@ -26,6 +27,22 @@ const COUNT_STATES = [
 onMounted(() => (document.title = `Overview · Manage · ${site.name}`))
 
 type Dot = 'live' | 'ok' | 'warn' | 'off'
+const DAY = 86_400_000
+/** How long the YouTube token has left, or how old it is when Google gave no end. */
+function tokenAge(yt: NonNullable<Health['youtube']>): { text: string; soon: boolean } | undefined {
+  if (yt.refreshTokenExpiresAt) {
+    const left = new Date(yt.refreshTokenExpiresAt).getTime() - Date.now()
+    if (left <= 0) return { text: 'token ended, connect again', soon: true }
+    const days = Math.ceil(left / DAY)
+    return { text: `token ends in ${days} day${days === 1 ? '' : 's'}`, soon: left < 2 * DAY }
+  }
+  if (yt.connectedAt) {
+    // In days, so a Testing project's 7-day limit is easy to read off.
+    const days = Math.floor((Date.now() - new Date(yt.connectedAt).getTime()) / DAY)
+    return { text: days < 1 ? `connected ${timeAgo(yt.connectedAt)}` : `connected ${days} day${days === 1 ? '' : 's'} ago`, soon: false }
+  }
+  return undefined
+}
 const tiles = computed(() => {
   const h = health.value
   if (!h) return []
@@ -44,6 +61,7 @@ const tiles = computed(() => {
       text: !yt ? 'Unknown' : !yt.authorized ? 'Not connected' : yt.valid ? 'Connected' : yt.channel === null ? 'No channel' : 'Token invalid',
       // The channel uploads go to, so a wrong account is caught before a job uploads there.
       link: yt?.channel ? { text: yt.channel.title, href: yt.channel.url } : undefined,
+      age: yt?.authorized ? tokenAge(yt) : undefined,
       sub: yt?.error ?? (yt?.checkedAt ? `checked ${timeAgo(yt.checkedAt)}` : ''),
       action: !yt ? undefined : yt.authorized && yt.valid ? 'switch' : 'connect',
     },
@@ -106,6 +124,7 @@ async function connectYoutube() {
           <div class="tile-main"><KStatusDot :status="t.status" />{{ t.text }}</div>
           <a v-if="t.link" class="tile-link small" :href="t.link.href" target="_blank" rel="noopener">{{ t.link.text }}</a>
           <div v-if="t.sub" class="k-muted small">{{ t.sub }}</div>
+          <div v-if="t.age" class="small" :class="t.age.soon ? 'tile-soon' : 'k-muted'">{{ t.age.text }}</div>
           <KButton v-if="t.action === 'connect'" @click="connectYoutube">Connect YouTube</KButton>
           <KButton v-else-if="t.action === 'switch'" size="sm" title="Connect a different Google account or channel" @click="connectYoutube">Switch account</KButton>
         </div>
@@ -134,6 +153,7 @@ async function connectYoutube() {
 .tile-main { display: flex; align-items: center; gap: 8px; font-size: 16px; }
 .tile-link { color: var(--k-accent); text-decoration: underline; text-underline-offset: 2px; }
 .tile-link:hover { color: var(--k-ink); }
+.tile-soon { color: var(--k-warn); }
 .small { font-size: 12px; }
 section { margin-bottom: 28px; }
 h2 { margin: 0 0 10px; }
