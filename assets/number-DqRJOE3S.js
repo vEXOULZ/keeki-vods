@@ -1,0 +1,1 @@
+function o(t,n=-1/0,i=1/0){return Math.min(i,Math.max(n,t))}function f(t){const n=String(t);return n.includes("e-")?Number(n.split("e-")[1]):n.includes(".")?n.split(".")[1].length:0}function l(t,n,i={}){const{step:e=1,min:s,max:r,bigStep:c=10,big:u=!1}=i,a=f(e),m=(Number.isFinite(t)?t:0)+n*e*(u?c:1);return o(Number(m.toFixed(a)),s,r)}export{o as c,f as d,l as s};
