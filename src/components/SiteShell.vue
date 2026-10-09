@@ -62,6 +62,8 @@ const NAV = [
 
 <style scoped>
 .site { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+/* Fill is capped at the window, or the chat replay's growing list stretches the row and the video with it. */
+.site.is-fill { height: 100vh; height: 100dvh; }
 .skip { position: absolute; left: 16px; top: -100px; z-index: 2000; }
 .skip:focus { top: 12px; }
 
@@ -87,7 +89,7 @@ const NAV = [
   container: k-site / inline-size; flex: 1 0 auto; width: 100%; max-width: 1200px; margin: 0 auto;
   padding: 24px 24px 56px; outline: none;
 }
-.is-fill .main { max-width: none; padding: 0; display: flex; flex-direction: column; min-height: 0; }
+.is-fill .main { flex: 1 1 0; max-width: none; padding: 0; display: flex; flex-direction: column; min-height: 0; }
 
 .foot { border-top: 1px solid var(--k-line); }
 .foot-in {
