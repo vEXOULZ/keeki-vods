@@ -6,7 +6,7 @@ import { KButton, KCallout, KChip, KDialog, KField, KInput, KSkeleton, useToast 
 import { normalizeVod, Timeline, toClock, toSeconds } from '@vexoulz/vods-core'
 import { computed, ref, watch } from 'vue'
 import { AdminApiError, type AdminVod, type MergeCandidate, type MergeCandidates, type Splice, type SpliceResult, type SplitPoint, admin, errorMessage } from '@vexoulz/vods-core/kit'
-import { stamp } from '@vexoulz/platform-web'
+import { duration as formatDuration, stamp } from '@vexoulz/platform-web'
 
 const props = defineProps<{ vod: AdminVod }>()
 const emit = defineEmits<{ changed: []; job: [jobId: number] }>()
@@ -15,14 +15,8 @@ const toast = useToast()
 const mergedInto = computed(() => props.vod.merged_into ?? null)
 const splices = computed(() => [...(props.vod.splices ?? [])].reverse())
 
-/** "4m 12s", "1h 02m", "40s". */
-function span(seconds: number): string {
-  const s = Math.round(Math.abs(seconds))
-  const h = Math.floor(s / 3600)
-  const m = Math.floor((s % 3600) / 60)
-  if (h) return `${h}h ${String(m).padStart(2, '0')}m`
-  return m ? `${m}m ${String(s % 60).padStart(2, '0')}s` : `${s}s`
-}
+/** "4m 12s", "1h 02m", "40s", for a gap either way. */
+const span = (seconds: number) => formatDuration(Math.abs(seconds))
 
 // ---- after a merge or split: the YouTube descriptions still list the old parts ----
 const touched = ref<string[]>([])
