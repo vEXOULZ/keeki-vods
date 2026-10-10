@@ -7,7 +7,7 @@ It's "Keeki Archives": an old cinema with the lights down. The look and every pa
 logic underneath (the API client, the player and chat replay state, list filters, tags, games) is
 [`@vexoulz/vods-core`](https://github.com/vEXOULZ/vods-core)'s, shared with
 [vods.vexoul.net](https://github.com/vEXOULZ/vexoulz-vods). It isn't part of the vexoul.net network and doesn't use
-its design (`@vexoulz/ui`); it links to vexoul.net only as its maker.
+its design: from `@vexoulz/ui` it takes only the headless logic (`/utils`, `/account`). It links to vexoul.net only as its maker.
 
 - `src/vods.config.ts`: the channel, its Twitch id, the archive API and the site's name.
 - `src/main.ts`: the styles, `setupVodsSite()`, the router and the vods plugin.
@@ -22,7 +22,7 @@ the chat replay) and `/games/:id`. Manage (`/manage`, archive admins only, throu
 the worker's dashboard in this UI: overview, jobs, VODs (with synthetic VODs), storage, settings, tags and the audit
 log, all on vods-core's `/kit` admin client.
 
-Sign-in is the vexoul.net one (vexoulz-auth, `src/lib/account.ts`): the same session as the other vexoul.net
+Sign-in is the vexoul.net one (vexoulz-auth, through `@vexoulz/ui/account`): the same session as the other vexoul.net
 sites. Signed in, watch progress is kept in the account and follows you across devices and sites; signed out it
 stays in the browser, and signing in moves it into the account. Archive admins also get Manage in the account menu.
 

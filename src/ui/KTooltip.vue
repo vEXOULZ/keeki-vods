@@ -2,7 +2,7 @@
 // A one-line hint on hover or focus, above its trigger (below when there's no room). Never anything needed to use
 // the page: touch screens rarely see it. Teleported to <body>; hides when anything scrolls.
 import { onScopeDispose, ref, useId, watch } from 'vue'
-import { clampX } from '@/lib/place'
+import { clampX } from '@vexoulz/ui/utils'
 
 defineProps<{ text: string }>()
 const GAP = 8

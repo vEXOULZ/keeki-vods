@@ -1,11 +1,12 @@
 <script setup lang="ts">
 // /manage/storage: what the worker keeps on disk (GET /admin/storage), one row per folder under vods/ and live/, with
 // the jobs that use it. Stale folders (no job needs them) can be deleted; the worker refuses while a job is active.
-import { KButton, KCallout, KCheckbox, KChip, KDialog, KProgress, KSegmented, KSkeleton, KTable, useToast, type Option, type TableColumn } from '@/ui'
+import { KButton, KCallout, KCheckbox, KChip, KDialog, KProgress, KSegmented, KSkeleton, KTable, type Option, type TableColumn } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { computed, onMounted, ref } from 'vue'
-import { type StorageFolder, type StorageView, admin, errorMessage, site } from '@vexoulz/vods-core/kit'
-import { bytes } from '@vexoulz/platform-web'
+import { type StorageFolder, type StorageView, admin, site } from '@vexoulz/vods-core/kit'
+import { bytes, errorText } from '@vexoulz/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
 
 const toast = useToast()
@@ -29,7 +30,7 @@ async function load(refresh = false) {
   try {
     view.value = await admin.storage(refresh)
   } catch (e) {
-    loadError.value = errorMessage(e)
+    loadError.value = errorText(e)
   } finally {
     loading.value = false
   }
@@ -84,7 +85,7 @@ async function remove() {
     toast.show(`Deleted ${r.path}: ${bytes(r.bytes)} freed (${r.files} files)`, { duration: 5000 })
     await load(true)
   } catch (e) {
-    deleteError.value = errorMessage(e)
+    deleteError.value = errorText(e)
   } finally {
     deleting.value = false
   }

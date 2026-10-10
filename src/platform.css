@@ -24,15 +24,10 @@
   --vxp-chat-muted: var(--k-muted);
 }
 
-/* vods-core's default tag styles (kit DEFAULT_TAGS) name the --vx-* colours the other sites define; here they are the
-   Keeki Archives ones. */
+/* vods-core's built-in tags (kit DEFAULT_TAGS) are coloured with --vods-tag-*; here they are the Keeki Archives
+   colours. */
 :root {
-  --vx-bg: var(--k-bg);
-  --vx-ink: var(--k-ink);
-  --vx-muted: var(--k-muted);
-  --vx-accent: var(--k-accent);
-  --vx-info: var(--k-info);
-  --vx-ok: var(--k-ok);
-  --vx-warn: var(--k-warn);
-  --vx-bad: var(--k-bad);
+  --vods-tag-new: var(--k-accent);
+  --vods-tag-updated: var(--k-info);
+  --vods-tag-complete: var(--k-ok);
 }

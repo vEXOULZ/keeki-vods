@@ -1,10 +1,12 @@
 <script setup lang="ts">
 // /manage/settings: the worker settings the dashboard can override (GET /admin/settings), grouped as the worker groups
 // them. Each shows its env default and when a change is seen; one Save sends every change, all or none.
-import { KButton, KCallout, KChip, KInput, KSkeleton, KSwitch, useToast } from '@/ui'
+import { KButton, KCallout, KChip, KInput, KSkeleton, KSwitch } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { computed, onMounted, ref } from 'vue'
-import { type RuntimeSetting, admin, settingChanges, settingLabel, showValue, toDraft, type SettingDraft, errorMessage, site } from '@vexoulz/vods-core/kit'
+import { type RuntimeSetting, admin, settingChanges, settingLabel, showValue, toDraft, type SettingDraft, site } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
 
 const toast = useToast()
@@ -26,7 +28,7 @@ async function load() {
   try {
     take((await admin.settings()).data)
   } catch (e) {
-    loadError.value = errorMessage(e)
+    loadError.value = errorText(e)
   }
 }
 
@@ -47,7 +49,7 @@ async function save() {
     take((await admin.saveSettings(pending.value.changes)).data)
     toast.show(count.value === 1 ? 'Setting saved' : 'Settings saved', { duration: 3000 })
   } catch (e) {
-    saveError.value = errorMessage(e)
+    saveError.value = errorText(e)
   } finally {
     saving.value = false
   }
@@ -67,7 +69,7 @@ async function reset(s: RuntimeSetting) {
     drafts.value = { ...keep, [s.key]: toDraft(fresh) }
     toast.show(`${settingLabel(s.key)} is back to its default`, { duration: 3000 })
   } catch (e) {
-    toast.show(errorMessage(e), { kind: 'error', duration: 5000 })
+    toast.show(errorText(e), { kind: 'error', duration: 5000 })
   } finally {
     resetting.value = null
   }

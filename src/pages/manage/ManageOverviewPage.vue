@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { KButton, KCallout, KChip, KSkeleton, KStatusDot, useToast } from '@/ui'
+import { KButton, KCallout, KChip, KSkeleton, KStatusDot } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { JobsTable, usePoll } from '@vexoulz/platform-web/vue'
 import ManageShell from '@/components/manage/ManageShell.vue'
-import { platform, admin, errorMessage, site } from '@vexoulz/vods-core/kit'
+import { platform, admin, site } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 
 const { data: health, error, loading, refresh } = usePoll((signal) => admin.health(signal), 15_000)
 const toast = useToast()
@@ -66,7 +68,7 @@ async function backfillBotChat() {
     toast.show(res.msg, { duration: 3500 })
     if (res.jobId != null) void router.push(`/manage/jobs/${res.jobId}`)
   } catch (e) {
-    toast.show(`Couldn't start the bot chat backfill: ${errorMessage(e)}`, { kind: 'error', duration: 5000 })
+    toast.show(`Couldn't start the bot chat backfill: ${errorText(e)}`, { kind: 'error', duration: 5000 })
   } finally {
     backfilling.value = false
   }
@@ -77,7 +79,7 @@ async function connectYoutube() {
     const { url } = await admin.youtubeAuthUrl()
     window.open(url, '_blank', 'noopener')
   } catch (e) {
-    toast.show(`Couldn't start the YouTube connection: ${errorMessage(e)}`, { kind: 'error', duration: 5000 })
+    toast.show(`Couldn't start the YouTube connection: ${errorText(e)}`, { kind: 'error', duration: 5000 })
   }
 }
 </script>

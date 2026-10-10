@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useToast } from './toast'
+import { useToast } from '@vexoulz/ui/utils'
 
 const { toasts, dismiss } = useToast()
 </script>

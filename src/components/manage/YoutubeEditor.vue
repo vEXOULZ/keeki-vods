@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // A VOD's YouTube parts: video id (paste a URL or the id), vod/live set, part number, duration. Existing videos keep
 // their thumbnail; leave duration empty to keep the archive's (or while YouTube is processing).
-import { KInput, KButton, KCallout, KSelect, useToast, type Option } from '@/ui'
+import { KInput, KButton, KCallout, KSelect, type Option } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { type AdminVod, newYoutube, youtubeDrafts, youtubeEdits, youtubeErrors, youtubeId, type YoutubeDraft, admin, useDraftEditor } from '@vexoulz/vods-core/kit'
 import TimeInput from '@/components/manage/TimeInput.vue'
 

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 // Jobs and fixes for one VOD, through the worker's existing routes. Each starts a job (shown in the VOD's job list);
 // delete removes the VOD from the archive after typing its id.
-import { KButton, KCheckbox, KDialog, KField, KInput, KSelect, useToast, type Option } from '@/ui'
+import { KButton, KCheckbox, KDialog, KField, KInput, KSelect, type Option } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { computed, ref } from 'vue'
-import { admin, errorMessage, isSpliced, type ActionResult, type AdminVod } from '@vexoulz/vods-core/kit'
+import { admin, isSpliced, type ActionResult, type AdminVod } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 
 const props = defineProps<{ vod: AdminVod }>()
 const emit = defineEmits<{ job: [jobId: number]; changed: []; deleted: [] }>()
@@ -24,7 +26,7 @@ async function run(name: string, action: () => Promise<ActionResult>, after?: ()
     if (res.jobId != null) emit('job', res.jobId)
     after?.()
   } catch (e) {
-    toast.show(errorMessage(e), { kind: 'error', duration: 6000 })
+    toast.show(errorText(e), { kind: 'error', duration: 6000 })
   } finally {
     busy.value = null
   }

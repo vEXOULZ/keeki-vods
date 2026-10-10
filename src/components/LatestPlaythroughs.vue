@@ -5,7 +5,7 @@
 import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from '@vexoulz/vods-core'
 import { COMPLETE_TAG } from '@vexoulz/vods-core/kit'
 import { computed } from 'vue'
-import { gamePalette } from '@/lib/color'
+import { gamePalette } from '@vexoulz/ui/utils'
 import { KButton, KChip, KLink, KPosters, KSkeleton } from '@/ui'
 import VodCard from './VodCard.vue'
 

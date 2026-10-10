@@ -6,8 +6,7 @@
 import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from '@vexoulz/vods-core'
 import { cutNote, gamesWithArt, splitTags, tagStyle, useThumbnail } from '@vexoulz/vods-core/kit'
 import { computed, watchEffect } from 'vue'
-import { learnGameColors } from '@/lib/artColor'
-import { gamePalette } from '@/lib/color'
+import { learnGameColors, gamePalette } from '@vexoulz/ui/utils'
 import { KChapterBar, KChip, KLink, KMenuItem, KPlaceholder, KPopover, KPosters } from '@/ui'
 import ThumbTags from './ThumbTags.vue'
 
