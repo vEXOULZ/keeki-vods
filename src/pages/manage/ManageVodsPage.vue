@@ -7,7 +7,8 @@ import { useToast } from '@vexoulz/ui/utils'
 import { toClock } from '@vexoulz/vods-core'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { type VodListRow, admin, errorMessage, watchDebounced, site } from '@vexoulz/vods-core/kit'
+import { type VodListRow, admin, watchDebounced, site } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
 
 const PER_PAGE = 30
@@ -110,7 +111,7 @@ async function add(mode: 'archive' | 'create') {
     addOpen.value = false
     router.push(`/manage/vods/${id}`)
   } catch (e) {
-    toast.show(errorMessage(e), { kind: 'error', duration: 6000 })
+    toast.show(errorText(e), { kind: 'error', duration: 6000 })
   } finally {
     adding.value = null
   }
@@ -144,7 +145,7 @@ onMounted(() => {
     </div>
 
     <KCallout v-if="error" tone="error" title="Couldn't load the VODs">
-      {{ errorMessage(error) }}
+      {{ errorText(error) }}
       <template #actions><KButton size="sm" @click="refresh">Try again</KButton></template>
     </KCallout>
     <div v-else-if="loading && !vods.length" class="sk" aria-busy="true"><KSkeleton v-for="i in 6" :key="i" h="36px" /></div>

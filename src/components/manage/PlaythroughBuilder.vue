@@ -4,7 +4,8 @@
 import { KButton, KCallout, KCheckbox, KSkeleton } from '@/ui'
 import { toClock } from '@vexoulz/vods-core'
 import { computed, ref, watch } from 'vue'
-import { type PlaythroughWindow, type GameValue, admin, errorMessage } from '@vexoulz/vods-core/kit'
+import { type PlaythroughWindow, type GameValue, admin } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 import GameSearch from '@/components/manage/GameSearch.vue'
 
 const emit = defineEmits<{ add: [windows: PlaythroughWindow[], game: string | null] }>()
@@ -29,7 +30,7 @@ watch(
       windows.value = items
       picked.value = new Set(items.map(key))
     } catch (e) {
-      if (!mine.signal.aborted) error.value = errorMessage(e)
+      if (!mine.signal.aborted) error.value = errorText(e)
     }
   },
 )

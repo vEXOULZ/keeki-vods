@@ -4,7 +4,8 @@
 import { KButton, KCheckbox, KDialog, KField, KInput, KSelect, type Option } from '@/ui'
 import { useToast } from '@vexoulz/ui/utils'
 import { computed, ref } from 'vue'
-import { admin, errorMessage, isSpliced, type ActionResult, type AdminVod } from '@vexoulz/vods-core/kit'
+import { admin, isSpliced, type ActionResult, type AdminVod } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 
 const props = defineProps<{ vod: AdminVod }>()
 const emit = defineEmits<{ job: [jobId: number]; changed: []; deleted: [] }>()
@@ -25,7 +26,7 @@ async function run(name: string, action: () => Promise<ActionResult>, after?: ()
     if (res.jobId != null) emit('job', res.jobId)
     after?.()
   } catch (e) {
-    toast.show(errorMessage(e), { kind: 'error', duration: 6000 })
+    toast.show(errorText(e), { kind: 'error', duration: 6000 })
   } finally {
     busy.value = null
   }

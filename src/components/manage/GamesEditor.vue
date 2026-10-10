@@ -5,7 +5,8 @@ import { KButton, KCallout, KSkeleton } from '@/ui'
 import { gamePalette, clamp, useToast } from '@vexoulz/ui/utils'
 import { toClock } from '@vexoulz/vods-core'
 import { computed, ref, watch } from 'vue'
-import { type AdminVod, type GameRow, gameDrafts, gameEdits, gameErrors, gamesFromChapters, newGame, type GameDraft, type GameValue, admin, useDraftEditor, errorMessage } from '@vexoulz/vods-core/kit'
+import { type AdminVod, type GameRow, gameDrafts, gameEdits, gameErrors, gamesFromChapters, newGame, type GameDraft, type GameValue, admin, useDraftEditor } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 import GameSearch from '@/components/manage/GameSearch.vue'
 import TimeInput from '@/components/manage/TimeInput.vue'
 
@@ -20,7 +21,7 @@ async function load() {
   try {
     loaded.value = await admin.games(props.vod.id)
   } catch (e) {
-    loadError.value = errorMessage(e)
+    loadError.value = errorText(e)
   }
 }
 watch(() => props.vod.id, load, { immediate: true })

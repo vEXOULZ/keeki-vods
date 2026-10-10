@@ -8,7 +8,8 @@ import { timeAgo } from '@/lib/time'
 import { toClock } from '@vexoulz/vods-core'
 import { computed, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
-import { type PlaythroughWindow, type SyntheticInput, type SyntheticVod, admin, errorMessage, COMPLETE_TAG, site } from '@vexoulz/vods-core/kit'
+import { type PlaythroughWindow, type SyntheticInput, type SyntheticVod, admin, COMPLETE_TAG, site } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import PlaythroughBuilder from '@/components/manage/PlaythroughBuilder.vue'
 import TimeInput from '@/components/manage/TimeInput.vue'
@@ -43,7 +44,7 @@ async function load() {
     fill(await admin.synthetic(props.id))
   } catch (e) {
     if ((e as { status?: number }).status === 404) notFound.value = true
-    else loadError.value = errorMessage(e)
+    else loadError.value = errorText(e)
   }
 }
 watch(() => props.id, load, { immediate: true })
@@ -123,7 +124,7 @@ async function save() {
       toast.show('Saved')
     }
   } catch (e) {
-    saveError.value = errorMessage(e)
+    saveError.value = errorText(e)
   } finally {
     saving.value = false
   }
@@ -138,7 +139,7 @@ async function destroy() {
     toast.show(`Deleted ${props.id}`)
     router.push('/manage/vods?synthetic=true')
   } catch (e) {
-    toast.show(errorMessage(e), { kind: 'error', duration: 6000 })
+    toast.show(errorText(e), { kind: 'error', duration: 6000 })
   } finally {
     deleting.value = false
     deleteOpen.value = false

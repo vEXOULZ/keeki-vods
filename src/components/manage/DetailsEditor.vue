@@ -4,7 +4,8 @@
 import { KButton, KCallout, KField, KInput } from '@/ui'
 import { useToast } from '@vexoulz/ui/utils'
 import { computed, ref, watch } from 'vue'
-import { type AdminVod, detailsDraft, detailsErrors, detailsPatch, type DetailsDraft, admin, errorMessage } from '@vexoulz/vods-core/kit'
+import { type AdminVod, detailsDraft, detailsErrors, detailsPatch, type DetailsDraft, admin } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 import TimeInput from '@/components/manage/TimeInput.vue'
 
 const props = defineProps<{ vod: AdminVod }>()
@@ -58,7 +59,7 @@ async function save() {
     toast.show('Details saved', { duration: 3000 })
     emit('saved', vod)
   } catch (e) {
-    error.value = errorMessage(e)
+    error.value = errorText(e)
   } finally {
     saving.value = false
   }

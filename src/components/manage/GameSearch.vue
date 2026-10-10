@@ -4,7 +4,8 @@
 import { KButton, KInput, KSpinner } from '@/ui'
 import { boxArt, NO_CATEGORY } from '@vexoulz/vods-core'
 import { computed, nextTick, ref, useId, watch } from 'vue'
-import { type TwitchGame, type GameValue, admin, errorMessage } from '@vexoulz/vods-core/kit'
+import { type TwitchGame, type GameValue, admin } from '@vexoulz/vods-core/kit'
+import { errorText } from '@vexoulz/platform-web'
 
 const props = defineProps<{ label?: string; invalid?: boolean }>()
 const model = defineModel<GameValue>({ required: true })
@@ -42,7 +43,7 @@ watch(query, (q) => {
       error.value = null
     } catch (e) {
       if (mine.signal.aborted) return
-      error.value = errorMessage(e)
+      error.value = errorText(e)
       results.value = []
     } finally {
       if (ctrl === mine) loading.value = false

@@ -7,7 +7,7 @@ import { timeAgo } from '@/lib/time'
 import { toClock } from '@vexoulz/vods-core'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { isSpliced, type AdminVod, vodSeconds, admin, platform, vodSubject, errorMessage, site } from '@vexoulz/vods-core/kit'
+import { isSpliced, type AdminVod, vodSeconds, admin, platform, vodSubject, site } from '@vexoulz/vods-core/kit'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import ChaptersEditor from '@/components/manage/ChaptersEditor.vue'
 import DetailsEditor from '@/components/manage/DetailsEditor.vue'
@@ -15,7 +15,7 @@ import DriveEditor from '@/components/manage/DriveEditor.vue'
 import EmotesPanel from '@/components/manage/EmotesPanel.vue'
 import GamesEditor from '@/components/manage/GamesEditor.vue'
 import SplicePanel from '@/components/manage/SplicePanel.vue'
-import { stamp } from '@vexoulz/platform-web'
+import { stamp, errorText } from '@vexoulz/platform-web'
 import { JobsTable, usePoll } from '@vexoulz/platform-web/vue'
 import VodActions from '@/components/manage/VodActions.vue'
 import YoutubeEditor from '@/components/manage/YoutubeEditor.vue'
@@ -36,7 +36,7 @@ async function load() {
   } catch (e) {
     const status = (e as { status?: number }).status
     if (status === 404) notFound.value = true
-    else loadError.value = errorMessage(e)
+    else loadError.value = errorText(e)
   }
 }
 watch(() => props.id, load, { immediate: true })
@@ -69,7 +69,7 @@ async function setHidden(hidden: boolean) {
     hideOpen.value = false
     toast.show(hidden ? 'Hidden from the site' : 'Public again', { duration: 3000 })
   } catch (e) {
-    toast.show(errorMessage(e), { kind: 'error', duration: 5000 })
+    toast.show(errorText(e), { kind: 'error', duration: 5000 })
   } finally {
     hiding.value = false
   }

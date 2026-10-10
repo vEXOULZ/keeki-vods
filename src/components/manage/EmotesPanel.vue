@@ -5,8 +5,8 @@ import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { emoteImage, type RawThirdPartyEmote } from '@vexoulz/vods-core'
 import { computed, ref, watch } from 'vue'
-import { type AdminEmotes, admin, errorMessage } from '@vexoulz/vods-core/kit'
-import { stamp } from '@vexoulz/platform-web'
+import { type AdminEmotes, admin } from '@vexoulz/vods-core/kit'
+import { stamp, errorText } from '@vexoulz/platform-web'
 
 const props = defineProps<{ vodId: string; /** Merged or split: the archive won't capture from Twitch for it. */ spliced?: boolean }>()
 const emit = defineEmits<{ job: [jobId: number] }>()
@@ -25,7 +25,7 @@ async function load() {
     data.value = await admin.vodEmotes(props.vodId)
     error.value = null
   } catch (e) {
-    error.value = errorMessage(e)
+    error.value = errorText(e)
   } finally {
     loading.value = false
   }
@@ -64,7 +64,7 @@ async function run(name: string, action: () => Promise<{ msg: string; jobId?: nu
     toast.show(res.msg, { duration: 3000 })
     if (res.jobId != null) emit('job', res.jobId)
   } catch (e) {
-    toast.show(errorMessage(e), { kind: 'error', duration: 5000 })
+    toast.show(errorText(e), { kind: 'error', duration: 5000 })
   } finally {
     busy.value = null
   }

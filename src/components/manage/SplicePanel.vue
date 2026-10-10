@@ -6,8 +6,8 @@ import { KButton, KCallout, KChip, KDialog, KField, KInput, KSkeleton } from '@/
 import { useToast } from '@vexoulz/ui/utils'
 import { normalizeVod, Timeline, toClock, toSeconds } from '@vexoulz/vods-core'
 import { computed, ref, watch } from 'vue'
-import { AdminApiError, type AdminVod, type MergeCandidate, type MergeCandidates, type Splice, type SpliceResult, type SplitPoint, admin, errorMessage } from '@vexoulz/vods-core/kit'
-import { duration as formatDuration, stamp } from '@vexoulz/platform-web'
+import { type AdminVod, type MergeCandidate, type MergeCandidates, type Splice, type SpliceResult, type SplitPoint, admin, editedSince, validPoints } from '@vexoulz/vods-core/kit'
+import { duration as formatDuration, stamp, errorText } from '@vexoulz/platform-web'
 
 const props = defineProps<{ vod: AdminVod }>()
 const emit = defineEmits<{ changed: []; job: [jobId: number] }>()
@@ -36,7 +36,7 @@ async function describe() {
     toast.show(`Updating the descriptions of ${touched.value.join(' and ')}`, { duration: 3500 })
     touched.value = []
   } catch (e) {
-    toast.show(errorMessage(e), { kind: 'error', duration: 6000 })
+    toast.show(errorText(e), { kind: 'error', duration: 6000 })
   } finally {
     describing.value = false
   }
@@ -57,15 +57,17 @@ async function run(name: string, action: (force: boolean) => Promise<SpliceResul
     emit('changed')
     loadCandidates()
   } catch (e) {
-    if (e instanceof AdminApiError && e.status === 409 && e.edited.length && !force) {
-      forceAsk.value = { edited: e.edited, retry: () => action(true) }
+    const edited = editedSince(e)
+    if (edited.length && !force) {
+      forceAsk.value = { edited, retry: () => action(true) }
       return
     }
-    if (e instanceof AdminApiError && name === 'split' && e.validPoints.length) {
-      splitErr.value = { msg: e.message, points: e.validPoints }
+    const points = name === 'split' ? validPoints(e) : []
+    if (points.length) {
+      splitErr.value = { msg: errorText(e), points }
       return
     }
-    toast.show(errorMessage(e), { kind: 'error', duration: 8000 })
+    toast.show(errorText(e), { kind: 'error', duration: 8000 })
   } finally {
     busy.value = null
   }
@@ -85,7 +87,7 @@ async function loadCandidates() {
   try {
     cands.value = await admin.mergeCandidates(props.vod.id)
   } catch (e) {
-    candsError.value = errorMessage(e)
+    candsError.value = errorText(e)
   }
 }
 watch(() => props.vod.id, () => ((cands.value = null), loadCandidates()), { immediate: true })
