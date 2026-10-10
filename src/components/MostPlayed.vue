@@ -5,7 +5,7 @@
 import { boxArt, type GamePlayed } from '@vexoulz/vods-core'
 import { hasPlayTime, playTime, rankGames, relativeDay, type MostPlayedBy } from '@vexoulz/vods-core/kit'
 import { computed, ref, watch, watchEffect } from 'vue'
-import { learnGameColors } from '@/lib/artColor'
+import { learnGameColors } from '@vexoulz/ui/utils'
 import { KButton, KPlaceholder, KSegmented, KSkeleton } from '@/ui'
 
 const props = withDefaults(defineProps<{ games: GamePlayed[] | null; error?: string | null; limit?: number }>(), { limit: 8 })

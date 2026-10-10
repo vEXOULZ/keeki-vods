@@ -2,7 +2,8 @@
 // /manage/tags: how each VOD tag shows on the site (GET /admin/site/tags): its label, whether it hangs off the
 // thumbnail or is a chip, its color and size, and its vector shape. One Save sends the whole list, all or none;
 // a shape uploads (or goes back to the placeholder) on its own, straight away, for a tag that's saved.
-import { KButton, KCallout, KChip, KField, KInput, KSelect, KSkeleton, KSwitch, useToast, type Option } from '@/ui'
+import { KButton, KCallout, KChip, KField, KInput, KSelect, KSkeleton, KSwitch, type Option } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { computed, onMounted, ref } from 'vue'
 import { AdminApiError, type SiteTags, admin, blankDraft, draftsOf, previewOf, rawOf, tagChanges, type TagDraft, type TagField, errorMessage, loadTagConfig, TAG_PATTERN_SIZE, TAG_SIZE, TAG_TEXT_MAX, TAG_TEXT_NUDGE, TAG_TEXT_ROTATE, TAG_TEXT_SIZE, type TagPattern, site, vodsConfig } from '@vexoulz/vods-core/kit'

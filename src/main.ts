@@ -17,14 +17,16 @@ import {
 } from '@vexoulz/vods-core/kit'
 import { createVods } from '@vexoulz/vods-core/vue'
 import { createPlatformUi } from '@vexoulz/platform-web/vue'
+import { createAccount } from '@vexoulz/ui/account'
+import { useToast } from '@vexoulz/ui/utils'
 import { createApp, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import App from './App.vue'
-import { account } from './lib/account'
 import { router } from './router'
-import { useToast } from './ui'
 import { site, vodsConfig } from './vods.config'
+
+const account = createAccount()
 
 setupVodsSite({ config: vodsConfig, site, adminBase: import.meta.env.VITE_ADMIN_API || '/backend-admin' })
 

@@ -3,8 +3,7 @@
 // it off. It opens towards whichever side has room, caps its height to that room (so long lists scroll), slides
 // sideways to stay on screen, follows its trigger while the page scrolls, and focuses its [autofocus] element.
 import { computed, nextTick, onScopeDispose, ref, watch } from 'vue'
-import { useDismiss } from '@/lib/dismiss'
-import { clampX, place } from '@/lib/place'
+import { useDismiss, clampX, place } from '@vexoulz/ui/utils'
 
 const props = withDefaults(
   defineProps<{

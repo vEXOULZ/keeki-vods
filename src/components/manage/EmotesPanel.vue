@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // The emote sets saved with a VOD (what its chat replay shows): counts per set, a preview, and re-capture actions.
-import { KButton, KCallout, KChip, KDialog, KSkeleton, KTabs, useToast, type Option } from '@/ui'
+import { KButton, KCallout, KChip, KDialog, KSkeleton, KTabs, type Option } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { emoteImage, type RawThirdPartyEmote } from '@vexoulz/vods-core'
 import { computed, ref, watch } from 'vue'

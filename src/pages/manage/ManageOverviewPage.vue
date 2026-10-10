@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { KButton, KCallout, KChip, KSkeleton, KStatusDot, useToast } from '@/ui'
+import { KButton, KCallout, KChip, KSkeleton, KStatusDot } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'

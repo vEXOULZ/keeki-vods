@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // /manage/vods/:id: fix one VOD by hand (visibility, details, chapters, games, YouTube and Drive lists, emotes) and
 // run its jobs.
-import { KButton, KCallout, KChip, KDialog, KSkeleton, KSwitch, useToast } from '@/ui'
+import { KButton, KCallout, KChip, KDialog, KSkeleton, KSwitch } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { toClock } from '@vexoulz/vods-core'
 import { computed, onMounted, ref, watch } from 'vue'

@@ -7,10 +7,8 @@
 // is part of. When a playthrough plays on into its next stream, a card over the video says so and counts down to go on;
 // when any VOD plays to its end, a card like it suggests another one to watch.
 import { chatSourceFor, useChatSettings, useFullscreen, useNextVod, type NextVod, useShortcuts, type Shortcut, cutNote, unplayable, gamesWithArt } from '@vexoulz/vods-core/kit'
-import { useToast, KButton, KChip, KKbd, KMenuItem, KPopover, KPosters } from '@/ui'
-import { gamePalette } from '@/lib/color'
-import { learnGameColors } from '@/lib/artColor'
-import { clamp } from '@/lib/number'
+import { KButton, KChip, KKbd, KMenuItem, KPopover, KPosters } from '@/ui'
+import { gamePalette, learnGameColors, clamp, useToast } from '@vexoulz/ui/utils'
 import {
   boxArt,
   mountYouTube,

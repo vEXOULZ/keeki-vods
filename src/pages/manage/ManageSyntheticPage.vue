@@ -2,7 +2,8 @@
 // /manage/synthetic/new and /manage/synthetic/:id: a VOD made of windows of real ones (GET/POST/PUT/DELETE
 // /api/v2/synthetic). A merge or split supersedes its sources (they leave the public lists and redirect into it); a
 // playthrough, built from a game's windows, is listed beside them and tagged `compilation`.
-import { KButton, KCallout, KCheckbox, KChip, KDialog, KField, KInput, KSkeleton, useToast } from '@/ui'
+import { KButton, KCallout, KCheckbox, KChip, KDialog, KField, KInput, KSkeleton } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { toClock } from '@vexoulz/vods-core'
 import { computed, ref, watch, watchEffect } from 'vue'

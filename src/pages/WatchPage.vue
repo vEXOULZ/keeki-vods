@@ -2,7 +2,8 @@
 // /vods/:id, /live/:id and /youtube/:id. `?t=` is VOD time (wins), `?part=` starts a part from its beginning;
 // with neither, playback resumes where this browser left off. A VOD merged into another one, or replaced by a
 // synthetic VOD (a merge or split that keeps the original), sends you to the same moment in that one.
-import { useToast, KButton, KCallout, KEmptyState, KSkeleton } from '@/ui'
+import { KButton, KCallout, KEmptyState, KSkeleton } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { isFinished, isResumable, parseTimestamp, redirectTarget, resumeProgress, toClock, toHMS, type Position, type UploadType } from '@vexoulz/vods-core'
 import { useVodsContext, useWatch } from '@vexoulz/vods-core/vue'
 import { computed, shallowRef, watch, watchEffect } from 'vue'

@@ -2,7 +2,8 @@
 // /manage/vods?q=&hidden=&synthetic=: find a VOD to edit (GET /api/v2/vods, so hidden, merged and synthetic ones too;
 // a title or an id), add ones the monitor missed (?add=<id> opens that with the id in), and make a synthetic one (a
 // playthrough, say).
-import { KButton, KCallout, KChip, KDialog, KField, KInput, KSegmented, KSkeleton, KTable, useToast, type Option, type TableColumn } from '@/ui'
+import { KButton, KCallout, KChip, KDialog, KField, KInput, KSegmented, KSkeleton, KTable, type Option, type TableColumn } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { toClock } from '@vexoulz/vods-core'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'

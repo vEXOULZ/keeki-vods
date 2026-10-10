@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Jobs and fixes for one VOD, through the worker's existing routes. Each starts a job (shown in the VOD's job list);
 // delete removes the VOD from the archive after typing its id.
-import { KButton, KCheckbox, KDialog, KField, KInput, KSelect, useToast, type Option } from '@/ui'
+import { KButton, KCheckbox, KDialog, KField, KInput, KSelect, type Option } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { computed, ref } from 'vue'
 import { admin, errorMessage, isSpliced, type ActionResult, type AdminVod } from '@vexoulz/vods-core/kit'
 

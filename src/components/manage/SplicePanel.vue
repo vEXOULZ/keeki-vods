@@ -2,7 +2,8 @@
 // Merge and split for one VOD. Merge: when a stream dropped and Twitch made two VODs of one broadcast, the later one
 // is appended to this one, the time between becoming a "Technical difficulties" gap chapter. Split: from a point
 // between two parts on becomes a new VOD. Both move chat with the video and can be undone (latest first).
-import { KButton, KCallout, KChip, KDialog, KField, KInput, KSkeleton, useToast } from '@/ui'
+import { KButton, KCallout, KChip, KDialog, KField, KInput, KSkeleton } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { normalizeVod, Timeline, toClock, toSeconds } from '@vexoulz/vods-core'
 import { computed, ref, watch } from 'vue'
 import { AdminApiError, type AdminVod, type MergeCandidate, type MergeCandidates, type Splice, type SpliceResult, type SplitPoint, admin, errorMessage } from '@vexoulz/vods-core/kit'

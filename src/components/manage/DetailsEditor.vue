@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // A VOD's details: title, thumbnail (a URL, or the default), duration and when it was streamed. Only what changed is
 // sent. A VOD merged into another keeps its details as they were.
-import { KButton, KCallout, KField, KInput, useToast } from '@/ui'
+import { KButton, KCallout, KField, KInput } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { computed, ref, watch } from 'vue'
 import { type AdminVod, detailsDraft, detailsErrors, detailsPatch, type DetailsDraft, admin, errorMessage } from '@vexoulz/vods-core/kit'
 import TimeInput from '@/components/manage/TimeInput.vue'

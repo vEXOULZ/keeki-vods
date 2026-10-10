@@ -4,7 +4,7 @@
 // On a synthetic VOD the games keep its time too, and chat follows the source VOD each moment comes from.
 import { gameName, gameTimeline, site } from '@vexoulz/vods-core/kit'
 import { KButton, KCallout, KChip, KEmptyState, KMenuItem, KPopover, KSkeleton } from '@/ui'
-import { clamp } from '@/lib/number'
+import { clamp } from '@vexoulz/ui/utils'
 import { parseTimestamp, toClock, toHMS, type GameUpload } from '@vexoulz/vods-core'
 import { useVodsContext, useWatch } from '@vexoulz/vods-core/vue'
 import { computed, watchEffect } from 'vue'

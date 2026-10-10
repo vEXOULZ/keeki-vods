@@ -1,9 +1,8 @@
 <script setup lang="ts">
 // Hand-edit a VOD's chapters: game (Twitch category search), start / end times, restricted (cut for DMCA). A strip on
 // top shows the result against the VOD's length. "Lock" keeps the automatic chapters step from overwriting the edit.
-import { KButton, KCallout, KCheckbox, KChip, KSwitch, useToast } from '@/ui'
-import { gamePalette } from '@/lib/color'
-import { clamp } from '@/lib/number'
+import { KButton, KCallout, KCheckbox, KChip, KSwitch } from '@/ui'
+import { gamePalette, clamp, useToast } from '@vexoulz/ui/utils'
 import { NO_CATEGORY, toClock } from '@vexoulz/vods-core'
 import { computed, ref } from 'vue'
 import { type AdminVod, chapterDrafts, chapterEdits, chapterErrors, chapterGaps, newChapter, type ChapterDraft, type GameValue, admin, useDraftEditor } from '@vexoulz/vods-core/kit'

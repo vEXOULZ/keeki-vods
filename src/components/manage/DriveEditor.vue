@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // A VOD's Google Drive files (the watch page's download button). Paste a Drive link or the file id.
-import { KInput, KButton, KCallout, KSelect, useToast, type Option } from '@/ui'
+import { KInput, KButton, KCallout, KSelect, type Option } from '@/ui'
+import { useToast } from '@vexoulz/ui/utils'
 import { type AdminVod, driveDrafts, driveEdits, driveErrors, driveId, newDrive, type DriveDraft, admin, useDraftEditor } from '@vexoulz/vods-core/kit'
 
 const props = defineProps<{ vod: AdminVod }>()
