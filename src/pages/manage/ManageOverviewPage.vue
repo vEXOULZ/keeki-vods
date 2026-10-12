@@ -6,6 +6,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { JobsTable, usePoll } from '@vexoulz/platform-web/vue'
 import ManageShell from '@/components/manage/ManageShell.vue'
+import TwitchViewerTile from '@/components/manage/TwitchViewerTile.vue'
 import { platform, admin, site } from '@vexoulz/vods-core/kit'
 import { errorText } from '@vexoulz/platform-web'
 
@@ -111,6 +112,7 @@ async function connectYoutube() {
           <KButton v-if="t.action === 'connect'" @click="connectYoutube">Connect YouTube</KButton>
           <KButton v-else-if="t.action === 'switch'" size="sm" title="Connect a different Google account or channel" @click="connectYoutube">Switch account</KButton>
         </div>
+        <TwitchViewerTile v-if="health.twitchViewer !== undefined" :status="health.twitchViewer" @changed="refresh" />
       </div>
 
       <section>
