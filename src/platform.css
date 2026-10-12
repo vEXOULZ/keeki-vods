@@ -1,6 +1,6 @@
-/* @vexoulz/platform-web's components (the chat lines) in the Keeki Archives colours. `:root:root` outranks the
-   library's own :root defaults whichever stylesheet loads last. */
-:root:root {
+/* @vexoulz/platform-web's components (the chat lines) in the Keeki Archives colours. The library declares its
+   defaults under `:where(:root)`, which has no specificity, so a plain `:root` wins whichever stylesheet loads last. */
+:root {
   --vxp-bg: var(--k-bg);
   --vxp-surface: var(--k-surface);
   --vxp-ink: var(--k-ink);
