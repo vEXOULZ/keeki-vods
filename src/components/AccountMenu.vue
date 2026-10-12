@@ -1,9 +1,8 @@
 <script setup lang="ts">
 // The header's account control: the vexoul.net sign-in (@vexoulz/ui/account). Signed out, "Sign in" (greyed out when
 // sign-in is off); signed in, the Twitch name opens a menu with Manage (archive admins) and signing out. A dashboard
-// session signed in with the admin password (no account) shows as "admin". Signing out ends both, and forgets this
-// browser's quiet admin check for the account.
-import { forget, logout, session } from '@vexoulz/vods-core/kit'
+// session signed in with the admin password (no account) shows as "admin". Signing out ends both.
+import { logout, session } from '@vexoulz/vods-core/kit'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAccount } from '@vexoulz/ui/account'
@@ -26,11 +25,7 @@ async function signOut(everywhere: boolean) {
   } catch {
     // the session is dropped here either way
   }
-  const id = account.user.value?.id
-  if (id) {
-    forget(id)
-    await account.signOut({ everywhere })
-  }
+  if (account.user.value) await account.signOut({ everywhere })
   if (route.path.startsWith('/manage')) router.push('/')
 }
 </script>
