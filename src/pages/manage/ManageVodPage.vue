@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// /manage/vods/:id: fix one VOD by hand (visibility, details, chapters, games, YouTube and Drive lists, emotes) and
-// run its jobs.
+// /manage/vods/:id: fix one VOD by hand (visibility, details, chapters, games, YouTube and Drive lists, censor
+// ranges, emotes) and run its jobs.
 import { KButton, KCallout, KChip, KDialog, KSkeleton, KSwitch } from '@/ui'
 import { useToast } from '@vexoulz/ui/utils'
 import { timeAgo } from '@/lib/time'
@@ -9,6 +9,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { isSpliced, type AdminVod, vodSeconds, admin, platform, vodSubject, site } from '@vexoulz/vods-core/kit'
 import ManageShell from '@/components/manage/ManageShell.vue'
+import CensorEditor from '@/components/manage/CensorEditor.vue'
 import ChaptersEditor from '@/components/manage/ChaptersEditor.vue'
 import DetailsEditor from '@/components/manage/DetailsEditor.vue'
 import DriveEditor from '@/components/manage/DriveEditor.vue'
@@ -180,6 +181,11 @@ onMounted(() => (document.title = `VOD ${props.id} · Manage · ${site.name}`))
         <section class="panel k-panel">
           <h2 class="k-eyebrow">YouTube parts</h2>
           <YoutubeEditor :vod="vod" @saved="saved" />
+        </section>
+
+        <section class="panel k-panel">
+          <h2 class="k-eyebrow">Censor</h2>
+          <CensorEditor :vod="vod" :duration="duration" @saved="saved" />
         </section>
 
         <section class="panel k-panel">

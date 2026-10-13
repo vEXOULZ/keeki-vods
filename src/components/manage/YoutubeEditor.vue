@@ -1,8 +1,11 @@
 <script setup lang="ts">
 // A VOD's YouTube parts: video id (paste a URL or the id), vod/live set, part number, duration. Existing videos keep
 // their thumbnail; leave duration empty to keep the archive's (or while YouTube is processing).
-import { KInput, KButton, KCallout, KSelect, type Option } from '@/ui'
+import { KInput, KButton, KCallout, KCheckbox, KDialog, KSelect, type Option } from '@/ui'
 import { useToast } from '@vexoulz/ui/utils'
+import { errorText } from '@vexoulz/platform-web'
+import type { RawUpload } from '@vexoulz/vods-core'
+import { computed, ref } from 'vue'
 import { type AdminVod, newYoutube, youtubeDrafts, youtubeEdits, youtubeErrors, youtubeId, type YoutubeDraft, admin, useDraftEditor } from '@vexoulz/vods-core/kit'
 import TimeInput from '@/components/manage/TimeInput.vue'
 
@@ -25,6 +28,34 @@ const { rows, error, saving, dirty, errors, reset, save, remove } = useDraftEdit
     toast.show('YouTube parts saved', { duration: 3000 })
   },
 })
+
+// Delete uploads from YouTube (the saved ones; unsaved rows aren't on the VOD yet)
+const delOpen = ref(false)
+const delPick = ref<string[]>([])
+const deleting = ref(false)
+const saved = computed(() => (props.vod.youtube ?? []).filter((u) => u.id))
+const label = (u: RawUpload) => `${u.type === 'live' ? 'Live' : 'VOD'} part ${u.part ?? 1} · ${u.id}`
+function openDelete() {
+  delPick.value = []
+  delOpen.value = true
+}
+function pick(id: string, on: boolean) {
+  delPick.value = on ? [...delPick.value.filter((x) => x !== id), id] : delPick.value.filter((x) => x !== id)
+}
+async function deleteUploads() {
+  deleting.value = true
+  try {
+    const res = await admin.deleteUploads(props.vod.id, delPick.value)
+    delOpen.value = false
+    emit('saved', res.vod)
+    const failed = res.failed.map((f) => `${f.id}: ${f.error}`).join('; ')
+    toast.show(failed ? `${res.msg} Not deleted: ${failed}` : res.msg, failed ? { kind: 'error', duration: 10000 } : { duration: 4000 })
+  } catch (e) {
+    toast.show(errorText(e), { kind: 'error', duration: 6000 })
+  } finally {
+    deleting.value = false
+  }
+}
 
 function add() {
   rows.value.push(newYoutube(rows.value, rows.value.some((r) => r.type === 'live') && !rows.value.some((r) => r.type === 'vod') ? 'live' : 'vod'))
@@ -64,10 +95,28 @@ function setId(r: YoutubeDraft, value: string) {
     <KCallout v-if="error" tone="error" title="Couldn't save the YouTube parts">{{ error }}</KCallout>
     <div class="foot">
       <KButton @click="add">+ Add part</KButton>
+      <KButton variant="danger" :disabled="!saved.length || dirty" :title="dirty ? 'Save or undo the changes first' : undefined" @click="openDelete">Delete from YouTube…</KButton>
       <span class="spacer" />
       <KButton :disabled="!dirty || saving" @click="reset">Undo changes</KButton>
       <KButton variant="primary" :loading="saving" :disabled="!dirty || errors.size > 0" @click="save">Save parts</KButton>
     </div>
+
+    <KDialog v-model:open="delOpen" title="Delete from YouTube">
+      Deletes the ticked videos from YouTube and takes them off this VOD; the other parts' descriptions are rewritten.
+      Each delete costs 50 units of the daily YouTube quota. This can't be undone; to replace uploads instead, use
+      Re-archive in the actions.
+      <ul class="pick">
+        <li v-for="u in saved" :key="u.id">
+          <KCheckbox :model-value="delPick.includes(u.id)" @update:model-value="pick(u.id, $event)">{{ label(u) }}</KCheckbox>
+        </li>
+      </ul>
+      <template #actions="{ close }">
+        <KButton @click="close">Keep them</KButton>
+        <KButton variant="danger-solid" :loading="deleting" :disabled="!delPick.length" @click="deleteUploads">
+          Delete {{ delPick.length || '' }}
+        </KButton>
+      </template>
+    </KDialog>
   </div>
 </template>
 
@@ -89,4 +138,5 @@ function setId(r: YoutubeDraft, value: string) {
 .err { flex-basis: 100%; margin: 0; color: var(--k-bad); font-size: 12px; }
 .foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .spacer { flex: 1; }
+.pick { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
 </style>
