@@ -4,7 +4,7 @@ import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from 
 import { gamesWithArt, relativeDay, useThumbnail } from '@vexoulz/vods-core/kit'
 import { computed, watchEffect } from 'vue'
 import { learnGameColors, gamePalette } from '@vexoulz/ui/utils'
-import { KButton, KChapterBar, KChip, KLink, KPlaceholder, KPosters } from '@/ui'
+import { KButton, KChapterBar, KChip, KLink, KNoPicture, KPosters } from '@/ui'
 import ThumbTags from './ThumbTags.vue'
 
 const props = defineProps<{ vod: Vod; progress?: Progress | null }>()
@@ -41,7 +41,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
         <div class="thumb">
           <KLink :to="to" class="thumb-link" :aria-label="title" tabindex="-1">
             <img v-if="thumb" :src="thumb" :srcset="thumbSet" alt="" decoding="async" @load="thumbLoaded" @error="thumbFailed" />
-            <KPlaceholder v-else label="no thumbnail" ratio="16 / 9" />
+            <KNoPicture v-else />
             <span class="dur k-mono">{{ toClock(vod.duration) }}</span>
             <span v-if="progress" class="watched" :style="{ width: `${watched * 100}%` }"></span>
             <KChapterBar v-if="vod.chapters.length" class="bar" :chapters="vod.chapters" :palette="palette" :height="6" />
@@ -94,7 +94,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .screen { flex: 3 1 560px; max-width: 100%; min-width: 0; display: flex; flex-direction: column; }
 .thumb { position: relative; }
 .thumb-link { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--k-thumb); color: inherit; }
-.thumb-link img, .thumb-link :deep(.k-ph) { display: block; width: 100%; height: 100%; object-fit: cover; }
+.thumb-link img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .dur { position: absolute; right: 10px; bottom: 16px; padding: 1px 7px; background: var(--k-bg); color: var(--k-ink); font-size: 12px; }
 .watched { position: absolute; left: 0; bottom: 6px; height: 3px; background: var(--k-accent); z-index: 1; }
 .bar { position: absolute; left: 0; right: 0; bottom: 0; }

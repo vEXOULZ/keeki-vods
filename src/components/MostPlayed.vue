@@ -6,7 +6,7 @@ import { boxArt, type GamePlayed } from '@vexoulz/vods-core'
 import { hasPlayTime, playTime, rankGames, relativeDay, type MostPlayedBy } from '@vexoulz/vods-core/kit'
 import { computed, ref, watch, watchEffect } from 'vue'
 import { learnGameColors } from '@vexoulz/ui/utils'
-import { KButton, KPlaceholder, KSegmented, KSkeleton } from '@/ui'
+import { KButton, KNoPoster, KSegmented, KSkeleton } from '@/ui'
 
 const props = withDefaults(defineProps<{ games: GamePlayed[] | null; error?: string | null; limit?: number }>(), { limit: 8 })
 const emit = defineEmits<{ game: [name: string]; retry: [] }>()
@@ -62,7 +62,7 @@ watchEffect(() => learnGameColors(top.value.map((g) => ({ name: g.name, image: a
         <button type="button" class="frame" :title="describe(g)" @click="emit('game', g.name)">
           <span class="art">
             <img v-if="art(g)" :src="art(g)" alt="" loading="lazy" decoding="async" />
-            <KPlaceholder v-else :label="g.name" ratio="3 / 4" />
+            <KNoPoster v-else :name="g.name" />
           </span>
           <span class="board">
             <span class="name">{{ g.name }}</span>
@@ -91,7 +91,7 @@ watchEffect(() => learnGameColors(top.value.map((g) => ({ name: g.name, image: a
   transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 .art { display: block; aspect-ratio: 3 / 4; overflow: hidden; border-radius: var(--k-radius); background: var(--k-thumb); }
-.art img, .art :deep(.k-ph) { display: block; width: 100%; height: 100%; object-fit: cover; }
+.art img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .board {
   display: flex; flex-direction: column; gap: 2px; padding: 5px 6px 6px; min-height: 44px;
   background: var(--k-board); color: var(--k-board-ink); border-radius: var(--k-radius);

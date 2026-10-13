@@ -7,7 +7,7 @@ import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from 
 import { cutNote, gamesWithArt, splitTags, tagStyle, useThumbnail } from '@vexoulz/vods-core/kit'
 import { computed, watchEffect } from 'vue'
 import { learnGameColors, gamePalette } from '@vexoulz/ui/utils'
-import { KChapterBar, KChip, KLink, KMenuItem, KPlaceholder, KPopover, KPosters } from '@/ui'
+import { KChapterBar, KChip, KLink, KMenuItem, KNoPicture, KPopover, KPosters } from '@/ui'
 import ThumbTags from './ThumbTags.vue'
 
 const props = defineProps<{ vod: Vod; progress?: Progress | null }>()
@@ -32,7 +32,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
     <div class="thumb">
       <KLink :to="to" class="thumb-link" :aria-label="title" tabindex="-1">
         <img v-if="thumb" :src="thumb" :srcset="thumbSet" alt="" loading="lazy" decoding="async" @load="thumbLoaded" @error="thumbFailed" />
-        <KPlaceholder v-else label="no thumbnail" ratio="16 / 9" />
+        <KNoPicture v-else />
         <span class="dur k-mono">{{ toClock(vod.duration) }}</span>
         <template v-if="progress">
           <span
@@ -93,7 +93,7 @@ const { src: thumb, srcset: thumbSet, onLoad: thumbLoaded, onError: thumbFailed 
 .card { display: flex; flex-direction: column; min-width: 0; background: var(--k-panel); border: 1px solid var(--k-line); }
 .thumb { position: relative; }
 .thumb-link { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--k-thumb); color: inherit; }
-.thumb-link img, .thumb-link :deep(.k-ph) { display: block; width: 100%; height: 100%; object-fit: cover; }
+.thumb-link img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .dur, .resume { position: absolute; padding: 1px 7px; background: var(--k-bg); font-size: 12px; }
 .dur { right: 8px; top: 8px; color: var(--k-ink); }
 .resume { left: 8px; top: 8px; color: var(--k-accent); }

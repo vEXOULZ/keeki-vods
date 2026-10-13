@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // The VOD the end card suggests: its thumbnail (a link to it), title, when it was streamed and how long it is, and
 // where you'd pick it up.
-import { KLink, KPlaceholder } from '@/ui'
+import { KLink, KNoPicture } from '@/ui'
 import { toClock, watchPath, type Vod } from '@vexoulz/vods-core'
 import { computed } from 'vue'
 import { useThumbnail } from '@vexoulz/vods-core/kit'
@@ -20,7 +20,7 @@ const { src, srcset, onLoad, onError } = useThumbnail(() => props.vod, 'hidpi')
     <KLink :to="to" class="thumb" :aria-label="title" tabindex="-1">
       <div class="k-ring img">
         <img v-if="src" :src="src" :srcset="srcset" alt="" decoding="async" @load="onLoad" @error="onError" />
-        <KPlaceholder v-else label="no thumbnail" ratio="16 / 9" />
+        <KNoPicture v-else />
       </div>
       <span class="dur k-mono">{{ toClock(vod.duration) }}</span>
       <span v-if="watched" class="watched" :style="{ width: `${watched * 100}%` }"></span>
