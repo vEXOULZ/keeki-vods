@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // /manage/vods?q=&hidden=&synthetic=: find a VOD to edit (GET /api/v2/vods, so hidden, merged and synthetic ones too;
-// a title or an id), add ones the monitor missed (?add=<id> opens that with the id in), and make a synthetic one (a
-// playthrough, say).
+// a title or an id), add ones the monitor missed (?add=<id> opens that with the id in, and "Find on Twitch" lists every
+// one Twitch still has), and make a synthetic one (a playthrough, say).
 import { KButton, KCallout, KChip, KDialog, KField, KInput, KSegmented, KSkeleton, KTable, type Option, type TableColumn } from '@/ui'
 import { useToast } from '@vexoulz/ui/utils'
 import { toClock } from '@vexoulz/vods-core'
@@ -10,6 +10,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { type VodListRow, admin, watchDebounced, site } from '@vexoulz/vods-core/kit'
 import { errorText } from '@vexoulz/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
+import TwitchImportDialog from '@/components/manage/TwitchImportDialog.vue'
 
 const PER_PAGE = 30
 const route = useRoute()
@@ -101,6 +102,7 @@ const rows = computed(() =>
 const addOpen = ref(false)
 const addId = ref('')
 const adding = ref<string | null>(null)
+const findOpen = ref(false)
 const addBad = computed(() => !/^\d+$/.test(addId.value.trim()))
 async function add(mode: 'archive' | 'create') {
   const id = addId.value.trim()
@@ -132,6 +134,7 @@ onMounted(() => {
   <ManageShell title="VODs">
     <template #actions>
       <KButton to="/manage/synthetic/new">New synthetic VOD</KButton>
+      <KButton @click="findOpen = true">Find on Twitch</KButton>
       <KButton variant="primary" @click="addId = ''; addOpen = true">Add from Twitch</KButton>
     </template>
 
@@ -179,6 +182,8 @@ onMounted(() => {
         <KButton variant="primary" :disabled="addBad" :loading="adding === 'archive'" @click="add('archive')">Archive it</KButton>
       </template>
     </KDialog>
+
+    <TwitchImportDialog v-model:open="findOpen" @added="refresh" />
   </ManageShell>
 </template>
 
