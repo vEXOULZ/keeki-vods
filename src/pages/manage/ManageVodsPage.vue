@@ -1,13 +1,14 @@
 <script setup lang="ts">
 // /manage/vods?q=&hidden=&synthetic=: find a VOD to edit (GET /api/v2/vods, so hidden, merged and synthetic ones too;
 // a title or an id), add ones the monitor missed (?add=<id> opens that with the id in, and "Find on Twitch" lists every
-// one Twitch still has), and make a synthetic one (a playthrough, say).
+// one Twitch still has), and make a synthetic one (a playthrough, say). Status: uploaded or details only, and each
+// queued, running or paused job.
 import { KButton, KCallout, KChip, KDialog, KField, KInput, KSegmented, KSkeleton, KTable, type Option, type TableColumn } from '@/ui'
 import { useToast } from '@vexoulz/ui/utils'
 import { toClock } from '@vexoulz/vods-core'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { type VodListRow, admin, watchDebounced, site } from '@vexoulz/vods-core/kit'
+import { type VodListRow, admin, jobStatus, uploadStatus, watchDebounced, site } from '@vexoulz/vods-core/kit'
 import { errorText } from '@vexoulz/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import TwitchImportDialog from '@/components/manage/TwitchImportDialog.vue'
@@ -80,6 +81,7 @@ const more = () => load(true)
 const columns: TableColumn[] = [
   { key: 'id', label: 'Id', mono: true },
   { key: 'title', label: 'Title' },
+  { key: 'status', label: 'Status' },
   { key: 'date', label: 'Streamed', muted: true },
   { key: 'length', label: 'Length', mono: true, align: 'right' },
 ]
@@ -93,6 +95,9 @@ const rows = computed(() =>
     merged: v.merged_into?.id ?? null,
     synthetic: v.synthetic ? (v.synthetic.supersedes ? 'merge or split' : 'synthetic') : null,
     tags: v.tags,
+    // A synthetic VOD plays parts of others: nothing of its own is uploaded.
+    upload: v.synthetic ? null : uploadStatus(v.uploaded),
+    jobs: v.active_jobs.map((j) => ({ id: j.id, to: `/manage/jobs/${j.id}`, ...jobStatus(j) })),
     // A synthetic VOD is edited as its segments.
     to: v.synthetic ? `/manage/synthetic/${encodeURIComponent(v.id)}` : `/manage/vods/${v.id}`,
   })),
@@ -162,6 +167,12 @@ onMounted(() => {
           <KChip v-if="row.hidden" tone="warn" title="Gone from the public site">hidden</KChip>
           <KChip v-if="row.merged" :title="`Merged into ${row.merged}`">merged</KChip>
         </template>
+        <template #cell-status="{ row }">
+          <span class="status">
+            <KChip v-if="row.upload" :tone="row.upload.tone" :title="row.upload.title">{{ row.upload.text }}</KChip>
+            <RouterLink v-for="j in row.jobs" :key="j.id" :to="j.to" class="job"><KChip :tone="j.tone" :title="j.title">{{ j.text }}</KChip></RouterLink>
+          </span>
+        </template>
       </KTable>
       <div class="more">
         <KButton v-if="next" :loading="loading" @click="more">More</KButton>
@@ -194,6 +205,8 @@ a { color: inherit; }
 .search > :first-child { flex: 1 1 260px; max-width: 480px; }
 .sk { display: flex; flex-direction: column; gap: 6px; }
 .title { margin-right: 6px; }
+.status { display: flex; flex-wrap: wrap; gap: 4px; }
+.job { text-decoration: none; }
 .more { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 16px; }
 .small { font-size: 11px; }
 .form { margin-top: 12px; color: var(--k-ink, inherit); }
