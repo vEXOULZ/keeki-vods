@@ -7,7 +7,25 @@ import { useRouter } from 'vue-router'
 import { JobsTable, usePoll } from '@vexoulz/platform-web/vue'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import TwitchViewerTile from '@/components/manage/TwitchViewerTile.vue'
-import { type StorageView, STUCK_QUERY, admin, diskLine, platform, quotaLine, site, stuckLine, stuckVods } from '@vexoulz/vods-core/kit'
+import {
+  type StorageView,
+  STUCK_QUERY,
+  YOUTUBE_ISSUES,
+  admin,
+  diskLine,
+  issueLink,
+  issueWhere,
+  percent,
+  platform,
+  quotaLine,
+  site,
+  sortedProblems,
+  stuckLine,
+  stuckVods,
+  youtubeCheckLine,
+  youtubeCheckMessage,
+} from '@vexoulz/vods-core/kit'
+import { toClock } from '@vexoulz/vods-core'
 import { errorText } from '@vexoulz/platform-web'
 
 const { data: health, error, loading, refresh } = usePoll((signal) => admin.health(signal), 15_000)
@@ -29,6 +47,23 @@ const COUNT_STATES = [
 // Uploads and storage: the VODs nothing is archiving, and the disk (the worker caches its walk, so once is enough).
 const { data: stuck } = usePoll((signal) => stuckVods(signal), 60_000)
 const storage = ref<StorageView | null>(null)
+// Whether the uploads are still on YouTube and whole: the worker's last check (an older worker has none: no tile).
+const { data: ytCheck, refresh: refreshYtCheck } = usePoll((signal) => admin.youtubeVideos(signal), 60_000)
+const problems = computed(() => sortedProblems(ytCheck.value?.last))
+const checking = ref(false)
+async function checkYoutube() {
+  checking.value = true
+  try {
+    const res = await admin.checkYoutubeVideos()
+    ytCheck.value = res
+    if (res.last) toast.show(youtubeCheckMessage(res.last), { duration: 4000 })
+  } catch (e) {
+    toast.show(`Couldn't check the uploads on YouTube: ${errorText(e)}`, { kind: 'error', duration: 6000 })
+    void refreshYtCheck()
+  } finally {
+    checking.value = false
+  }
+}
 onMounted(async () => {
   document.title = `Overview · Manage · ${site.name}`
   try {
@@ -78,6 +113,13 @@ const uploadTiles = computed(() => {
     const q = quotaLine(quota)
     const calls = Object.entries(quota.calls).map(([k, n]) => `${k} × ${n}`).join(', ')
     out.push({ name: 'YouTube quota', status: q.warn ? 'warn' : 'ok', text: q.text, sub: q.sub, title: calls || 'No calls today' })
+  }
+  if (ytCheck.value) {
+    const y = youtubeCheckLine(ytCheck.value)
+    const at = ytCheck.value.last?.checkedAt
+    const status: Dot = y.warn ? 'warn' : ytCheck.value.last ? 'ok' : 'off'
+    const to = problems.value.length ? '#youtube-uploads' : undefined
+    out.push({ name: 'On YouTube', status, text: y.text, sub: at ? `${y.sub} · checked ${timeAgo(at)}` : y.sub, to, toText: 'See them' })
   }
   if (stuck.value) {
     const s = stuckLine(stuck.value)
@@ -148,7 +190,8 @@ async function connectYoutube() {
           <div class="k-eyebrow">{{ t.name }}</div>
           <div class="tile-main"><KStatusDot :status="t.status" />{{ t.text }}</div>
           <div class="k-muted small">{{ t.sub }}</div>
-          <RouterLink v-if="t.to" class="tile-link small" :to="t.to">{{ t.toText }}</RouterLink>
+          <a v-if="t.to?.startsWith('#')" class="tile-link small" :href="t.to">{{ t.toText }}</a>
+          <RouterLink v-else-if="t.to" class="tile-link small" :to="t.to">{{ t.toText }}</RouterLink>
         </div>
         <TwitchViewerTile v-if="health.twitchViewer !== undefined" :status="health.twitchViewer" @changed="refresh" />
       </div>
@@ -166,6 +209,34 @@ async function connectYoutube() {
         <h2 class="k-eyebrow">Recent failures</h2>
         <JobsTable :jobs="failures?.items ?? []" empty="No failed jobs. 🎉" label="Recent failures" />
       </section>
+
+      <section v-if="ytCheck" id="youtube-uploads">
+        <div class="section-head">
+          <h2 class="k-eyebrow">YouTube uploads</h2>
+          <KButton size="sm" :loading="checking || ytCheck.running" title="Look up every upload on YouTube now (1 API unit per 50 videos)" @click="checkYoutube">Check now</KButton>
+        </div>
+        <p v-if="!ytCheck.last" class="k-muted small">Not checked yet.</p>
+        <p v-else-if="!problems.length" class="k-muted small">
+          Every upload of {{ ytCheck.last.vods }} VODs is on YouTube and whole (checked {{ timeAgo(ytCheck.last.checkedAt) }}).
+        </p>
+        <ul v-else class="problems">
+          <li v-for="p in problems" :key="p.id" class="problem k-panel">
+            <div class="problem-head">
+              <RouterLink :to="`/manage/vods/${p.id}`" class="problem-title">{{ p.title || p.id }}</RouterLink>
+              <span class="k-muted small" :title="p.planned < p.seconds ? 'Restricted games are left out of the uploads on purpose' : undefined">
+                {{ percent(p.share) }} of {{ toClock(p.seconds) }} on YouTube<template v-if="p.planned < p.seconds - 60"> · {{ toClock(p.planned) }} planned</template>
+              </span>
+            </div>
+            <ul class="issues">
+              <li v-for="(i, n) in p.issues" :key="n" class="issue">
+                <KChip :tone="i.severity === 'bad' ? 'bad' : 'warn'">{{ YOUTUBE_ISSUES[i.kind] ?? i.kind }}</KChip>
+                <span class="small">{{ issueWhere(i) }}: {{ i.detail }}</span>
+                <a v-if="issueLink(i)" class="tile-link small" :href="issueLink(i)" target="_blank" rel="noopener">Open</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
     </template>
   </ManageShell>
 </template>
@@ -181,4 +252,13 @@ section { margin-bottom: 28px; }
 h2 { margin: 0 0 10px; }
 .counts { display: flex; flex-wrap: wrap; gap: 8px; }
 .count { text-decoration: none; }
+.section-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.section-head h2 { margin: 0; }
+.problems, .issues { list-style: none; margin: 0; padding: 0; }
+.problems { display: flex; flex-direction: column; gap: 8px; }
+.problem { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.problem-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+.problem-title { color: var(--k-ink); font-weight: 600; overflow-wrap: anywhere; }
+.issues { display: flex; flex-direction: column; gap: 6px; }
+.issue { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
 </style>
