@@ -4,7 +4,7 @@
 // so nothing downloads until it's resumed on /manage/jobs.
 import { KButton, KCallout, KCheckbox, KChip, KDialog, KSkeleton } from '@/ui'
 import { useToast } from '@vexoulz/ui/utils'
-import { type TwitchVideo, admin } from '@vexoulz/vods-core/kit'
+import { type TwitchVideo, admin, jobStatus, uploadStatus } from '@vexoulz/vods-core/kit'
 import { errorText } from '@vexoulz/platform-web'
 import { computed, ref, watch } from 'vue'
 
@@ -38,12 +38,7 @@ watch(open, (o) => o && load(), { immediate: true })
 const chosen = computed(() => videos.value.filter((v) => !taken(v) && picked.value[v.id]).map((v) => v.id))
 const missing = computed(() => videos.value.filter((v) => !v.inArchive).length)
 
-function status(v: TwitchVideo): { tone: 'default' | 'ok' | 'warn' | 'accent'; text: string; title: string } {
-  if (v.archiveJob) return { tone: 'accent', text: `job ${v.archiveJob.state}`, title: `Archive job ${v.archiveJob.id}, at ${v.archiveJob.step ?? 'its end'}` }
-  if (v.uploaded) return { tone: 'ok', text: 'archived', title: 'Already on YouTube' }
-  if (v.inArchive) return { tone: 'warn', text: 'details only', title: 'The archive has its details, but nothing uploaded' }
-  return { tone: 'default', text: 'not in the archive', title: 'Only on Twitch' }
-}
+const status = (v: TwitchVideo) => (v.archiveJob ? jobStatus({ ...v.archiveJob, kind: 'archive' }) : uploadStatus(v.uploaded, v.inArchive))
 
 async function addPicked() {
   adding.value = true
