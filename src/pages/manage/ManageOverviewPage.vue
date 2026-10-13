@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router'
 import { JobsTable, usePoll } from '@vexoulz/platform-web/vue'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import TwitchViewerTile from '@/components/manage/TwitchViewerTile.vue'
-import { platform, admin, site } from '@vexoulz/vods-core/kit'
+import { type StorageView, STUCK_QUERY, admin, diskLine, platform, quotaLine, site, stuckLine, stuckVods } from '@vexoulz/vods-core/kit'
 import { errorText } from '@vexoulz/platform-web'
 
 const { data: health, error, loading, refresh } = usePoll((signal) => admin.health(signal), 15_000)
@@ -26,7 +26,17 @@ const COUNT_STATES = [
   { state: 'cancelled', tone: 'default' },
 ] as const
 
-onMounted(() => (document.title = `Overview · Manage · ${site.name}`))
+// Uploads and storage: the VODs nothing is archiving, and the disk (the worker caches its walk, so once is enough).
+const { data: stuck } = usePoll((signal) => stuckVods(signal), 60_000)
+const storage = ref<StorageView | null>(null)
+onMounted(async () => {
+  document.title = `Overview · Manage · ${site.name}`
+  try {
+    storage.value = await admin.storage()
+  } catch {
+    storage.value = null // no tile; /manage/storage has the error
+  }
+})
 
 type Dot = 'live' | 'ok' | 'warn' | 'off'
 const tiles = computed(() => {
@@ -57,6 +67,28 @@ const tiles = computed(() => {
       sub: h.live?.live && h.live.startedAt ? `started ${timeAgo(h.live.startedAt)}` : '',
     },
   ]
+})
+
+/** The YouTube quota spent today, the stuck VODs and the disk, each with where to look further. */
+const uploadTiles = computed(() => {
+  const quota = health.value?.youtube?.quota
+  const disk = storage.value?.disk
+  const out: { name: string; status: Dot; text: string; sub: string; to?: string; toText?: string; title?: string }[] = []
+  if (quota) {
+    const q = quotaLine(quota)
+    const calls = Object.entries(quota.calls).map(([k, n]) => `${k} × ${n}`).join(', ')
+    out.push({ name: 'YouTube quota', status: q.warn ? 'warn' : 'ok', text: q.text, sub: q.sub, title: calls || 'No calls today' })
+  }
+  if (stuck.value) {
+    const s = stuckLine(stuck.value)
+    const to = s.warn ? `/manage/vods?upload=${STUCK_QUERY.upload}` : undefined
+    out.push({ name: 'Stuck VODs', status: s.warn ? 'warn' : 'ok', text: s.text, sub: s.sub, to, toText: 'List them' })
+  }
+  if (disk) {
+    const d = diskLine(disk)
+    out.push({ name: 'Disk', status: d.warn ? 'warn' : 'ok', text: d.text, sub: d.sub, to: '/manage/storage', toText: 'Storage' })
+  }
+  return out
 })
 
 const router = useRouter()
@@ -111,6 +143,12 @@ async function connectYoutube() {
           <div v-if="t.sub" class="k-muted small">{{ t.sub }}</div>
           <KButton v-if="t.action === 'connect'" @click="connectYoutube">Connect YouTube</KButton>
           <KButton v-else-if="t.action === 'switch'" size="sm" title="Connect a different Google account or channel" @click="connectYoutube">Switch account</KButton>
+        </div>
+        <div v-for="t in uploadTiles" :key="t.name" class="tile k-panel" :title="t.title">
+          <div class="k-eyebrow">{{ t.name }}</div>
+          <div class="tile-main"><KStatusDot :status="t.status" />{{ t.text }}</div>
+          <div class="k-muted small">{{ t.sub }}</div>
+          <RouterLink v-if="t.to" class="tile-link small" :to="t.to">{{ t.toText }}</RouterLink>
         </div>
         <TwitchViewerTile v-if="health.twitchViewer !== undefined" :status="health.twitchViewer" @changed="refresh" />
       </div>
