@@ -19,6 +19,9 @@
   /* A strip of film: its base, and the sprocket holes punched along its edges. */
   --k-film: #151311;
   --k-film-hole: #3b3631;
+  /* Film leader, where a VOD has no thumbnail (KNoPicture). */
+  --k-leader: #2a2622;
+  --k-leader-line: #4a433c;
   --k-accent-ink: #080707;
   /* Raised surfaces (menus, hovered rows) and the states. */
   --k-surface: #181614;
@@ -282,6 +285,41 @@ button.k-chip:hover { border-color: var(--k-muted); }
   color: var(--k-muted); font-size: 12px; text-align: center;
 }
 .k-ph.is-round { border-radius: 50%; }
+/* No thumbnail (KNoPicture): a frame of film leader, lit in the middle and dark at the edges. */
+.k-nopic {
+  display: block; width: 100%; height: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+  background: radial-gradient(ellipse at center, var(--k-leader) 0%, var(--k-thumb) 75%);
+}
+/* No box art (KNoPoster): a blank poster in its case, with the name as its title (initials when it's an icon). */
+.k-noposter {
+  container-type: inline-size; position: relative; display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%; overflow: hidden;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--c, var(--k-leader)) 22%, var(--k-leader)) 0%, var(--k-thumb) 85%);
+}
+.k-noposter > .case {
+  position: absolute; inset: 7%; border: 1px solid var(--k-leader-line);
+  outline: 1px solid var(--k-leader-line); outline-offset: 3px; pointer-events: none;
+}
+.k-noposter > .name, .k-noposter > .ini {
+  font-family: var(--k-display); font-weight: 900; text-transform: uppercase; line-height: 0.95; text-align: center;
+  color: var(--k-board-ink); overflow-wrap: anywhere;
+}
+.k-noposter .name {
+  padding: 0 16%; font-size: clamp(11px, 15cqw, 22px); letter-spacing: 0.04em; text-wrap: balance;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+.k-noposter .ini { display: none; font-size: max(7px, 36cqw); letter-spacing: 0.02em; color: var(--k-muted); }
+@container (max-width: 63px) {
+  .k-noposter .name, .k-noposter .case { display: none; }
+  .k-noposter .ini { display: block; }
+}
+.k-nopic > svg { display: block; width: 100%; height: 100%; }
+.k-nopic .lines { fill: none; stroke: var(--k-leader-line); stroke-width: 0.75; }
+.k-nopic .slate { fill: var(--k-board); stroke: var(--k-leader-line); stroke-width: 0.75; }
+.k-nopic .word {
+  fill: var(--k-muted); font-family: var(--k-display); font-weight: 900; font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase; text-anchor: middle; dominant-baseline: central;
+}
 .k-ph > span { padding: 4px; overflow: hidden; text-overflow: ellipsis; }
 
 @media (prefers-reduced-motion: reduce) {

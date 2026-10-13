@@ -2,8 +2,8 @@
 // Box-art posters (3:4) for a VOD's games, each with a strip of its game colour (the same as the chapter bar's).
 // bill: hung side by side in their frames, like the posters outside a cinema · row: bare, for inline icons.
 import { computed } from 'vue'
-import { gamePalette, initials } from '@vexoulz/ui/utils'
-import KPlaceholder from './KPlaceholder.vue'
+import { gamePalette } from '@vexoulz/ui/utils'
+import KNoPoster from './KNoPoster.vue'
 
 export type PosterGame = string | { name: string; image?: string; color?: string }
 
@@ -24,7 +24,7 @@ const extra = computed(() => all.value.length - shown.value.length)
   <span class="posters" :class="`is-${mode}`" :style="{ '--pw': `${size}px` }" :title="all.map((g) => g.name).join(' · ')">
     <span v-for="g in shown" :key="g.name" class="poster" :style="{ '--c': colorOf(g) }">
       <img v-if="g.image" :src="g.image" :alt="g.name" loading="lazy" />
-      <KPlaceholder v-else :label="initials(g.name)" ratio="3 / 4" />
+      <KNoPoster v-else :name="g.name" />
     </span>
     <span v-if="extra > 0" class="more k-mono">+{{ extra }}</span>
   </span>
@@ -36,7 +36,7 @@ const extra = computed(() => all.value.length - shown.value.length)
   position: relative; display: block; flex: none; width: var(--pw); aspect-ratio: 3 / 4; overflow: hidden;
   background: var(--c);
 }
-.poster img, .poster :deep(.k-ph) { display: block; width: 100%; height: 100%; object-fit: cover; font-size: 9px; }
+.poster img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .poster::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--c); }
 .is-row { gap: 4px; }
 
