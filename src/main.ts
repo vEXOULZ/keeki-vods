@@ -18,8 +18,10 @@ setupVodsSite({ config: vodsConfig, site, adminBase: import.meta.env.VITE_ADMIN_
 
 // The vexoul.net account (vexoulz-auth). installVodsSession wires it and the Manage dashboard session into the router
 // (the Manage guard, an expired session, the tab title, the quiet admin check) and keeps watch progress with it.
+// The quiet check asks vexoulz-auth for a code for this archive's worker, whose client there is `keeki-admin`
+// (its ARCHIVE_ADMIN_AUTH_CLIENT_ID); a code for vods' `vods-admin` is refused, and Manage never shows.
 const account = createAccount()
-const { progress } = installVodsSession(router, account)
+const { progress } = installVodsSession(router, account, { adminClientId: 'keeki-admin' })
 
 createApp(App)
   .use(router)
