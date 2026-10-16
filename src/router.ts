@@ -20,6 +20,7 @@ export const router = createRouter({
       vod: () => import('./pages/manage/ManageVodPage.vue'),
       synthetic: () => import('./pages/manage/ManageSyntheticPage.vue'),
       storage: () => import('./pages/manage/ManageStoragePage.vue'),
+      youtube: () => import('./pages/manage/ManageYoutubePage.vue'),
       settings: () => import('./pages/manage/ManageSettingsPage.vue'),
       tags: () => import('./pages/manage/ManageTagsPage.vue'),
       audit: () => import('./pages/manage/ManageAuditPage.vue'),
