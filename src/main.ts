@@ -4,6 +4,7 @@ import './platform.css'
 
 import { installVodsSession, setupVodsSite } from '@vexoulz/vods-core/kit'
 import { createVods } from '@vexoulz/vods-core/vue'
+import { twitchUserLookup } from '@vexoulz/platform-web/chat'
 import { createPlatformUi } from '@vexoulz/platform-web/vue'
 import { createAccount } from '@vexoulz/ui/account'
 import { useToast } from '@vexoulz/ui/utils'
@@ -12,7 +13,7 @@ import { RouterLink } from 'vue-router'
 
 import App from './App.vue'
 import { router } from './router'
-import { site, vodsConfig } from './vods.config'
+import { site, USER_LOOKUP, vodsConfig } from './vods.config'
 
 setupVodsSite({ config: vodsConfig, site, adminBase: import.meta.env.VITE_ADMIN_API || '/backend-admin' })
 
@@ -35,6 +36,7 @@ createApp(App)
       subjectHref: () => null,
       notify: (msg, kind) => useToast().show(msg, { kind, duration: kind === 'error' ? 5000 : 3000 }),
       appName: 'worker',
+      userLookup: USER_LOOKUP ? twitchUserLookup(USER_LOOKUP) : undefined,
     }),
   )
   .mount('#app')

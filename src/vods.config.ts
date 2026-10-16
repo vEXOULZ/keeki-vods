@@ -15,3 +15,9 @@ export const site: VodsSiteOptions['site'] = {
   name: 'Keeki Archives',
   twitchUrl: 'https://twitch.tv/keeki_dechu',
 }
+
+/**
+ * Where chat's user cards look a chatter up on Twitch: doomtp-bot's `/api/v2/twitch/users` (its USER_LOOKUP_ORIGINS
+ * must list this site). VITE_USER_LOOKUP overrides it; empty turns the lookup off, and a card shows what chat knows.
+ */
+export const USER_LOOKUP = import.meta.env.VITE_USER_LOOKUP ?? 'https://dtp.vexoul.net/api/v2/twitch/users'
