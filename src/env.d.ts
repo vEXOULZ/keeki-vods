@@ -10,6 +10,8 @@ interface ImportMetaEnv {
    * off: progress stays in the browser.
    */
   readonly VITE_AUTH_BASE?: string
+  /** doomtp-bot's Twitch user lookup, for chat's user cards (default its public one). Empty turns it off. */
+  readonly VITE_USER_LOOKUP?: string
   /** Dev only (vite.config.ts): where `/backend` is forwarded. */
   readonly VITE_DEV_API_TARGET?: string
   /** Dev only (vite.config.ts): where `/backend-admin` is forwarded; unset uses the mock (@vexoulz/vods-core/dev). */

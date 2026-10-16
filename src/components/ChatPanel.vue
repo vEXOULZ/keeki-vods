@@ -4,8 +4,8 @@
 // the viewer's own. The live recording (doomtp-bot's) also has notices (subs, raids, redemptions), rewards, bits and
 // removed messages; the VOD recording (Twitch's replay) has none of those.
 import { KButton, KChip, KPopover, KSegmented, KSlider, KStepper, KSwitch } from '@/ui'
-import { toClock, type ChatMessage, type ChatSource, type ChatSources, type EmoteToken } from '@vexoulz/vods-core'
-import { ChatLine } from '@vexoulz/platform-web/vue'
+import { toClock, type ChatLine as Line, type ChatMessage, type ChatSource, type ChatSources, type EmoteToken } from '@vexoulz/vods-core'
+import { ChatLine, UserCard } from '@vexoulz/platform-web/vue'
 import { computed, nextTick, ref, shallowRef, watch } from 'vue'
 import EmoteMenu from '@/components/EmoteMenu.vue'
 import { DELAY_LIMIT, WIDTH_DEFAULT, WIDTH_MAX, WIDTH_MIN, type ChatSettings } from '@vexoulz/vods-core/kit'
@@ -39,11 +39,18 @@ function toBottom() {
 // (new lines would scroll its emote away), and catches up once it closes.
 const menu = shallowRef<{ token: EmoteToken; anchor: HTMLElement } | null>(null)
 function toggleMenu(token: EmoteToken, anchor: HTMLElement) {
+  card.value = null
   menu.value = menu.value?.anchor === anchor ? null : { token, anchor }
 }
+// A chatter's name opens their user card, the same way.
+const card = shallowRef<{ line: Line; anchor: HTMLElement } | null>(null)
+function toggleCard(line: Line, anchor: HTMLElement) {
+  menu.value = null
+  card.value = card.value?.anchor === anchor ? null : { line, anchor }
+}
 
-watch([() => props.messages, menu], async () => {
-  if (!following.value || menu.value) return
+watch([() => props.messages, menu, card], async () => {
+  if (!following.value || menu.value || card.value) return
   await nextTick()
   if (lines.value) lines.value.scrollTop = lines.value.scrollHeight
 })
@@ -166,12 +173,16 @@ const sizeOpts = [
         :names="names"
         :emotes="settings.emotes"
         :open-token="menu?.token ?? null"
+        user-cards
+        :user-open="card?.line === m"
         @emote-menu="toggleMenu"
+        @user="toggleCard"
       >
         <template v-if="settings.timestamps" #before><span class="ts k-mono">{{ toClock(m.at) }}</span></template>
       </ChatLine>
     </div>
     <EmoteMenu v-if="menu" :token="menu.token" :anchor="menu.anchor" :enabled="settings.emotes" @close="menu = null" />
+    <UserCard v-if="card" :line="card.line" :anchor="card.anchor" :colors="settings.colors" @close="card = null" />
     <KButton v-if="!following" class="jump" size="sm" variant="primary" @click="toBottom">↓ Latest messages</KButton>
   </aside>
 </template>
