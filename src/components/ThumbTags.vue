@@ -2,9 +2,9 @@
 // The drawn tags hanging off a VOD's thumbnail (lib/vodTags: which tags are drawn, their color and shape). The parent
 // places it outside the thumbnail's link. Each names itself on hover, and is a link to the list narrowed to it (in
 // the VOD's own tab) when the list can be (lib/listQuery, tagLink); the others let clicks through to the thumbnail.
-import { tagLink, splitTags, tagStyle } from '@vexoulz/vods-core/kit'
+import { tagLink, splitTags, tagStyle } from '@vex/vods-core/kit'
 import { KLink, KTooltip } from '@/ui'
-import type { Vod } from '@vexoulz/vods-core'
+import type { Vod } from '@vex/vods-core'
 import { computed } from 'vue'
 import TagMark from '@/components/TagMark.vue'
 

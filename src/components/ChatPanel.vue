@@ -4,11 +4,11 @@
 // the viewer's own. The live recording (doomtp-bot's) also has notices (subs, raids, redemptions), rewards, bits and
 // removed messages; the VOD recording (Twitch's replay) has none of those.
 import { KButton, KChip, KPopover, KSegmented, KSlider, KStepper, KSwitch } from '@/ui'
-import { toClock, type ChatLine as Line, type ChatMessage, type ChatSource, type ChatSources, type EmoteToken } from '@vexoulz/vods-core'
-import { ChatLine, UserCard } from '@vexoulz/platform-web/vue'
+import { toClock, type ChatLine as Line, type ChatMessage, type ChatSource, type ChatSources, type EmoteToken } from '@vex/vods-core'
+import { ChatLine, UserCard } from '@vex/platform-web/vue'
 import { computed, nextTick, ref, shallowRef, watch } from 'vue'
 import EmoteMenu from '@/components/EmoteMenu.vue'
-import { DELAY_LIMIT, WIDTH_DEFAULT, WIDTH_MAX, WIDTH_MIN, type ChatSettings } from '@vexoulz/vods-core/kit'
+import { DELAY_LIMIT, WIDTH_DEFAULT, WIDTH_MAX, WIDTH_MIN, type ChatSettings } from '@vex/vods-core/kit'
 
 const props = defineProps<{
   messages: ChatMessage[]

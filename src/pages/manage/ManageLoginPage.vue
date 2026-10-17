@@ -4,8 +4,8 @@
 import { KButton, KCallout, KField, KInput } from '@/ui'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ensure, login, session, SIGNIN_ERRORS, twitchLoginUrl, site } from '@vexoulz/vods-core/kit'
-import { ProblemError } from '@vexoulz/platform-web'
+import { ensure, login, session, SIGNIN_ERRORS, twitchLoginUrl, site } from '@vex/vods-core/kit'
+import { ProblemError } from '@vex/platform-web'
 import SiteShell from '@/components/SiteShell.vue'
 
 const route = useRoute()

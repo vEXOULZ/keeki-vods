@@ -1,12 +1,12 @@
 <script setup lang="ts">
-// The header's account control: the vexoul.net sign-in (@vexoulz/ui/account). Signed out, "Sign in" (greyed out when
+// The header's account control: the vexoul.net sign-in (@vex/ui/account). Signed out, "Sign in" (greyed out when
 // sign-in is off); signed in, the Twitch name opens a menu with Manage (archive admins) and signing out. A dashboard
 // session signed in with the admin password (no account) shows as "admin". Signing out ends both.
-import { logout, session } from '@vexoulz/vods-core/kit'
+import { logout, session } from '@vex/vods-core/kit'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAccount } from '@vexoulz/ui/account'
-import { initials } from '@vexoulz/ui/utils'
+import { useAccount } from '@vex/ui/account'
+import { initials } from '@vex/ui/utils'
 import { KButton, KMenuItem, KPopover } from '@/ui'
 
 const account = useAccount()

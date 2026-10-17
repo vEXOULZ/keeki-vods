@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // The YouTube check's problems, one panel per VOD with each upload's issues: the overview's recent ones and /manage/youtube's all.
 import { KChip } from '@/ui'
-import { type YoutubeVodReport, YOUTUBE_ISSUES, issueLink, issueWhere, percent } from '@vexoulz/vods-core/kit'
-import { toClock } from '@vexoulz/vods-core'
+import { type YoutubeVodReport, YOUTUBE_ISSUES, issueLink, issueWhere, percent } from '@vex/vods-core/kit'
+import { toClock } from '@vex/vods-core'
 
 defineProps<{ problems: YoutubeVodReport[] }>()
 </script>

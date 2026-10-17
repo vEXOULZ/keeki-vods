@@ -3,10 +3,10 @@
 // top shows the result against the VOD's length. "Lock" keeps the automatic chapters step from overwriting the edit.
 // The logic is vods-core's useChaptersDraft (kit); this draws it, with keeki's game colours.
 import { KButton, KCallout, KCheckbox, KChip, KSwitch } from '@/ui'
-import { gamePalette, useToast } from '@vexoulz/ui/utils'
-import { toClock } from '@vexoulz/vods-core'
+import { gamePalette, useToast } from '@vex/ui/utils'
+import { toClock } from '@vex/vods-core'
 import { computed } from 'vue'
-import { type AdminVod, useChaptersDraft } from '@vexoulz/vods-core/kit'
+import { type AdminVod, useChaptersDraft } from '@vex/vods-core/kit'
 import GameSearch from '@/components/manage/GameSearch.vue'
 import TimeInput from '@/components/manage/TimeInput.vue'
 

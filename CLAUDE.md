@@ -4,10 +4,10 @@
 
 keekivods.vexoul.net: keeki_dechu's VOD archive, "Keeki Archives". It has its own UI and is not part of the
 vexoul.net network: it never uses vods-core's `app` entry, and links to vexoul.net only as its maker (the footer).
-keeki may import @vexoulz/ui's headless logic (`/utils`, `/account`), never its components or styles;
+keeki may import @vex/ui's headless logic (`/utils`, `/account`), never its components or styles;
 `tests/headless.test.ts` fails if it does. Published by `publish.yml` to the `deploy` branch.
 
-- What's shared with vods.vexoul.net is the logic, from `@vexoulz/vods-core`: the root (types, helpers), `/vue`
+- What's shared with vods.vexoul.net is the logic, from `@vex/vods-core`: the root (types, helpers), `/vue`
   (`createVods`, `useVods`, `useWatch`, `useChat`) and `/kit` (list query, tags, games, composables, the admin
   client). A fix to that logic goes to vods-core, then a release, then a bump here. Never patch around it.
 - Everything you see is this repo's: `src/theme.css` (the tokens and `.k-*` classes; dark only), `src/ui/` (the

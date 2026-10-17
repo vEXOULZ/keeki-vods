@@ -2,11 +2,11 @@
 // /manage/audit?action=&target=&actor=&actor_kind=&outcome=: the worker's audit log (GET /api/v2/audit), newest
 // first: every change made through the admin API (dashboard or API key), what the worker's own jobs did, and refused
 // or failed requests. Filters live in the URL.
-import { AuditBrowser, type AuditFilters } from '@vexoulz/platform-web/vue'
+import { AuditBrowser, type AuditFilters } from '@vex/platform-web/vue'
 import { computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ManageShell from '@/components/manage/ManageShell.vue'
-import { platform, site } from '@vexoulz/vods-core/kit'
+import { platform, site } from '@vex/vods-core/kit'
 
 const KEYS = ['action', 'target', 'actor', 'actor_kind', 'outcome'] as const
 const route = useRoute()

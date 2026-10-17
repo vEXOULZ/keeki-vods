@@ -1,6 +1,6 @@
 // The site's pages, at the same URLs as the other vods sites (vods-core's vodsRoutes). The Manage pages (all but its
 // login) need a dashboard session; installVodsSession in main.ts guards them.
-import { vodsRoutes } from '@vexoulz/vods-core/kit'
+import { vodsRoutes } from '@vex/vods-core/kit'
 import { createRouter, createWebHistory } from 'vue-router'
 
 export const router = createRouter({

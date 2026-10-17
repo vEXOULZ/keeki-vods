@@ -2,11 +2,11 @@
 // /games/:id?part=N: a VOD's per-game uploads (one YouTube video per game). Each game plays on its own timeline that
 // keeps VOD time, so the bar, chapters and chat line up with the full VOD. `?part=` is the 1-based game (old URLs).
 // On a synthetic VOD the games keep its time too, and chat follows the source VOD each moment comes from.
-import { gameName, gameTimeline, site } from '@vexoulz/vods-core/kit'
+import { gameName, gameTimeline, site } from '@vex/vods-core/kit'
 import { KButton, KCallout, KChip, KEmptyState, KMenuItem, KPopover, KSkeleton } from '@/ui'
-import { clamp } from '@vexoulz/ui/utils'
-import { parseTimestamp, toClock, toHMS, type GameUpload } from '@vexoulz/vods-core'
-import { useVodsContext, useWatch } from '@vexoulz/vods-core/vue'
+import { clamp } from '@vex/ui/utils'
+import { parseTimestamp, toClock, toHMS, type GameUpload } from '@vex/vods-core'
+import { useVodsContext, useWatch } from '@vex/vods-core/vue'
 import { computed, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import WatchView from '@/components/WatchView.vue'

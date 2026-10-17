@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // The Manage bar, at the top of every Manage page (ManageShell): the archive's admin sections and who is signed in.
 // On a narrow screen it wraps; nothing is dropped.
-import { session } from '@vexoulz/vods-core/kit'
+import { session } from '@vex/vods-core/kit'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 

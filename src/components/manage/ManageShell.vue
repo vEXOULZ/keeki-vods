@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Frame for every Manage page: the site's shell, the Manage bar, and the page's heading with its actions.
-import { session } from '@vexoulz/vods-core/kit'
+import { session } from '@vex/vods-core/kit'
 import SiteShell from '@/components/SiteShell.vue'
 import ManageBar from './ManageBar.vue'
 

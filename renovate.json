@@ -3,6 +3,6 @@
   "extends": ["github>vexouLuna/conventions//renovate/default"],
   "packageRules": [
     { "matchUpdateTypes": ["minor", "patch"], "matchDepTypes": ["devDependencies"], "groupName": "dev dependencies (non-major)" },
-    { "matchPackageNames": ["@vexoulz/vods-core", "@vexoulz/platform-web", "vEXOULZ/vods-core", "vEXOULZ/vex-platform-web"], "groupName": "vexoulz packages", "description": "Tagged git releases of the shared vods logic and the platform components." }
+    { "matchPackageNames": ["@vex/vods-core", "@vex/platform-web", "vexouLuna/vods-core", "vexouLuna/vex-platform-web"], "groupName": "vex packages", "description": "Tagged git releases of the shared vods logic and the platform components." }
   ]
 }

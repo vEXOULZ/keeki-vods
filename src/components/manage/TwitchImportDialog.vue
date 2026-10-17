@@ -3,9 +3,9 @@
 // each. The ones it doesn't have are ticked; adding them queues an archive job for each, paused before its first step,
 // so nothing downloads until it's resumed on /manage/jobs.
 import { KButton, KCallout, KCheckbox, KChip, KDialog, KSkeleton } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
-import { type TwitchVideo, admin, jobStatus, uploadStatus } from '@vexoulz/vods-core/kit'
-import { errorText } from '@vexoulz/platform-web'
+import { useToast } from '@vex/ui/utils'
+import { type TwitchVideo, admin, jobStatus, uploadStatus } from '@vex/vods-core/kit'
+import { errorText } from '@vex/platform-web'
 import { computed, ref, watch } from 'vue'
 
 const open = defineModel<boolean>('open', { default: false })

@@ -2,8 +2,8 @@
 // One bar for the whole VOD (all parts): chapters in their game colour, restricted chapters hatched, parts that
 // can't play hatched red, part labels above. Click, drag or use the arrow keys to seek (VOD seconds). The logic is
 // vods-core's useTimeline (kit); this draws it.
-import { unplayable, useTimeline } from '@vexoulz/vods-core/kit'
-import { toClock, type PartStatus, type PlayableTimeline, type Span } from '@vexoulz/vods-core'
+import { unplayable, useTimeline } from '@vex/vods-core/kit'
+import { toClock, type PartStatus, type PlayableTimeline, type Span } from '@vex/vods-core'
 import { computed } from 'vue'
 import SeekMarker, { type SeekMode } from '@/components/SeekMarker.vue'
 

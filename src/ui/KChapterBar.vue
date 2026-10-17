@@ -2,7 +2,7 @@
 // A strip of game colours, one segment per chapter, sized by length; cut chapters hatched. Sits along the bottom of
 // a thumbnail.
 import { computed } from 'vue'
-import { gamePalette } from '@vexoulz/ui/utils'
+import { gamePalette } from '@vex/ui/utils'
 
 const props = withDefaults(
   defineProps<{ chapters: { name: string; start: number; end: number; restricted?: boolean }[]; height?: number; palette?: Map<string, string> }>(),

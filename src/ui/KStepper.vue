@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // A number with − / + buttons. Shift-click steps ×10 (chat delay: 0.1s, shift for 1s).
-import { clamp, decimalsOf, stepValue } from '@vexoulz/ui/utils'
+import { clamp, decimalsOf, stepValue } from '@vex/ui/utils'
 
 const props = withDefaults(defineProps<{ step?: number; min?: number; max?: number; unit?: string; label?: string; id?: string }>(), {
   step: 1,

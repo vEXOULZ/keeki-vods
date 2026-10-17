@@ -2,9 +2,9 @@
 // The VOD the end card suggests: its thumbnail (a link to it), title, when it was streamed and how long it is, and
 // where you'd pick it up.
 import { KLink, KNoPicture } from '@/ui'
-import { toClock, watchPath, type Vod } from '@vexoulz/vods-core'
+import { toClock, watchPath, type Vod } from '@vex/vods-core'
 import { computed } from 'vue'
-import { useThumbnail } from '@vexoulz/vods-core/kit'
+import { useThumbnail } from '@vex/vods-core/kit'
 
 const props = defineProps<{ vod: Vod; t: number | null }>()
 

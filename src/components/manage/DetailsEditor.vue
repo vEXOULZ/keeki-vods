@@ -2,10 +2,10 @@
 // A VOD's details: title, thumbnail (a URL, or the default), duration and when it was streamed. Only what changed is
 // sent. A VOD merged into another keeps its details as they were.
 import { KButton, KCallout, KField, KInput } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { computed, ref, watch } from 'vue'
-import { type AdminVod, detailsDraft, detailsErrors, detailsPatch, type DetailsDraft, admin } from '@vexoulz/vods-core/kit'
-import { errorText } from '@vexoulz/platform-web'
+import { type AdminVod, detailsDraft, detailsErrors, detailsPatch, type DetailsDraft, admin } from '@vex/vods-core/kit'
+import { errorText } from '@vex/platform-web'
 import TimeInput from '@/components/manage/TimeInput.vue'
 
 const props = defineProps<{ vod: AdminVod }>()

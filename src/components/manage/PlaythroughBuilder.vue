@@ -2,10 +2,10 @@
 // Builds a playthrough: pick a game, then the windows of real VODs that played it
 // (GET /api/v2/playthrough-candidates, oldest first), and add them as segments, in that order.
 import { KButton, KCallout, KCheckbox, KSkeleton } from '@/ui'
-import { toClock } from '@vexoulz/vods-core'
+import { toClock } from '@vex/vods-core'
 import { computed, ref, watch } from 'vue'
-import { type PlaythroughWindow, type GameValue, admin } from '@vexoulz/vods-core/kit'
-import { errorText } from '@vexoulz/platform-web'
+import { type PlaythroughWindow, type GameValue, admin } from '@vex/vods-core/kit'
+import { errorText } from '@vex/platform-web'
 import GameSearch from '@/components/manage/GameSearch.vue'
 
 const emit = defineEmits<{ add: [windows: PlaythroughWindow[], game: string | null] }>()

@@ -2,10 +2,10 @@
 // "Series now running": the newest playthroughs, each with what it is beside its thumbnail (the game, how many
 // streams it took and when, its length, ongoing or complete, how far you are) and the button that picks it up.
 // Hidden while there are none.
-import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from '@vexoulz/vods-core'
-import { COMPLETE_TAG } from '@vexoulz/vods-core/kit'
+import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from '@vex/vods-core'
+import { COMPLETE_TAG } from '@vex/vods-core/kit'
 import { computed } from 'vue'
-import { gamePalette } from '@vexoulz/ui/utils'
+import { gamePalette } from '@vex/ui/utils'
 import { KButton, KChip, KLink, KPosters, KSkeleton } from '@/ui'
 import VodCard from './VodCard.vue'
 

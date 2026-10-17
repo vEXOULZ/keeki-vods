@@ -2,11 +2,11 @@
 // /manage/storage: what the worker keeps on disk (GET /admin/storage), one row per folder under vods/ and live/, with
 // the jobs that use it. Stale folders (no job needs them) can be deleted; the worker refuses while a job is active.
 import { KButton, KCallout, KCheckbox, KChip, KDialog, KProgress, KSegmented, KSkeleton, KTable, type Option, type TableColumn } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { computed, onMounted, ref } from 'vue'
-import { type StorageFolder, type StorageView, admin, site } from '@vexoulz/vods-core/kit'
-import { bytes, errorText } from '@vexoulz/platform-web'
+import { type StorageFolder, type StorageView, admin, site } from '@vex/vods-core/kit'
+import { bytes, errorText } from '@vex/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
 
 const toast = useToast()

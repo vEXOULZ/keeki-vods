@@ -2,7 +2,7 @@
 // Box-art posters (3:4) for a VOD's games, each with a strip of its game colour (the same as the chapter bar's).
 // bill: hung side by side in their frames, like the posters outside a cinema · row: bare, for inline icons.
 import { computed } from 'vue'
-import { gamePalette } from '@vexoulz/ui/utils'
+import { gamePalette } from '@vex/ui/utils'
 import KNoPoster from './KNoPoster.vue'
 
 export type PosterGame = string | { name: string; image?: string; color?: string }

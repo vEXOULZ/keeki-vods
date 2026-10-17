@@ -1,4 +1,4 @@
-// keeki-vods has its own look. From @vexoulz/ui it takes only the headless logic (`/utils`, `/account`), never the
+// keeki-vods has its own look. From @vex/ui it takes only the headless logic (`/utils`, `/account`), never the
 // components or styles; from vods-core it never takes the `/app` entry (vods.vexoul.net's pages) or its CSS.
 import { readdirSync, readFileSync } from 'node:fs'
 import { dirname, join, relative, resolve } from 'node:path'
@@ -15,28 +15,28 @@ function specifiers(source: string): string[] {
   return found
 }
 
-/** The `Vx*` names a module imports from @vexoulz/ui (any path). */
+/** The `Vx*` names a module imports from @vex/ui (any path). */
 function vxNames(source: string): string[] {
   const found: string[] = []
-  for (const [, names] of source.matchAll(/import\s+(?:type\s+)?\{([^}]*)\}\s*from\s*['"]@vexoulz\/ui[^'"]*['"]/g))
+  for (const [, names] of source.matchAll(/import\s+(?:type\s+)?\{([^}]*)\}\s*from\s*['"]@vex\/ui[^'"]*['"]/g))
     found.push(...names!.split(',').map((n) => n.trim().replace(/^type\s+/, '').split(/\s+as\s+/)[0]!).filter((n) => /^Vx[A-Z]/.test(n)))
   return found
 }
 
 /** Why a specifier is not allowed here, or null. */
 function forbidden(spec: string): string | null {
-  if (spec.startsWith('@vexoulz/ui')) {
-    if (spec === '@vexoulz/ui/utils' || spec === '@vexoulz/ui/account') return null
-    return `@vexoulz/ui: only /utils and /account (got ${spec})`
+  if (spec.startsWith('@vex/ui')) {
+    if (spec === '@vex/ui/utils' || spec === '@vex/ui/account') return null
+    return `@vex/ui: only /utils and /account (got ${spec})`
   }
-  if (/^@vexoulz\/vods-core\/(app|app\.css)(\/|$)/.test(spec)) return `vods-core's app entry (got ${spec})`
+  if (/^@vex\/vods-core\/(app|app\.css)(\/|$)/.test(spec)) return `vods-core's app entry (got ${spec})`
   return null
 }
 
 function violations(source: string): string[] {
   return [
     ...specifiers(source).map(forbidden).filter((v): v is string => !!v),
-    ...vxNames(source).map((n) => `a Vx component from @vexoulz/ui (${n})`),
+    ...vxNames(source).map((n) => `a Vx component from @vex/ui (${n})`),
   ]
 }
 
@@ -47,7 +47,7 @@ function sources(dir: string): string[] {
 }
 
 describe('headless only', () => {
-  it("imports nothing but @vexoulz/ui's /utils and /account, and nothing from vods-core's app entry", () => {
+  it("imports nothing but @vex/ui's /utils and /account, and nothing from vods-core's app entry", () => {
     const files = [...sources(join(ROOT, 'src')), join(ROOT, 'index.html')]
     expect(files.length).toBeGreaterThan(50)
     const bad = files.flatMap((f) => violations(readFileSync(f, 'utf8')).map((v) => `${relative(ROOT, f)}: ${v}`))
@@ -55,13 +55,13 @@ describe('headless only', () => {
   })
 
   it('catches the root, a Vx component, the styles and the app entry', () => {
-    expect(violations(`import { useToast } from '@vexoulz/ui/utils'\nimport { createAccount } from '@vexoulz/ui/account'`)).toEqual([])
-    expect(violations(`import { clamp } from '@vexoulz/ui'`)).toHaveLength(1)
-    expect(violations(`import { VxButton } from '@vexoulz/ui/utils'`)).toEqual(['a Vx component from @vexoulz/ui (VxButton)'])
-    expect(violations(`import '@vexoulz/ui/style.css'`)).toHaveLength(1)
-    expect(violations(`@import '@vexoulz/ui/fonts.css';`)).toHaveLength(1)
-    expect(violations(`const P = () => import('@vexoulz/ui')`)).toHaveLength(1)
-    expect(violations(`import { WatchView } from '@vexoulz/vods-core/app'`)).toHaveLength(1)
-    expect(violations(`import '@vexoulz/vods-core/app.css'`)).toHaveLength(1)
+    expect(violations(`import { useToast } from '@vex/ui/utils'\nimport { createAccount } from '@vex/ui/account'`)).toEqual([])
+    expect(violations(`import { clamp } from '@vex/ui'`)).toHaveLength(1)
+    expect(violations(`import { VxButton } from '@vex/ui/utils'`)).toEqual(['a Vx component from @vex/ui (VxButton)'])
+    expect(violations(`import '@vex/ui/style.css'`)).toHaveLength(1)
+    expect(violations(`@import '@vex/ui/fonts.css';`)).toHaveLength(1)
+    expect(violations(`const P = () => import('@vex/ui')`)).toHaveLength(1)
+    expect(violations(`import { WatchView } from '@vex/vods-core/app'`)).toHaveLength(1)
+    expect(violations(`import '@vex/vods-core/app.css'`)).toHaveLength(1)
   })
 })

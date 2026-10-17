@@ -2,8 +2,8 @@
 // Game filter for the list page: a dropdown of every game in the archive (most played first, with how many VODs
 // each is in), with a filter field for long lists. Empty value = all games.
 import { KButton, KInput, KMenuItem, KPopover, KPosters } from '@/ui'
-import { learnGameColors } from '@vexoulz/ui/utils'
-import { boxArt, type GamePlayed } from '@vexoulz/vods-core'
+import { learnGameColors } from '@vex/ui/utils'
+import { boxArt, type GamePlayed } from '@vex/vods-core'
 import { computed, ref } from 'vue'
 
 const props = defineProps<{ games: GamePlayed[] | null; error?: string | null }>()

@@ -2,7 +2,7 @@
 // A VOD time as text ("1:02:03", "1h2m3s" or seconds). Commits on blur / Enter; unreadable text is flagged, not kept.
 import { KInput } from '@/ui'
 import { ref, watch } from 'vue'
-import { formatTime, parseTime } from '@vexoulz/vods-core/kit'
+import { formatTime, parseTime } from '@vex/vods-core/kit'
 
 const props = defineProps<{ id?: string; invalid?: boolean; label?: string; placeholder?: string; optional?: boolean }>()
 const model = defineModel<number | null>({ required: true })

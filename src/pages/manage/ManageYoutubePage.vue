@@ -2,12 +2,12 @@
 // /manage/youtube: every problem the last YouTube check found (GET /admin/youtube/videos), the last two weeks' first and
 // then the older ones, which the overview leaves out. Some of those will never be fixed (a removed upload of an old VOD).
 import { KButton, KCallout, KSkeleton } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { computed, onMounted, ref } from 'vue'
-import { usePoll } from '@vexoulz/platform-web/vue'
-import { errorText } from '@vexoulz/platform-web'
-import { RECENT_PROBLEM_DAYS, admin, site, splitProblems, youtubeCheckMessage } from '@vexoulz/vods-core/kit'
+import { usePoll } from '@vex/platform-web/vue'
+import { errorText } from '@vex/platform-web'
+import { RECENT_PROBLEM_DAYS, admin, site, splitProblems, youtubeCheckMessage } from '@vex/vods-core/kit'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import YoutubeProblems from '@/components/manage/YoutubeProblems.vue'
 

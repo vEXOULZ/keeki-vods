@@ -2,11 +2,11 @@
 // /manage/settings: the worker settings the dashboard can override (GET /admin/settings), grouped as the worker groups
 // them. Each shows its env default and when a change is seen; one Save sends every change, all or none.
 import { KButton, KCallout, KChip, KInput, KSkeleton, KSwitch } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { computed, onMounted, ref } from 'vue'
-import { type RuntimeSetting, admin, settingChanges, settingLabel, showValue, toDraft, type SettingDraft, site } from '@vexoulz/vods-core/kit'
-import { errorText } from '@vexoulz/platform-web'
+import { type RuntimeSetting, admin, settingChanges, settingLabel, showValue, toDraft, type SettingDraft, site } from '@vex/vods-core/kit'
+import { errorText } from '@vex/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
 
 const toast = useToast()

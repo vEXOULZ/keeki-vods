@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { KButton, KCallout, KChip, KSkeleton, KStatusDot } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { timeAgo } from '@/lib/time'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { JobsTable, usePoll } from '@vexoulz/platform-web/vue'
+import { JobsTable, usePoll } from '@vex/platform-web/vue'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import TwitchViewerTile from '@/components/manage/TwitchViewerTile.vue'
 import YoutubeProblems from '@/components/manage/YoutubeProblems.vue'
@@ -23,8 +23,8 @@ import {
   stuckVods,
   youtubeCheckLine,
   youtubeCheckMessage,
-} from '@vexoulz/vods-core/kit'
-import { errorText } from '@vexoulz/platform-web'
+} from '@vex/vods-core/kit'
+import { errorText } from '@vex/platform-web'
 
 const { data: health, error, loading, refresh } = usePoll((signal) => admin.health(signal), 15_000)
 const toast = useToast()
