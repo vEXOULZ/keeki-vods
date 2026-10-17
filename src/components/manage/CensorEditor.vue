@@ -3,9 +3,9 @@
 // (in-game nudity, say). The worker applies them to every upload after they're saved; the uploads already on YouTube
 // keep what they had until the VOD is re-archived (the actions above).
 import { KButton, KCallout, KCheckbox, KInput, KSelect, type Option } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { computed } from 'vue'
-import { toClock } from '@vexoulz/vods-core'
+import { toClock } from '@vex/vods-core'
 import {
   type AdminVod,
   CENSOR_NOTE_MAX,
@@ -18,7 +18,7 @@ import {
   censoredSeconds,
   newCensor,
   useDraftEditor,
-} from '@vexoulz/vods-core/kit'
+} from '@vex/vods-core/kit'
 import TimeInput from '@/components/manage/TimeInput.vue'
 
 const props = defineProps<{ vod: AdminVod; duration: number }>()

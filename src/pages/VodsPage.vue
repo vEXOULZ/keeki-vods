@@ -3,8 +3,8 @@
 // included), /playthroughs the playthroughs (one game across streams, as one video). Under the film strip, the board
 // with the page's name and count, then one filter row (All resets, title search, game, tag, date range; all combinable
 // and kept in the URL), a grid of cards, and "load more". A tag on a card links here narrowed to it (ThumbTags).
-import { resumeProgress, type GamePlayed, type Progress, type Vod } from '@vexoulz/vods-core'
-import { useVods, useVodsContext } from '@vexoulz/vods-core/vue'
+import { resumeProgress, type GamePlayed, type Progress, type Vod } from '@vex/vods-core'
+import { useVods, useVodsContext } from '@vex/vods-core/vue'
 import {
   hasFilters,
   loadGamesPlayed,
@@ -16,7 +16,7 @@ import {
   watchDebounced,
   type ListState,
   type Tab,
-} from '@vexoulz/vods-core/kit'
+} from '@vex/vods-core/kit'
 import { computed, nextTick, ref, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import GamePicker from '@/components/GamePicker.vue'

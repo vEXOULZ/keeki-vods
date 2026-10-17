@@ -2,10 +2,10 @@
 // Pick a chapter's game from Twitch's categories (GET /admin/twitch/games). Shows the current game with its box art;
 // typing searches, arrows + Enter pick, "No category" clears it.
 import { KButton, KInput, KSpinner } from '@/ui'
-import { boxArt, NO_CATEGORY } from '@vexoulz/vods-core'
+import { boxArt, NO_CATEGORY } from '@vex/vods-core'
 import { computed, nextTick, ref, useId, watch } from 'vue'
-import { type TwitchGame, type GameValue, admin } from '@vexoulz/vods-core/kit'
-import { errorText } from '@vexoulz/platform-web'
+import { type TwitchGame, type GameValue, admin } from '@vex/vods-core/kit'
+import { errorText } from '@vex/platform-web'
 
 const props = defineProps<{ label?: string; invalid?: boolean }>()
 const model = defineModel<GameValue>({ required: true })

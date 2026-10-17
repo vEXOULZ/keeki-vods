@@ -2,10 +2,10 @@
 // Jobs and fixes for one VOD, through the worker's existing routes. Each starts a job (shown in the VOD's job list);
 // delete removes the VOD from the archive after typing its id.
 import { KButton, KCheckbox, KDialog, KField, KInput, KSelect, type Option } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { computed, ref } from 'vue'
-import { admin, isSpliced, type ActionResult, type AdminVod } from '@vexoulz/vods-core/kit'
-import { errorText } from '@vexoulz/platform-web'
+import { admin, isSpliced, type ActionResult, type AdminVod } from '@vex/vods-core/kit'
+import { errorText } from '@vex/platform-web'
 
 const props = defineProps<{ vod: AdminVod }>()
 const emit = defineEmits<{ job: [jobId: number]; changed: []; deleted: [] }>()

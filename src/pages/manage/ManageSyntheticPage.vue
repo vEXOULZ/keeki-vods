@@ -3,13 +3,13 @@
 // /api/v2/synthetic). A merge or split supersedes its sources (they leave the public lists and redirect into it); a
 // playthrough, built from a game's windows, is listed beside them and tagged `compilation`.
 import { KButton, KCallout, KCheckbox, KChip, KDialog, KField, KInput, KSkeleton } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { timeAgo } from '@/lib/time'
-import { toClock } from '@vexoulz/vods-core'
+import { toClock } from '@vex/vods-core'
 import { computed, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
-import { type PlaythroughWindow, type SyntheticInput, type SyntheticVod, admin, COMPLETE_TAG, site } from '@vexoulz/vods-core/kit'
-import { errorText } from '@vexoulz/platform-web'
+import { type PlaythroughWindow, type SyntheticInput, type SyntheticVod, admin, COMPLETE_TAG, site } from '@vex/vods-core/kit'
+import { errorText } from '@vex/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import PlaythroughBuilder from '@/components/manage/PlaythroughBuilder.vue'
 import TimeInput from '@/components/manage/TimeInput.vue'

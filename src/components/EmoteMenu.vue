@@ -4,10 +4,10 @@
 // the channel one belongs to isn't saved with chat, so their row says so instead of linking.
 // One menu serves the whole chat. It follows its emote while chat scrolls and closes once the emote scrolls away.
 import { KMenuItem } from '@/ui'
-import { clampX, place } from '@vexoulz/ui/utils'
-import type { EmoteToken } from '@vexoulz/vods-core'
+import { clampX, place } from '@vex/ui/utils'
+import type { EmoteToken } from '@vex/vods-core'
 import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
-import { emoteMenuRows, type EmoteSources } from '@vexoulz/vods-core/kit'
+import { emoteMenuRows, type EmoteSources } from '@vex/vods-core/kit'
 
 const props = defineProps<{ token: EmoteToken; anchor: HTMLElement; enabled: EmoteSources }>()
 const emit = defineEmits<{ close: [] }>()

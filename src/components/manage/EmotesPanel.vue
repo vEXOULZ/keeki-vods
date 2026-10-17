@@ -1,12 +1,12 @@
 <script setup lang="ts">
 // The emote sets saved with a VOD (what its chat replay shows): counts per set, a preview, and re-capture actions.
 import { KButton, KCallout, KChip, KDialog, KSkeleton, KTabs, type Option } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { timeAgo } from '@/lib/time'
-import { emoteImage, type RawThirdPartyEmote } from '@vexoulz/vods-core'
+import { emoteImage, type RawThirdPartyEmote } from '@vex/vods-core'
 import { computed, ref, watch } from 'vue'
-import { type AdminEmotes, admin } from '@vexoulz/vods-core/kit'
-import { stamp, errorText } from '@vexoulz/platform-web'
+import { type AdminEmotes, admin } from '@vex/vods-core/kit'
+import { stamp, errorText } from '@vex/platform-web'
 
 const props = defineProps<{ vodId: string; /** Merged or split: the archive won't capture from Twitch for it. */ spliced?: boolean }>()
 const emit = defineEmits<{ job: [jobId: number] }>()

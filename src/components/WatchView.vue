@@ -6,10 +6,10 @@
 // follows whichever source VOD is playing, and a "related" menu links a playthrough's streams and the playthroughs a VOD
 // is part of. When a playthrough plays on into its next stream, a card over the video says so and counts down to go on;
 // when any VOD plays to its end, a card like it suggests another one to watch.
-import { gamesWithArt, useWatchView } from '@vexoulz/vods-core/kit'
+import { gamesWithArt, useWatchView } from '@vex/vods-core/kit'
 import { KButton, KChip, KKbd, KMenuItem, KPopover, KPosters } from '@/ui'
-import { gamePalette, learnGameColors, useToast } from '@vexoulz/ui/utils'
-import { boxArt, toClock, watchPath, type DriveFile, type PlayableTimeline, type Position, type SegmentTimeline, type Span, type Vod } from '@vexoulz/vods-core'
+import { gamePalette, learnGameColors, useToast } from '@vex/ui/utils'
+import { boxArt, toClock, watchPath, type DriveFile, type PlayableTimeline, type Position, type SegmentTimeline, type Span, type Vod } from '@vex/vods-core'
 import { computed, watchEffect } from 'vue'
 import ChatPanel from '@/components/ChatPanel.vue'
 import CountdownRing from '@/components/CountdownRing.vue'

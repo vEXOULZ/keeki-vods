@@ -1,4 +1,4 @@
-// The shapes the controls share (the same as vexoulz-ui's, so Manage's pages port across unchanged).
+// The shapes the controls share (the same as vex-ui's, so Manage's pages port across unchanged).
 
 /** One choice in a select, tab row or segmented control. */
 export interface Option<T extends string | number = string> {

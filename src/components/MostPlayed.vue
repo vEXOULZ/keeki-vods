@@ -2,10 +2,10 @@
 // "Most played": the games keeki has played most, hung as a wall of framed posters with their titles on a board
 // beneath: by how long they can be watched in total (the default), or by how many VODs they're in (the toggle,
 // remembered in this browser). A poster opens the VOD list filtered to that game.
-import { boxArt, type GamePlayed } from '@vexoulz/vods-core'
-import { hasPlayTime, playTime, rankGames, relativeDay, type MostPlayedBy } from '@vexoulz/vods-core/kit'
+import { boxArt, type GamePlayed } from '@vex/vods-core'
+import { hasPlayTime, playTime, rankGames, relativeDay, type MostPlayedBy } from '@vex/vods-core/kit'
 import { computed, ref, watch, watchEffect } from 'vue'
-import { learnGameColors } from '@vexoulz/ui/utils'
+import { learnGameColors } from '@vex/ui/utils'
 import { KButton, KNoPoster, KSegmented, KSkeleton } from '@/ui'
 
 const props = withDefaults(defineProps<{ games: GamePlayed[] | null; error?: string | null; limit?: number }>(), { limit: 8 })

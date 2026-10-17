@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { KButton, KCallout, KDialog, KField, KInput, KStatusDot } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
+import { useToast } from '@vex/ui/utils'
 import { timeAgo } from '@/lib/time'
-import { errorText } from '@vexoulz/platform-web'
+import { errorText } from '@vex/platform-web'
 import { computed, onBeforeUnmount, ref } from 'vue'
-import { admin, linkTwitch, viewerTile, type TwitchDeviceFlow, type TwitchViewerStatus } from '@vexoulz/vods-core/kit'
+import { admin, linkTwitch, viewerTile, type TwitchDeviceFlow, type TwitchViewerStatus } from '@vex/vods-core/kit'
 
 /**
  * The Overview tile for the Twitch account live recordings are asked for as: one that sees no ads on the channel

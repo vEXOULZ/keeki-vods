@@ -4,10 +4,10 @@
 // between two parts on becomes a new VOD. Both move chat with the video and can be undone (latest first). The logic
 // is vods-core's useSplice (kit); this draws it.
 import { KButton, KCallout, KChip, KDialog, KField, KInput, KSkeleton } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
-import { toClock, toSeconds } from '@vexoulz/vods-core'
-import { type AdminVod, useSplice } from '@vexoulz/vods-core/kit'
-import { stamp } from '@vexoulz/platform-web'
+import { useToast } from '@vex/ui/utils'
+import { toClock, toSeconds } from '@vex/vods-core'
+import { type AdminVod, useSplice } from '@vex/vods-core/kit'
+import { stamp } from '@vex/platform-web'
 
 const props = defineProps<{ vod: AdminVod }>()
 const emit = defineEmits<{ changed: []; job: [jobId: number] }>()

@@ -3,13 +3,13 @@
 // with neither, playback resumes where this browser left off. A VOD merged into another one, or replaced by a
 // synthetic VOD (a merge or split that keeps the original), sends you to the same moment in that one.
 import { KButton, KCallout, KEmptyState, KSkeleton } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
-import { isFinished, isResumable, parseTimestamp, redirectTarget, resumeProgress, toClock, toHMS, type Position, type UploadType } from '@vexoulz/vods-core'
-import { useVodsContext, useWatch } from '@vexoulz/vods-core/vue'
+import { useToast } from '@vex/ui/utils'
+import { isFinished, isResumable, parseTimestamp, redirectTarget, resumeProgress, toClock, toHMS, type Position, type UploadType } from '@vex/vods-core'
+import { useVodsContext, useWatch } from '@vex/vods-core/vue'
 import { computed, shallowRef, watch, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import WatchView from '@/components/WatchView.vue'
-import { site } from '@vexoulz/vods-core/kit'
+import { site } from '@vex/vods-core/kit'
 import SiteShell from '@/components/SiteShell.vue'
 
 const props = defineProps<{ id: string; type: UploadType | null }>()

@@ -3,10 +3,10 @@
 // off its corner (a button: the chapters, each a link to that point), and the title in a strip below. Where you
 // stopped shows on the thumbnail with a bar for how much you've seen. Drawn tags hang off the thumbnail's left edge
 // (ThumbTags); the rest are chips by the date.
-import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from '@vexoulz/vods-core'
-import { cutNote, gamesWithArt, splitTags, tagStyle, useThumbnail } from '@vexoulz/vods-core/kit'
+import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from '@vex/vods-core'
+import { cutNote, gamesWithArt, splitTags, tagStyle, useThumbnail } from '@vex/vods-core/kit'
 import { computed, watchEffect } from 'vue'
-import { learnGameColors, gamePalette } from '@vexoulz/ui/utils'
+import { learnGameColors, gamePalette } from '@vex/ui/utils'
 import { KChapterBar, KChip, KLink, KMenuItem, KNoPicture, KPopover, KPosters } from '@/ui'
 import ThumbTags from './ThumbTags.vue'
 

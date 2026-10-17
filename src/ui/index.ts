@@ -1,4 +1,4 @@
-// keeki-vods' own controls: the jobs vexoulz-ui's do on the other sites, in the Keeki Archives look (theme.css).
+// keeki-vods' own controls: the jobs vex-ui's do on the other sites, in the Keeki Archives look (theme.css).
 export { default as KButton } from './KButton.vue'
 export { default as KCallout } from './KCallout.vue'
 export { default as KChapterBar } from './KChapterBar.vue'

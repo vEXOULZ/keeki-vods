@@ -4,8 +4,8 @@
 // "Assets still needed"). Its text, if it has any, sits on top; the label stays for screen readers.
 import { KPlaceholder } from '@/ui'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { shapeText, svgDataUrl, tintSvg } from '@vexoulz/vods-core/kit'
-import type { TagStyle } from '@vexoulz/vods-core/kit'
+import { shapeText, svgDataUrl, tintSvg } from '@vex/vods-core/kit'
+import type { TagStyle } from '@vex/vods-core/kit'
 
 const props = defineProps<{ tag: TagStyle }>()
 const w = computed(() => props.tag.width ?? 62)

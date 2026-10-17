@@ -3,8 +3,8 @@
 // pause. Queued with POST /api/v2/jobs, the VOD as its `vod:<id>` subject.
 import { KButton, KCallout, KCheckbox, KDialog, KField, KInput, KSelect, type Option } from '@/ui'
 import { computed, ref, watch } from 'vue'
-import { ProblemError, errorText, type JobKindOut } from '@vexoulz/platform-web'
-import { platform, vodSubject } from '@vexoulz/vods-core/kit'
+import { ProblemError, errorText, type JobKindOut } from '@vex/platform-web'
+import { platform, vodSubject } from '@vex/vods-core/kit'
 
 const props = defineProps<{ kinds: JobKindOut[]; vodId?: string }>()
 const emit = defineEmits<{ started: [jobId: number] }>()

@@ -5,8 +5,8 @@
 // queued, running or paused job; `upload=stuck` keeps the ones not on YouTube with no job (the overview links there). Tick VODs
 // to queue them to archive, refetch their chapters, chat or emotes, hide or show them, or add or take off a tag.
 import { KButton, KCallout, KCheckbox, KChip, KDialog, KField, KInput, KSegmented, KSelect, KSkeleton, KTable, type Option, type TableColumn } from '@/ui'
-import { useToast } from '@vexoulz/ui/utils'
-import { toClock } from '@vexoulz/vods-core'
+import { useToast } from '@vex/ui/utils'
+import { toClock } from '@vex/vods-core'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
@@ -22,8 +22,8 @@ import {
   useVodBatch,
   vodBatchTargets,
   watchDebounced,
-} from '@vexoulz/vods-core/kit'
-import { errorText } from '@vexoulz/platform-web'
+} from '@vex/vods-core/kit'
+import { errorText } from '@vex/platform-web'
 import ManageShell from '@/components/manage/ManageShell.vue'
 import TwitchImportDialog from '@/components/manage/TwitchImportDialog.vue'
 

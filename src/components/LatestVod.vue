@@ -1,9 +1,9 @@
 <script setup lang="ts">
 // The newest VOD, on a strip of film: its thumbnail over a title board ("Now showing · today"), and beside it every chapter (each a link to that point), when it was streamed, its length, and Watch (or Resume).
-import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from '@vexoulz/vods-core'
-import { gamesWithArt, relativeDay, useThumbnail } from '@vexoulz/vods-core/kit'
+import { boxArt, isFinished, toClock, watchPath, type Progress, type Vod } from '@vex/vods-core'
+import { gamesWithArt, relativeDay, useThumbnail } from '@vex/vods-core/kit'
 import { computed, watchEffect } from 'vue'
-import { learnGameColors, gamePalette } from '@vexoulz/ui/utils'
+import { learnGameColors, gamePalette } from '@vex/ui/utils'
 import { KButton, KChapterBar, KChip, KLink, KNoPicture, KPosters } from '@/ui'
 import ThumbTags from './ThumbTags.vue'
 

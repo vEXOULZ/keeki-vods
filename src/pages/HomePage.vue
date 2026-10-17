@@ -1,9 +1,9 @@
 <script setup lang="ts">
 // The home page: the newest VOD on the screen, the series now running (the latest playthroughs), and the most played
 // games. The full lists are their own pages (/vods, /playthroughs); a game card opens the VODs list narrowed to it.
-import { resumeProgress, type GamePlayed, type Progress, type Vod } from '@vexoulz/vods-core'
-import { useVods, useVodsContext } from '@vexoulz/vods-core/vue'
-import { listPath, loadGamesPlayed, parseListQuery, toApiFilter, toListQuery, type Tab } from '@vexoulz/vods-core/kit'
+import { resumeProgress, type GamePlayed, type Progress, type Vod } from '@vex/vods-core'
+import { useVods, useVodsContext } from '@vex/vods-core/vue'
+import { listPath, loadGamesPlayed, parseListQuery, toApiFilter, toListQuery, type Tab } from '@vex/vods-core/kit'
 import { computed, ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import LatestPlaythroughs from '@/components/LatestPlaythroughs.vue'

@@ -1,4 +1,4 @@
-// Relative times for Manage (as vexoulz-ui words them on the other sites).
+// Relative times for Manage (as vex-ui words them on the other sites).
 
 const span = (s: number): string => (s < 60 ? `${s}s` : s < 3600 ? `${Math.floor(s / 60)} min` : `${Math.floor(s / 3600)} h`)
 
